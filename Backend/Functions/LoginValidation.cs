@@ -16,14 +16,14 @@ namespace Backend.Functions
     {
         [FunctionName("LoginValidation")]
         public static async Task<IActionResult> Run(
-            [HttpTrigger(AuthorizationLevel.Anonymous,"get", Route = "v1/login/{mail}/{password}")] HttpRequest req, string mail, string password,
+            [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "v1/login/{mail}/{password}")] HttpRequest req, string mail, string password,
             ILogger log)
         {
             try
             {
                 LoginValidationReturn loginValidationReturn = new LoginValidationReturn();
                 // Controleer of er iets ingevuld is
-                if (mail.Length>0 && password.Length > 0)
+                if (mail.Length > 0 && password.Length > 0)
                 {
                     User user = new User();
 
@@ -33,9 +33,11 @@ namespace Backend.Functions
 
                     // Check if the combination exist in the database
 
-                    // Make a unique cookieId --> GUID + computername
-                    loginValidationReturn.Id = Hash.GenerateSHA512String(Guid.NewGuid().ToString());
-
+                    // Make a unique cookieId --> UserId + client ip-address
+                    var remoteAddress = req.HttpContext.Connection.RemoteIpAddress;
+                    string strCookieId = "cb854d19-eed9-4452-b9db-f0eba854454c";
+                    user.Id = Guid.Parse(strCookieId);
+                    loginValidationReturn.Id = aes.EncryptToBase64String(user.Id.ToString() + remoteAddress.ToString());
                 }
                 else
                 {
