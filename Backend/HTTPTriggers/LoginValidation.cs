@@ -62,7 +62,7 @@ namespace Backend.Functions
                             else
                             {
                                 loginValidationReturn.Id = "ERROR";
-                                loginValidationReturn.strErrorMessage = "Deze combinatie (mail en wachtwoord) vinden we niet terug in onze database";
+                                loginValidationReturn.strErrorMessage = "Uw wachtwoord en of mailadres is fout";
                             }
                         }
                     }
