@@ -9,6 +9,7 @@ using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using Backend.StaticFunctions;
 using Backend.Models;
+using System.Data.SqlClient;
 
 namespace Backend.Functions
 {
@@ -32,12 +33,39 @@ namespace Backend.Functions
                     user.strPassword = Hash.GenerateSHA512String(password);
 
                     // Check if the combination exist in the database
-
-                    // Make a unique cookieId --> UserId + client ip-address
-                    var remoteAddress = req.HttpContext.Connection.RemoteIpAddress;
-                    string strCookieId = "cb854d19-eed9-4452-b9db-f0eba854454c";
-                    user.Id = Guid.Parse(strCookieId);
-                    loginValidationReturn.Id = aes.EncryptToBase64String(user.Id.ToString() + remoteAddress.ToString());
+                    using (SqlConnection connection = new SqlConnection(Environment.GetEnvironmentVariable("SQL_ConnectionsString")))
+                    {
+                        await connection.OpenAsync();
+                        using (SqlCommand command = new SqlCommand())
+                        {
+                            command.Connection = connection;
+                            string sql = "SELECT ID, COUNT(*) as usersCount FROM TB_Users WHERE Mail=@mail AND Password=@password  GROUP BY ID";
+                            command.CommandText = sql;
+                            command.Parameters.AddWithValue("@mail", user.strMail);
+                            command.Parameters.AddWithValue("@password", user.strPassword);
+                            SqlDataReader reader = await command.ExecuteReaderAsync();
+                            if (reader.Read())
+                            {
+                                if (Convert.ToInt32(reader["usersCount"]) == 1)
+                                {
+                                    user.Id = Guid.Parse(reader["ID"].ToString());
+                                    // Make a unique cookieId --> UserId + client ip-address
+                                    var remoteAddress = req.HttpContext.Connection.RemoteIpAddress;
+                                    loginValidationReturn.Id = aes.EncryptToBase64String(user.Id.ToString() + remoteAddress.ToString());
+                                }
+                                else
+                                {
+                                    loginValidationReturn.Id = "ERROR";
+                                    loginValidationReturn.strErrorMessage = "Deze combinatie (mail en wachtwoord) vinden we niet terug in onze database";
+                                }
+                            }
+                            else
+                            {
+                                loginValidationReturn.Id = "ERROR";
+                                loginValidationReturn.strErrorMessage = "Deze combinatie (mail en wachtwoord) vinden we niet terug in onze database";
+                            }
+                        }
+                    }
                 }
                 else
                 {
