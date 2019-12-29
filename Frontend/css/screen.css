@@ -84,7 +84,7 @@
     --global-input-error-boxShadowColor: var(--global-color-error-x-transparent);
 }
 
-@media (prefers-color-scheme: dark) {
+/* @media (prefers-color-scheme: dark) {
     :root {
         --global-page-color: White;
         --global-page-backgroundColor: var(--global-color-neutral-xxxx-dark);
@@ -99,7 +99,7 @@
         --global-input-focus-boxShadowColor: var(--global-color-alpha-transparent);
         --global-input-error-boxShadowColor: var(--global-color-error-transparent);
     }
-}
+} */
 
 /*------------------------------------*\
 #GENERIC
@@ -198,7 +198,7 @@ h6 {
     font-size: 16px;
     font-weight: 600;
     line-height: calc(var(--global-baseline) * 3);
-    margin: 0 0 var(--global-whitespace);
+    margin: 0 0 8px;
 }
 
 p,
@@ -608,33 +608,27 @@ input::placeholder {
 grid
 
 */
-.c-app__main {
-	padding: 1rem;
-}
+
 .c-dashboard {
-	display: grid;
-	grid-template-columns: auto minmax(auto, 29em);
+    display: grid;
+	/* grid-template-rows: auto minmax(auto,20rem); */
 	justify-content: center;
 	align-items: center;
 }
 .c-dashboard__item {
 	box-shadow: 0 2px 3px rgba(0, 0, 0, 0.125);
 }
-.c-img {
-	max-width: 100%;
-	max-height: 100%;
-}
+
 @media screen and (min-width: 960px) {
-	.c-app__main {
-		padding: 0rem;
-	}
+
 	.c-dashboard__item {
-		grid-column: 1/-1;
+        grid-column: 1/-1;
 	}
 	.c-dashboard {
-		display: grid;
-		grid-template-columns: repeat(4, 1fr);
-		grid-gap: 5rem;
+        display: grid;
+        padding: 4rem;
+        grid-gap: 4rem;
+		grid-template-columns: repeat(2, 1fr);
 		justify-content: center;
 		align-items: center;
 	}
@@ -669,20 +663,22 @@ grid
     fill: var(--logo__path--3--fill, var(--global-color-alpha-x-dark));
 }
 
-@media (prefers-color-scheme: dark) {
+/* @media (prefers-color-scheme: dark) {
     .c-logo {
         --logo__path--1--fill: White;
         --logo__path--2--fill: var(--logo__path--1--fill);
         --logo__path--3--fill: var(--logo__path--1--fill);
     }
-}
+} */
 
 /*
     Component: Card
     ---
     Card with box shadow
 */
-
+.c-card__space{
+    padding:0 16px 16px 16px;
+}
 .c-card {
     --card-borderRadius: var(--global-borderRadius);
     background-color: var(--card-backgroundColor, White);
@@ -693,10 +689,10 @@ grid
 }
 
 /* Add padding to child for more flexibility */
-.c-card__body,
+/* .c-card__body,
 .c-card__footer {
     padding: var(--global-whitespace);
-}
+} */
 
 .c-card__footer {
     text-align: center;
@@ -720,21 +716,21 @@ grid
 }
 
 @media (min-width: 27em) {
-    .c-card__body {
-        padding: var(--global-whitespace-xl);
-    }
+/*     .c-card__body {
+        padding: var(--global-whitespace-md);
+    } */
 
     .c-card__title {
-        margin-bottom: var(--global-whitespace-xl);
+        margin-bottom: var(--global-whitespace-md);
     }
 }
 
-@media (prefers-color-scheme: dark) {
+/* @media (prefers-color-scheme: dark) {
     .c-card {
         --card-backgroundColor: var(--global-color-neutral-xxx-dark);
         --card__footer-borderColor: var(--global-color-neutral-xxxx-dark);
     }
-}
+} */
 
 /*
     Component: Forms
@@ -849,11 +845,11 @@ more padding on the right to avoid overlap
     transform: translateY(calc(var(--global-baseline) * -3))
 }
 
-@media (prefers-color-scheme: dark) {
+/* @media (prefers-color-scheme: dark) {
     .c-label--floating {
         --label--floating-backgroundColor: transparent;
     }
-}
+} */
 
 /*
     Component: Button
@@ -893,14 +889,14 @@ more padding on the right to avoid overlap
     box-shadow: var(--button-active-boxShadow, 0);
 }
 
-@media (prefers-color-scheme: dark) {
+/* @media (prefers-color-scheme: dark) {
     .c-button {
         --button-borderColor: var(--global-color-alpha);
         --button-hover-borderColor: var(--global-color-alpha-light);
         --button-active-borderColor: var(--global-color-alpha-dark);
         --button-focus-borderColor: var(--global-color-alpha-x-dark);
     }
-}
+} */
 
 /*
     Component: Option list
@@ -1098,7 +1094,7 @@ more padding on the right to avoid overlap
     margin-left: -6px;
 }
 
-@media (prefers-color-scheme: dark) {
+/* @media (prefers-color-scheme: dark) {
     .c-custom-toggle-list {
         --toggle-list-borderColor: var(--global-color-neutral-xx-dark);
     }
@@ -1110,7 +1106,7 @@ more padding on the right to avoid overlap
         --toggle__switch-backgroundColor: var(--global-color-neutral-dark);
         --toggle__switch-checked-backgroundColor: White;
     }
-}
+} */
 
 /*
     Component: Custom Select
@@ -1184,11 +1180,11 @@ more padding on the right to avoid overlap
     display: none;
 }
 
-@media (prefers-color-scheme: dark) {
+/* @media (prefers-color-scheme: dark) {
     .c-password-toggle {
         --password-toggle__symbol-fill: var(--global-color-neutral-x-dark);
     }
-}
+} */
 
 /* tent */
 
@@ -1344,7 +1340,7 @@ more padding on the right to avoid overlap
 }
 
 */
-
+/* 
 @media (prefers-color-scheme: dark) {
     .c-tent {
         --tent-backgroundColor: var(--global-color-neutral-xxx-dark);
@@ -1352,9 +1348,9 @@ more padding on the right to avoid overlap
         --tent__icon-backgroundColor: var(--global-color-neutral-xxx-dark);
         --tent__icon-backgroundColor: var(--global-color-alpha-light);
         --tent__action-backgroundColor: var(--global-color-neutral-xx-dark);
-        /* --tent__action-color: white; */
+        /* --tent__action-color: white;
     }
-}
+} */
 
 /* icons */
 
@@ -1366,12 +1362,12 @@ more padding on the right to avoid overlap
     fill: var(--icon__path-color-2, var(--global-color-alpha));
 }
 
-@media (prefers-color-scheme: dark) {
+/* @media (prefers-color-scheme: dark) {
     .c-icon {
         --icon__path-color-1: var(--global-color-alpha-dark);
         --icon__path-color-2: white;
     }
-}
+} */
 
 /*------------------------------------*\
 #States
