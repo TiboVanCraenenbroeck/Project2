@@ -1,0 +1,1222 @@
+/*------------------------------------*\
+  #FONTS
+\*------------------------------------*/
+
+@font-face {
+	font-family: 'Inter UI Web';
+	font-weight: 400;
+	src: url('../fonts/Inter-UI-Regular.woff2') format('woff2');
+}
+
+@font-face {
+	font-family: 'Inter UI Web';
+	font-weight: 600;
+	src: url('../fonts/Inter-UI-Medium.woff2') format('woff2');
+}
+
+@font-face {
+	font-family: 'Inter UI Web';
+	font-weight: 700;
+	src: url('../fonts/Inter-UI-Bold.woff2') format('woff2');
+}
+
+/*------------------------------------*\
+#Variables
+\*------------------------------------*/
+:root {
+    /* Global colors */
+    --global-color-alpha-light: #4F95FF;
+    --global-color-alpha: #3385FF;
+    --global-color-alpha-dark: #2E77E6;
+    --global-color-alpha-x-dark: #1B4186;
+    --global-color-alpha-transparent: #3385ffbf;
+    --global-color-alpha-x-transparent: #3385ff4d;
+
+    --global-color-neutral-xxxx-light: #F5F6FA;
+    --global-color-neutral-xxx-light: #E2E3E7;
+    --global-color-neutral-xx-light: #caccd4;
+    --global-color-neutral-x-light: #b5b6c0;
+    --global-color-neutral-light: #a0a1ad;
+    --global-color-neutral: #8b8c9a;
+    --global-color-neutral-dark: #757787;
+    --global-color-neutral-x-dark: #606274;
+    --global-color-neutral-xx-dark: #4b4c60;
+    --global-color-neutral-xxx-dark: #35374d;
+    --global-color-neutral-xxxx-dark: #20223a;
+    --global-color-error: #FF3333;
+    --global-color-error-transparent: #FF3333bf;
+    --global-color-error-x-transparent: #FF33334d;
+
+    /* global page settings */
+    --global-page-color: var(--global-color-neutral-xxxx-dark);
+    --global-page-backgroundColor: var(--global-color-neutral-xxxx-light);
+    --global-selection-backgroundColor: var(--global-color-alpha);
+
+    /* border radius */
+    --global-borderRadius: 3px;
+    --global-borderWidth: 1px;
+
+    /* transitions */
+    --global-transitionEasing-out: ease-out;
+    --global-transitionEasing-out-cubic: cubic-bezier(0.22, 0.61, 0.36, 1);
+    --global-transitionDuration-alpha: .1s;
+    --global-transitionDuration-beta: .2s;
+    --global-transitionDuration-gamma: .3s;
+
+
+     /* Baseline settings */
+    --global-baseline: 8px;         
+    --global-whitespace: calc(var(--global-baseline) * 3); /* = 24px */
+
+    --global-whitespace-xs: calc(var(--global-baseline) * .5); /* = 4px */
+    --global-whitespace-sm: calc(var(--global-baseline) * 1); /*  = 8px */
+    --global-whitespace-md: calc(var(--global-baseline) * 2); /*  = 16px */
+    --global-whitespace-lg: calc(var(--global-baseline) * 4); /*  = 32px */
+    --global-whitespace-xl: calc(var(--global-whitespace) * 2); /*  = 48px */
+    --global-whitespace-xxl: calc(var(--global-whitespace) * 3); /*  = 72px */
+
+    /* forms */
+    --global-label-color: var(--global-color-neutral-xx-dark);
+    --global-placeholder-color: var(--global-color-neutral-x-light);
+    --global-input-backgroundColor: White;
+    --global-input-color: var(--global-color-neutral-xxxx-dark);
+    --global-input-borderColor: var(--global-color-neutral-xxx-light);
+    --global-input-hover-borderColor: var(--global-color-neutral-xx-light);
+    --global-input-focus-borderColor: var(--global-color-alpha);
+    --global-input-error-borderColor: var(--global-color-error);
+    --global-input-focus-boxShadowSpread: 0 0 0 3px;
+    --global-input-focus-boxShadowColor: var(--global-color-alpha-x-transparent);
+    --global-input-error-boxShadowColor: var(--global-color-error-x-transparent);
+}
+
+/*------------------------------------*\
+  #GENERIC
+\*------------------------------------*/
+
+/*
+    Generic: Page
+    ---
+    Global page styles + universal box-sizing:
+*/
+
+html {
+	font-size: 16px;
+	line-height: 1.5;
+	font-family: 'Inter UI Web', Helvetica, arial, sans-serif;
+	color: #20223a;
+	box-sizing: border-box;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+*,
+*:before,
+*:after {
+	box-sizing: inherit;
+}
+
+/*
+ * Remove text-shadow in selection highlight:
+ * https://twitter.com/miketaylr/status/12228805301
+ *
+ * Customize the background color to match your design.
+ */
+
+::-moz-selection {
+	background: #3385ff;
+	color: white;
+	text-shadow: none;
+}
+
+::selection {
+	background: #3385ff;
+	color: white;
+	text-shadow: none;
+}
+
+/*------------------------------------*\
+  #Elements
+\*------------------------------------*/
+
+/*
+    Elements: Images
+    ---
+    Default markup for images to make them responsive
+*/
+
+img {
+	max-width: 100%;
+	vertical-align: top;
+}
+
+/*
+    Elements: typography
+    ---
+    Default markup for typographic elements
+*/
+
+h1,
+h2,
+h3 {
+	font-weight: 700;
+}
+
+h1 {
+	font-size: 36px;
+	line-height: 48px;
+	margin: 0 0 24px;
+}
+
+h2 {
+	font-size: 32px;
+	line-height: 40px;
+	margin: 0 0 24px;
+}
+
+h3 {
+	font-size: 26px;
+	line-height: 32px;
+	margin: 0 0 24px;
+}
+
+h4,
+h5,
+h6 {
+	font-size: 20px;
+	line-height: 24px;
+	margin: 0 0 24px;
+}
+
+p,
+ol,
+ul,
+dl,
+table,
+address,
+figure {
+	margin: 0 0 24px;
+}
+
+ul,
+ol {
+	padding-left: 24px;
+}
+
+li ul,
+li ol {
+	margin-bottom: 0;
+}
+
+blockquote {
+	font-style: normal;
+	font-size: 23px;
+	line-height: 32px;
+	margin: 0 0 24px;
+}
+
+blockquote * {
+	font-size: inherit;
+	line-height: inherit;
+}
+
+figcaption {
+	font-weight: 400;
+	font-size: 12px;
+	line-height: 16px;
+	margin-top: 8px;
+}
+
+hr {
+	border: 0;
+	height: 1px;
+	background: LightGrey;
+	margin: 0 0 24px;
+}
+
+a {
+	color: #3385ff;
+	transition: all 0.1s ease-in-out;
+}
+
+a:visited,
+a:active {
+	color: #4f95ff;
+}
+
+a:hover,
+a:focus {
+	color: #4f95ff;
+}
+
+/*------------------------------------*\
+  #OBJECTS
+\*------------------------------------*/
+
+/*
+    Objects: Row
+    ---
+    Creates a horizontal row that stretches the viewport and adds padding around children
+*/
+
+.o-row {
+	position: relative;
+	padding: 24px 24px 0;
+	display: flex;
+	flex-direction: column;
+}
+
+/* color modifiers */
+
+.o-row--primary-x-light {
+	background-color: #f2faff;
+}
+
+.o-row--neutral-xx-dark {
+	color: #fff;
+	background: #20223a;
+}
+
+/* intro needs a larger z-index to pull the image over the next row */
+
+.o-row--intro {
+	z-index: 10;
+}
+
+/* size modifiers */
+
+.o-row--lg {
+	padding-top: 48px;
+	padding-bottom: 24px;
+}
+
+.o-row--intro {
+	padding-top: 48px;
+	padding-bottom: 48px;
+}
+
+.o-row--xl {
+	padding-top: 72px;
+	padding-bottom: 48px;
+}
+
+@media (min-width: 768px) {
+	.o-row {
+		padding-left: 48px;
+		padding-right: 48px;
+	}
+
+	.o-row--md {
+		padding-top: 48px;
+		padding-bottom: 24px;
+	}
+
+	.o-row--lg {
+		padding-top: 72px;
+		padding-bottom: 48px;
+	}
+}
+
+@media (min-width: 992px) {
+	.o-row--intro {
+		padding-top: 0;
+		padding-bottom: 0;
+	}
+
+	.o-row--xl {
+		padding-top: 96px;
+		padding-bottom: 72px;
+	}
+}
+
+/*
+    Objects: Container
+    ---
+    Creates a horizontal container that sets de global max-width
+*/
+
+.o-container {
+	margin-left: auto;
+	margin-right: auto;
+	width: 100%;
+	max-width: 79.5em; /* 90 * 16px = 1440px */
+}
+
+/*
+    Objects: section
+    ---
+    Creates vertical whitespace between adjacent sections inside a row
+*/
+
+/*
+    Objects: section
+    ---
+    Creates vertical whitespace between adjacent sections inside a row
+*/
+
+.o-section {
+	display: flex;
+	flex-direction: column;
+}
+
+.o-section + .o-section {
+	margin-top: 24px;
+}
+
+@media (min-width: 768px) {
+	.o-section--lg + .o-section--lg,
+	.o-section--xl + .o-section--xl {
+		margin-top: 48px;
+	}
+}
+
+@media (min-width: 1200px) {
+	.o-section--xl + .o-section--xl {
+		margin-top: 72px;
+	}
+}
+
+/*
+    Objects: Layout
+    ---
+    The layout object provides us with a column-style layout system. This object
+    contains the basic structural elements, but classes should be complemented
+    with width utilities
+*/
+
+.o-layout {
+	display: flex;
+	flex-wrap: wrap;
+}
+
+.o-layout__item {
+	width: 100%;
+}
+
+/* gutter modifiers, these affect o-layout__item too */
+
+.o-layout--gutter {
+	margin: 0 -12px;
+}
+
+.o-layout--gutter > .o-layout__item {
+	padding: 0 12px;
+}
+
+.o-layout--gutter-sm {
+	margin: 0 -6px;
+}
+
+.o-layout--gutter-sm > .o-layout__item {
+	padding: 0 6px;
+}
+
+.o-layout--gutter-lg {
+	margin: 0 -24px;
+}
+
+.o-layout--gutter-lg > .o-layout__item {
+	padding: 0 24px;
+}
+
+.o-layout--gutter-xl {
+	margin: 0 -48px;
+}
+
+.o-layout--gutter-xl > .o-layout__item {
+	padding: 0 48px;
+}
+
+/* reverse horizontal row modifier */
+
+.o-layout--row-reverse {
+	flex-direction: row-reverse;
+}
+
+/* Horizontal alignment modifiers*/
+
+.o-layout--justify-start {
+	justify-content: flex-start;
+}
+
+.o-layout--justify-end {
+	justify-content: flex-end;
+}
+
+.o-layout--justify-center {
+	justify-content: center;
+}
+
+.o-layout--justify-space-around {
+	justify-content: space-around;
+}
+
+.o-layout--justify-space-evenly {
+	justify-content: space-evenly;
+}
+
+.o-layout--justify-space-between {
+	justify-content: space-between;
+}
+
+/* Vertical alignment modifiers */
+
+.o-layout--align-start {
+	align-items: flex-start;
+}
+
+.o-layout--align-end {
+	align-items: flex-end;
+}
+
+.o-layout--align-center {
+	align-items: center;
+}
+
+.o-layout--align-baseline {
+	align-items: baseline;
+}
+
+/* Vertical alignment modifiers that only work if there is one than one flex item */
+
+.o-layout--align-content-start {
+	align-content: start;
+}
+
+.o-layout--align-content-end {
+	align-content: end;
+}
+
+.o-layout--align-content-center {
+	align-content: center;
+}
+
+.o-layout--align-content-space-around {
+	align-content: space-around;
+}
+
+.o-layout--align-content-space-between {
+	align-content: space-between;
+}
+
+/*
+    Objects: List
+    ---
+    Small reusable object to remove default list styling from lists
+*/
+
+.o-list {
+	list-style: none;
+	padding: 0;
+}
+
+/*
+    Object: Button reset
+    ---
+    Small button reset object
+*/
+
+.o-button-reset {
+	border: none;
+	margin: 0;
+	padding: 0;
+	width: auto;
+	overflow: visible;
+	background: transparent;
+
+	/* inherit font & color from ancestor */
+	color: inherit;
+	font: inherit;
+
+	/* Normalize `line-height`. Cannot be changed from `normal` in Firefox 4+. */
+	line-height: normal;
+
+	/* Corrects font smoothing for webkit */
+	-webkit-font-smoothing: inherit;
+	-moz-osx-font-smoothing: inherit;
+
+	/* Corrects inability to style clickable `input` types in iOS */
+	-webkit-appearance: none;
+}
+
+/*------------------------------------*\
+  #COMPONENTS
+\*------------------------------------*/
+
+/*
+    Componets grid 
+    ---
+    Componets grid layout
+*/
+.c-dashboard {
+	display: grid;
+    grid-template-columns: repeat(2, 1fr);
+	justify-content: center;
+	align-items: center;
+}
+.c-dashboard__item {
+	box-shadow: 0 2px 3px rgba(0, 0, 0, 0.125);
+}
+
+/* @media screen and (min-width: 960px) {
+	.c-app__main {
+		padding: 0rem;
+	}
+	.c-dashboard__item {
+		grid-column: 1/-1;
+	}
+	.c-dashboard {
+		display: grid;
+		grid-template-columns: repeat(4, 1fr);
+		grid-gap: 5rem;
+		justify-content: center;
+		align-items: center;
+	}
+} */
+/*
+    Component: Card
+    ---
+    Website cards
+*/
+.c-card {
+    --card-borderRadius: var(--global-borderRadius);
+    background-color: var(--card-backgroundColor, White);
+    margin-bottom: var(--global-whitespace);
+    border-radius: var(--card-borderRadius, var(--global-borderRadius));
+    box-shadow: 0 0 0 1px rgba(0,0,0, 0.05), 0 2px 4px rgba(0,0,0,.075);
+    overflow: hidden;
+}
+/*
+    Component: Logo
+    ---
+    Website main logo
+*/
+
+.c-logo {
+	height: 24px;
+	display: flex;
+	align-items: center;
+}
+
+.c-logo__symbol {
+	height: 100%;
+}
+
+/*
+    Component: header
+    ---
+    Main header of the website
+*/
+
+.c-header {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.c-header__nav {
+	display: none;
+}
+
+@media (min-width: 992px) {
+	.c-header__nav {
+		display: block;
+	}
+}
+
+/*
+    Component: Nav
+    ---
+    Main navigation of the site
+*/
+
+.c-nav {
+	font-size: 14px;
+	line-height: 24px;
+}
+
+.c-nav__link {
+	text-decoration: none;
+	font-weight: 600;
+	display: block;
+	padding: 8px 0;
+}
+
+.c-nav__link,
+.c-nav__link:visited,
+.c-nav__link:active {
+	color: #4b4e6b;
+}
+
+.c-nav__link:hover,
+.c-nav__link:focus {
+	color: #3385ff;
+}
+
+@media (min-width: 992px) {
+	.c-nav__list {
+		display: flex;
+	}
+
+	.c-nav__item--cta {
+		margin-left: 20px;
+	}
+
+	.c-nav__link {
+		padding: 8px 20px;
+	}
+}
+
+/*
+    Component: Lead
+    ---
+    Lead type treatments to style everything that differs from standard typography elements
+*/
+
+.c-lead {
+	position: relative;
+}
+
+.c-lead--md {
+	font-size: 18px;
+	line-height: 32px;
+}
+
+.c-lead--lg {
+	font-size: 20px;
+	line-height: 32px;
+}
+
+.c-lead--xl {
+	font-size: 32px;
+	line-height: 40px;
+}
+
+@media (min-width: 768px) {
+	.c-lead--xl {
+		font-size: 41px;
+		line-height: 48px;
+	}
+}
+
+@media (min-width: 1200px) {
+	.c-lead--xl {
+		font-size: 52px;
+		line-height: 64px;
+	}
+}
+
+/*
+    Component: Intro
+    ---
+    Intro part on the homepage
+*/
+
+.c-intro {
+	position: relative;
+}
+
+@media (max-width: 991px) {
+	.c-intro__figure {
+		display: none;
+	}
+}
+
+@media (min-width: 1200px) {
+	.c-intro {
+		margin-bottom: -96px;
+	}
+
+	.c-intro__body {
+		position: relative;
+		top: -48px;
+	}
+}
+
+/*
+    Component: CTA link
+    ---
+    Small cta link with custom animation
+*/
+
+.c-link-cta {
+	display: inline-block;
+	text-decoration: none;
+	font-size: 14px;
+	line-height: 24px;
+	font-weight: 600;
+	padding: 8px 20px;
+	border-radius: 4px;
+	box-shadow: inset 0 0 0 1px #2e77e6;
+	background: #3385ff linear-gradient(to bottom, #4f95ff, #2e77e6);
+}
+
+.c-link-cta,
+.c-link-cta:visited,
+.c-link-cta:active {
+	color: #fff;
+}
+
+.c-link-cta:hover,
+.c-link-cta:focus {
+	color: #fff;
+	background: #4f95ff;
+}
+
+.c-link-cta:active {
+	background-color: #3385ff;
+}
+
+.c-link-cta--lg {
+	font-size: 16px;
+	padding: 16px 32px;
+}
+
+/*
+    Component: Stat
+    ---
+    Component to visualise statistics
+*/
+
+.c-stats {
+	margin-bottom: -24px;
+}
+
+.c-stat {
+	color: #3385ff;
+	text-align: center;
+	margin-bottom: 48px;
+}
+
+.c-stat__title {
+	margin-bottom: 4px;
+	font-size: 41px;
+	line-height: 48px;
+}
+
+.c-stat__what {
+	font-size: 14px;
+	line-height: 16px;
+	text-transform: uppercase;
+	letter-spacing: 1px;
+	font-weight: 600;
+}
+
+/*------------------------------------*\
+  #UTILITIES
+\*------------------------------------*/
+
+/*
+    Utilities: color
+    ---
+    Utility classes to put specific colors onto elements
+*/
+
+.u-color-neutral-base {
+	color: #9c9eb8;
+}
+
+.u-color-neutral-dark {
+	color: #83859e;
+}
+
+/*
+    Utilities: spacing
+    ---
+    Utility classes to put specific margins and paddings onto elements
+*/
+
+.u-pt-clear {
+	padding-top: 0 !important;
+}
+
+.u-mb-clear {
+	margin-bottom: 0 !important;
+}
+
+.u-mb-xs {
+	margin-bottom: 4px !important;
+}
+
+.u-mb-sm {
+	margin-bottom: 8px !important;
+}
+
+.u-mb-md {
+	margin-bottom: 16px !important;
+}
+
+.u-mb-lg {
+	margin-bottom: 32px !important;
+}
+
+.u-mb-xl {
+	margin-bottom: 48px !important;
+}
+
+/*
+    Utilities: max-width
+    ---
+    Utility classes to put specific max widths onto elements
+*/
+
+.u-max-width-xs {
+	max-width: 18em !important;
+}
+
+.u-max-width-sm {
+	max-width: 39em !important;
+}
+
+.u-max-width-md {
+	max-width: 50em !important;
+}
+
+.u-max-width-lg {
+	max-width: 63.5em !important;
+}
+
+.u-max-width-none {
+	max-width: none !important;
+}
+
+/*---------------------------------
+Utility-Grids
+Verdeeld je tablad in colommen en rijen
+
+---------------------------------*/
+.u-grid-x-1 {
+	grid-column: span 1;
+}
+.u-grid-x-2 {
+	grid-column: span 2;
+}
+.u-grid-x-4 {
+	grid-column: span 4;
+}
+.u-grid-x-5 {
+	grid-column: span 5;
+}
+.u-grid-x-6 {
+	grid-column: span 6;
+}
+.u-grid-x-8 {
+	grid-column: span 8;
+}
+.u-grid-x-12 {
+	grid-column: span 12;
+}
+.u-grid-y-2 {
+	grid-row: span 2;
+}
+.u-grid-y-4 {
+	grid-row: span 4;
+}
+.u-grid-y-6 {
+	grid-row: span 6;
+}
+.u-grid-y-8 {
+	grid-row: span 8;
+}
+.u-grid-y-10 {
+	grid-row: span 10;
+}
+.u-grid-y-12 {
+	grid-row: span 12;
+}
+/*
+    Utility: Widths
+    ---
+    Utility classes to put specific widths onto elements
+    Will be mostly used on o-layout__item
+*/
+
+.u-width-auto {
+	width: auto !important;
+}
+
+.u-1-of-2 {
+	width: 50% !important;
+}
+
+.u-1-of-3 {
+	width: 33.3333333333% !important;
+}
+
+.u-2-of-3 {
+	width: 66.6666666667% !important;
+}
+
+.u-1-of-4 {
+	width: 25% !important;
+}
+
+.u-3-of-4 {
+	width: 75% !important;
+}
+
+.u-1-of-5 {
+	width: 20% !important;
+}
+
+.u-2-of-5 {
+	width: 40% !important;
+}
+
+.u-3-of-5 {
+	width: 60% !important;
+}
+
+.u-4-of-5 {
+	width: 80% !important;
+}
+
+.u-1-of-6 {
+	width: 16.6666666667% !important;
+}
+
+.u-5-of-6 {
+	width: 83.3333333333% !important;
+}
+
+@media (min-width: 576px) {
+	.u-1-of-2-bp1 {
+		width: 50% !important;
+	}
+	.u-1-of-3-bp1 {
+		width: 33.3333333333% !important;
+	}
+	.u-2-of-3-bp1 {
+		width: 66.6666666667% !important;
+	}
+	.u-1-of-4-bp1 {
+		width: 25% !important;
+	}
+	.u-3-of-4-bp1 {
+		width: 75% !important;
+	}
+	.u-1-of-5-bp1 {
+		width: 20% !important;
+	}
+	.u-2-of-5-bp1 {
+		width: 40% !important;
+	}
+	.u-3-of-5-bp1 {
+		width: 60% !important;
+	}
+	.u-4-of-5-bp1 {
+		width: 80% !important;
+	}
+	.u-1-of-6-bp1 {
+		width: 16.6666666667% !important;
+	}
+	.u-5-of-6-bp1 {
+		width: 83.3333333333% !important;
+	}
+}
+
+@media (min-width: 768px) {
+	.u-1-of-2-bp2 {
+		width: 50% !important;
+	}
+	.u-1-of-3-bp2 {
+		width: 33.3333333333% !important;
+	}
+	.u-2-of-3-bp2 {
+		width: 66.6666666667% !important;
+	}
+	.u-1-of-4-bp2 {
+		width: 25% !important;
+	}
+	.u-3-of-4-bp2 {
+		width: 75% !important;
+	}
+	.u-1-of-5-bp2 {
+		width: 20% !important;
+	}
+	.u-2-of-5-bp2 {
+		width: 40% !important;
+	}
+	.u-3-of-5-bp2 {
+		width: 60% !important;
+	}
+	.u-4-of-5-bp2 {
+		width: 80% !important;
+	}
+	.u-1-of-6-bp2 {
+		width: 16.6666666667% !important;
+	}
+	.u-5-of-6-bp2 {
+		width: 83.3333333333% !important;
+	}
+}
+
+@media (min-width: 992px) {
+	.u-1-of-2-bp3 {
+		width: 50% !important;
+	}
+	.u-1-of-3-bp3 {
+		width: 33.3333333333% !important;
+	}
+	.u-2-of-3-bp3 {
+		width: 66.6666666667% !important;
+	}
+	.u-1-of-4-bp3 {
+		width: 25% !important;
+	}
+	.u-3-of-4-bp3 {
+		width: 75% !important;
+	}
+	.u-1-of-5-bp3 {
+		width: 20% !important;
+	}
+	.u-2-of-5-bp3 {
+		width: 40% !important;
+	}
+	.u-3-of-5-bp3 {
+		width: 60% !important;
+	}
+	.u-4-of-5-bp3 {
+		width: 80% !important;
+	}
+	.u-1-of-6-bp3 {
+		width: 16.6666666667% !important;
+	}
+	.u-5-of-6-bp3 {
+		width: 83.3333333333% !important;
+	}
+}
+
+@media (min-width: 1200px) {
+	.u-1-of-2-bp4 {
+		width: 50% !important;
+	}
+	.u-1-of-3-bp4 {
+		width: 33.3333333333% !important;
+	}
+	.u-2-of-3-bp4 {
+		width: 66.6666666667% !important;
+	}
+	.u-1-of-4-bp4 {
+		width: 25% !important;
+	}
+	.u-3-of-4-bp4 {
+		width: 75% !important;
+	}
+	.u-1-of-5-bp4 {
+		width: 20% !important;
+	}
+	.u-2-of-5-bp4 {
+		width: 40% !important;
+	}
+	.u-3-of-5-bp4 {
+		width: 60% !important;
+	}
+	.u-4-of-5-bp4 {
+		width: 80% !important;
+	}
+	.u-1-of-6-bp4 {
+		width: 16.6666666667% !important;
+	}
+	.u-5-of-6-bp4 {
+		width: 83.3333333333% !important;
+	}
+}
+
+/*------------------------------------*\
+  #MEDIA
+\*------------------------------------*/
+
+/*
+    Media Queries
+    ---
+    EXAMPLE Media Queries for Responsive Design.
+    These examples override the primary ('mobile first') styles.
+    USE THEM INLINE!
+*/
+
+/* Extra small devices (portrait phones, less than 576px)
+   No media query since this is the default in mobile first design
+*/
+
+/* Small devices (landscape phones, 576px and up)
+@media (min-width: 576px) {}
+*/
+
+/* Medium devices (tablets, 768px and up)
+@media (min-width: 768px) {}
+*/
+
+/* Large devices (landscape tablets, desktops, 992px and up)
+@media (min-width: 992px) {}
+*/
+
+/* Extra large devices (large desktops, 1200px and up)
+@media (min-width: 1200px) {}
+*/
+
+/*
+    Print styles.
+    ---
+    Inlined to avoid the additional HTTP request:
+    http://www.phpied.com/delay-loading-your-print-css/
+*/
+
+@media print {
+	*,
+	*:before,
+	*:after {
+		background: transparent !important;
+		color: #000 !important;
+		/* Black prints faster:
+                                   http://www.sanbeiji.com/archives/953 */
+		box-shadow: none !important;
+		text-shadow: none !important;
+	}
+	a,
+	a:visited {
+		text-decoration: underline;
+	}
+	a[href]:after {
+		content: ' (' attr(href) ')';
+	}
+	abbr[title]:after {
+		content: ' (' attr(title) ')';
+	}
+	/*
+     * Don't show links that are fragment identifiers,
+     * or use the `javascript:` pseudo protocol
+     */
+	a[href^='#']:after,
+	a[href^='javascript:']:after {
+		content: '';
+	}
+	pre {
+		white-space: pre-wrap !important;
+	}
+	pre,
+	blockquote {
+		border: 1px solid #999;
+		page-break-inside: avoid;
+	}
+	/*
+     * Printing Tables:
+     * http://css-discuss.incutio.com/wiki/Printing_Tables
+     */
+	thead {
+		display: table-header-group;
+	}
+	tr,
+	img {
+		page-break-inside: avoid;
+	}
+	p,
+	h2,
+	h3 {
+		orphans: 3;
+		widows: 3;
+	}
+	h2,
+	h3 {
+		page-break-after: avoid;
+	}
+}
