@@ -5,12 +5,11 @@ using System.Text;
 
 namespace Backend.Models
 {
-    public class LoginValidationReturn: User
+    public class ObjectResultReturn
     {
-
-        [JsonProperty(PropertyName = "cookie_id")]
+        [JsonProperty(PropertyName = "id")]
         public string Id { get; set; }
-        
+
         [JsonProperty(PropertyName = "error_message")]
         public string strErrorMessage { get; set; }
     }

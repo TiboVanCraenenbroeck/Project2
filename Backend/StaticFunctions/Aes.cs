@@ -43,6 +43,14 @@ namespace Backend.StaticFunctions
             rijndael.Key = Convert.FromBase64String(Environment.GetEnvironmentVariable("AES_KEY"));
             rijndael.IV = Convert.FromBase64String(Environment.GetEnvironmentVariable("AES_IV"));
         }
+        
+        public Aes(int cookie)
+        {
+            InitializeRijndael();
+
+            rijndael.Key = Convert.FromBase64String(Environment.GetEnvironmentVariable("EAS_KEY_Cookie"));
+            rijndael.IV = Convert.FromBase64String(Environment.GetEnvironmentVariable("EAS_IV_Cookie"));
+        }
 
         public Aes(byte[] key, byte[] iv)
         {

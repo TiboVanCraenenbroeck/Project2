@@ -22,7 +22,8 @@ namespace Backend.Functions
         {
             try
             {
-                LoginValidationReturn loginValidationReturn = new LoginValidationReturn();
+                //LoginValidationReturn loginValidationReturn = new LoginValidationReturn();
+                ObjectResultReturn objectResultReturn = new ObjectResultReturn();
                 // Controleer alle velden ingevuld zijn
                 if (mail.Length > 0 && password.Length > 0)
                 {
@@ -51,28 +52,29 @@ namespace Backend.Functions
                                     user.Id = Guid.Parse(reader["ID"].ToString());
                                     // Make a unique cookieId --> UserId + client ip-address
                                     var remoteAddress = req.HttpContext.Connection.RemoteIpAddress;
-                                    loginValidationReturn.Id = aes.EncryptToBase64String(user.Id.ToString() + remoteAddress.ToString());
+                                    Aes aesCookies = new Aes(1);
+                                    objectResultReturn.Id = aesCookies.EncryptToBase64String(user.Id.ToString()+ "!!!" + remoteAddress.ToString());
                                 }
                                 else
                                 {
-                                    loginValidationReturn.Id = "ERROR";
-                                    loginValidationReturn.strErrorMessage = "Deze combinatie (mail en wachtwoord) vinden we niet terug in onze database";
+                                    objectResultReturn.Id = "ERROR";
+                                    objectResultReturn.strErrorMessage = "Deze combinatie (mail en wachtwoord) vinden we niet terug in onze database";
                                 }
                             }
                             else
                             {
-                                loginValidationReturn.Id = "ERROR";
-                                loginValidationReturn.strErrorMessage = "Uw wachtwoord en of mailadres is fout";
+                                objectResultReturn.Id = "ERROR";
+                                objectResultReturn.strErrorMessage = "Uw wachtwoord en of mailadres is fout";
                             }
                         }
                     }
                 }
                 else
                 {
-                    loginValidationReturn.Id = "ERROR";
-                    loginValidationReturn.strErrorMessage = "Gelieve alle velden in te vullen";
+                    objectResultReturn.Id = "ERROR";
+                    objectResultReturn.strErrorMessage = "Gelieve alle velden in te vullen";
                 }
-                return new OkObjectResult(loginValidationReturn);
+                return new OkObjectResult(objectResultReturn);
             }
             catch (Exception ex)
             {
