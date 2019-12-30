@@ -9,37 +9,45 @@ namespace Backend.StaticFunctions
 {
     public class IsUserLoggedIn
     {
-        public async Task<bool> CheckIfUserIsLoggedInAsync(Guid guidUserId)
+        public static async Task<bool> CheckIfUserIsLoggedInAsync(string strCookie_ID, string strIpAddress)
         {
             try
             {
-
-                User Result = new User();
-                using (SqlConnection connection = new SqlConnection(Environment.GetEnvironmentVariable("SQL_ConnectionsString")))
+                Aes aesCookies = new Aes(1);
+                string strDecryptedCookie = aesCookies.DecryptFromBase64String(strCookie_ID);
+                string[] strCookieSplit = strDecryptedCookie.Split("!!!");
+                Guid guidUserId = Guid.Parse(strCookieSplit[0]);
+                // Check if the ip-address are the same
+                if (strIpAddress == strCookieSplit[1])
                 {
-                    await connection.OpenAsync();
-                    using (SqlCommand command = new SqlCommand())
+                    User Result = new User();
+                    using (SqlConnection connection = new SqlConnection(Environment.GetEnvironmentVariable("SQL_ConnectionsString")))
                     {
-                        command.Connection = connection;
-                        string sql = "SELECT COUNT(ID) as userCount FROM TB_Users WHERE ID=@UserId";
-                        command.CommandText = sql;
-                        command.Parameters.AddWithValue("@UserId", guidUserId);
-                        SqlDataReader reader = await command.ExecuteReaderAsync();
-                        if (reader.Read())
+                        await connection.OpenAsync();
+                        using (SqlCommand command = new SqlCommand())
                         {
-                            if (Convert.ToInt32(reader["userCount"]) == 1)
+                            command.Connection = connection;
+                            string sql = "SELECT COUNT(ID) as userCount FROM TB_Users WHERE ID=@UserId";
+                            command.CommandText = sql;
+                            command.Parameters.AddWithValue("@UserId", guidUserId);
+                            SqlDataReader reader = await command.ExecuteReaderAsync();
+                            if (reader.Read())
                             {
-                                return true;
+                                if (Convert.ToInt32(reader["userCount"]) == 1)
+                                {
+                                    return true;
+                                }
+                                else { return false; }
                             }
                             else { return false; }
                         }
-                        else { return false; }
                     }
                 }
+                else { return false; }
             }
             catch (Exception ex)
             {
-                throw ex;
+                return false;
             }
         }
     }
