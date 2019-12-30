@@ -8,7 +8,7 @@ namespace Backend.Models
     public class QuizSubject
     {
 
-        [JsonProperty(PropertyName = "id")]
+        [JsonProperty(PropertyName = "quiz_id")]
         public Guid Id { get; set; }
         
         [JsonProperty(PropertyName = "title")]
