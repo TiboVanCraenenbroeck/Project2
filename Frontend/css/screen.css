@@ -615,6 +615,7 @@ grid
 	justify-content: center;
 	align-items: center;
 }
+
 .c-dashboard__item {
 	box-shadow: 0 2px 3px rgba(0, 0, 0, 0.125);
 }
@@ -631,7 +632,13 @@ grid
 		grid-template-columns: repeat(2, 1fr);
 		justify-content: center;
 		align-items: center;
-	}
+    }
+    .c-dashboard__avatar{
+            display: grid;
+            /* grid-template-rows: auto minmax(auto,20rem); */
+            justify-content: center;
+            align-items: center;
+        }
 }
 /*
     Component: Logo
