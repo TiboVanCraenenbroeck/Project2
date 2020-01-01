@@ -21,29 +21,6 @@ namespace Backend.HTTPTriggers
             [HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = "v1/game/{QuizId}")] HttpRequest req, string QuizId,
         ILogger log)
         {
-            /*
-             {
-    "game_id": "00000000-0000-0000-0000-000000000000",
-    "quiz": {
-        "quiz_id": "00000000-0000-0000-0000-000000000000",
-        "title": null,
-        "description": null,
-        "dateTime": "0001-01-01T00:00:00"
-    },
-    "teams": [
-        {
-            "team_id": "00000000-0000-0000-0000-000000000000",
-            "name": null,
-            "avatar": {
-                "avatar_id": "00000000-0000-0000-0000-000000000000",
-                "name": null,
-                "link": null
-            }
-        }
-    ],
-    "dateTime": "0001-01-01T00:00:00"
-}
-             */
             try
             {
                 string cookies_ID = req.Query["cookie_id"];
@@ -60,8 +37,51 @@ namespace Backend.HTTPTriggers
                         string strJson = await new StreamReader(req.Body).ReadToEndAsync();
                         Game newGame = JsonConvert.DeserializeObject<Game>(strJson);
                         newGame.Id = Guid.NewGuid();
-
-
+                        // Check if the teams haven't the same name and character
+                        if (newGame.teams[0].strName != newGame.teams[1].strName && newGame.teams[0].avatar.Id != newGame.teams[1].avatar.Id)
+                        {
+                            // Get the team_id's
+                            for (int i = 0; i < newGame.teams.Count; i++)
+                            {
+                                newGame.teams[i].Id = await TeamFunctions.GetTeamIdAsync(newGame.teams[i]);
+                            }
+                            // Insert the game into the database
+                            using (SqlConnection connection = new SqlConnection(Environment.GetEnvironmentVariable("SQL_ConnectionsString")))
+                            {
+                                await connection.OpenAsync();
+                                using (SqlCommand command = new SqlCommand())
+                                {
+                                    command.Connection = connection;
+                                    string sql = "INSERT INTO TB_Games VALUES(@id, @QuizId, @dateTime)";
+                                    command.CommandText = sql;
+                                    command.Parameters.AddWithValue("@id", newGame.Id);
+                                    command.Parameters.AddWithValue("@QuizId", guidQuizId);
+                                    command.Parameters.AddWithValue("@dateTime", DateTime.Now);
+                                    SqlDataReader reader = await command.ExecuteReaderAsync();
+                                    reader.Close();
+                                }
+                                //Link teams to the game
+                                foreach (Team itemTeam in newGame.teams)
+                                {
+                                    using (SqlCommand command = new SqlCommand())
+                                    {
+                                        command.Connection = connection;
+                                        string sql = "INSERT INTO TB_Games_Teams VALUES(@gameId, @teamId, 0)";
+                                        command.CommandText = sql;
+                                        command.Parameters.AddWithValue("@gameId", newGame.Id);
+                                        command.Parameters.AddWithValue("@teamId", itemTeam.Id);
+                                        SqlDataReader reader = await command.ExecuteReaderAsync();
+                                        reader.Close();
+                                    }
+                                }
+                                objectResultReturn.Id = newGame.Id.ToString();
+                            }
+                        }
+                        else
+                        {
+                            objectResultReturn.Id = "ERROR";
+                            objectResultReturn.strErrorMessage = "Beide teams moeten een verschillende naam en avatar hebben";
+                        }
                     }
                     else
                     {

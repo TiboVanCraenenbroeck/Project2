@@ -39,7 +39,7 @@ namespace Backend.StaticFunctions
                     using (SqlCommand command = new SqlCommand())
                     {
                         command.Connection = connection;
-                        string sql = "SELECT COUNT(ID) as teamCount, ID FROM TB_Teams WHERE TB_Avatars_ID=@avatarId AND Name=@teamName";
+                        string sql = "SELECT COUNT(ID) as teamCount, ID FROM TB_Teams WHERE TB_Avatars_ID=@avatarId AND Name=@teamName GROUP BY ID";
                         command.CommandText = sql;
                         command.Parameters.AddWithValue("@avatarId", team.avatar.Id);
                         command.Parameters.AddWithValue("@teamName", team.strName);
