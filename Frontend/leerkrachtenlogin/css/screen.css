@@ -8,7 +8,7 @@
 
 :root {
     /* Global colors */
-    --global-howest-color: #44C7F5;
+    --global-howest-color: #72B3EF;
     --global-color-alpha-light: #4F95FF;
     --global-color-alpha: #3385FF;
     --global-color-alpha-dark: #2E77E6;
@@ -16,6 +16,7 @@
     --global-color-alpha-transparent: #3385ffbf;
     --global-color-alpha-x-transparent: #3385ff4d;
 
+    --global-color-white: rgb(255, 255, 255);
     --global-color-neutral-xxxx-light: #F5F6FA;
     --global-color-neutral-xxx-light: #E2E3E7;
     --global-color-neutral-xx-light: #caccd4;
@@ -553,8 +554,19 @@ input::placeholder {
     Card with box shadow
 */
 
+.c-background{
+    position: absolute;
+    top: 0;
+    left:0;
+    height: 100vh;
+    width: 100vw;
+    background-image: url("../fotos/retro.jpg");
+    background-size: cover;
+
+}
+
 .c-card {
-    --card-backgroundColor: White;
+    --card-backgroundColor: #70199E;
     --card__footer-borderColor: var(--global-color-neutral-xxx-light);
     --card-borderRadius: var(--global-borderRadius);
     background-color: var(--card-backgroundColor);
@@ -673,7 +685,12 @@ more padding on the right to avoid overlap
     font-size: 14px;
     line-height: 16px;
     /* color: var(--label-color); */
-    color: var(--label-color, var(--global-color-neutral-xx-dark));
+    color: var(--global-color-white);
+}
+
+.c-label-logo{
+    font-size:28px;
+    color: var(--global-color-white);
 }
 
 .c-label--option {
