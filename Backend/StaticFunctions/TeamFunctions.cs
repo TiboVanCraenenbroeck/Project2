@@ -87,5 +87,44 @@ namespace Backend.StaticFunctions
                 throw ex;
             }
         }
+
+        public static async Task<List<Team>> GetTeamFromGameAsync(Guid guidGameId)
+        {
+            try
+            {
+                List<Team> listTeam = new List<Team>();
+                using (SqlConnection connection = new SqlConnection(Environment.GetEnvironmentVariable("SQL_ConnectionsString")))
+                {
+                    await connection.OpenAsync();
+                    using (SqlCommand command = new SqlCommand())
+                    {
+                        command.Connection = connection;
+                        string sql = "SELECT TB_Teams.ID AS TeamId, TB_Teams.Name AS TeamName, TB_Avatars.Name AS AvatarName, TB_Avatars.ID AS AvatarId, TB_Avatars.Link AS AvatarLink FROM TB_Games_Teams INNER JOIN TB_Teams ON TB_Teams.ID = TB_Games_Teams.TB_Teams_ID INNER JOIN TB_Avatars ON TB_Avatars.ID = TB_Teams.TB_Avatars_ID WHERE TB_Games_Teams.TB_Games_ID=@gameId";
+                        command.CommandText = sql;
+                        command.Parameters.AddWithValue("@gameId", guidGameId);
+                        SqlDataReader reader = await command.ExecuteReaderAsync();
+                        while (reader.Read())
+                        {
+                            listTeam.Add(new Team()
+                            {
+                                Id = Guid.Parse(reader["TeamId"].ToString()),
+                                strName = reader["TeamName"].ToString(),
+                                avatar = new Avatar()
+                                {
+                                    Id = Guid.Parse(reader["AvatarId"].ToString()),
+                                    strName = reader["AvatarName"].ToString(),
+                                    strLink = reader["AvatarLink"].ToString()
+                                }
+                            });
+                        }
+                    }
+                }
+                return listTeam;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
     }
 }
