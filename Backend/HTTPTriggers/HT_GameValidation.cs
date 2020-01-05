@@ -13,7 +13,7 @@ using System.Collections.Generic;
 
 namespace Backend.HTTPTriggers
 {
-    public static class GameValidation
+    public static class HT_GameValidation
     {
         [FunctionName("GameValidation")]
         public static async Task<IActionResult> Run(
@@ -23,23 +23,23 @@ namespace Backend.HTTPTriggers
             try
             {
                 Guid guidGameId = Guid.Parse(GameId);
-                ModelGameValidation NewModelGameValidation = new ModelGameValidation();
+                Model_GameValidation NewModelGameValidation = new Model_GameValidation();
                 // Check if the quiz exists
-                if (await QuizExists.CheckIfQuizExistsAsync(Guid.Parse(QuizId)))
+                if (await SF_QuizExists.CheckIfQuizExistsAsync(Guid.Parse(QuizId)))
                 {
                     // Check if the game_id exists
                     if (await SF_GameValidation.GameIdExistsAsync(guidGameId))
                     {
                         //Get the data from the body
                         string strJson = await new StreamReader(req.Body).ReadToEndAsync();
-                        ModelGameValidation IncomingModelGameValidation = JsonConvert.DeserializeObject<ModelGameValidation>(strJson);
+                        Model_GameValidation IncomingModelGameValidation = JsonConvert.DeserializeObject<Model_GameValidation>(strJson);
                         //Check if it's the first game
                         if (IncomingModelGameValidation.intGameStatus == 0)
                         {
                             // Select a random question
                             NewModelGameValidation.question = await SF_GameValidation.GetRandomQuestionAsync(guidGameId, IncomingModelGameValidation.question.intDifficulty);
                             // Select a random team
-                            List<Team> listTeams = await TeamFunctions.GetTeamFromGameAsync(guidGameId);
+                            List<Model_Team> listTeams = await SF_TeamFunctions.GetTeamFromGameAsync(guidGameId);
                             Random random = new Random();
                             int intRandom = random.Next(listTeams.Count);
                             NewModelGameValidation.team = listTeams[intRandom];
@@ -47,12 +47,12 @@ namespace Backend.HTTPTriggers
                         else
                         {
                             // Check if the answer is correct
-                            ModelGameValidation validateModelGameValidation = await SF_GameValidation.CheckAnswerAsync(IncomingModelGameValidation, guidGameId);
+                            Model_GameValidation validateModelGameValidation = await SF_GameValidation.CheckAnswerAsync(IncomingModelGameValidation, guidGameId);
                             if (validateModelGameValidation.team.intScore == 0)
                             {
                                 // Select other team
-                                List<Team> listTeams = await TeamFunctions.GetTeamFromGameAsync(guidGameId);
-                                foreach (Team itemTeam in listTeams)
+                                List<Model_Team> listTeams = await SF_TeamFunctions.GetTeamFromGameAsync(guidGameId);
+                                foreach (Model_Team itemTeam in listTeams)
                                 {
                                     if (itemTeam.Id != validateModelGameValidation.team.Id)
                                     {

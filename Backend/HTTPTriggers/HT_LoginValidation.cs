@@ -13,7 +13,7 @@ using System.Data.SqlClient;
 
 namespace Backend.Functions
 {
-    public static class LoginValidation
+    public static class HT_LoginValidation
     {
         [FunctionName("LoginValidation")]
         public static async Task<IActionResult> Run(
@@ -23,15 +23,15 @@ namespace Backend.Functions
             try
             {
                 //LoginValidationReturn loginValidationReturn = new LoginValidationReturn();
-                ObjectResultReturn objectResultReturn = new ObjectResultReturn();
+                Model_ObjectResultReturn objectResultReturn = new Model_ObjectResultReturn();
                 // Controleer alle velden ingevuld zijn
                 if (mail.Length > 0 && password.Length > 0)
                 {
-                    User user = new User();
+                    Model_User user = new Model_User();
 
-                    Aes aes = new Aes();
+                    SF_Aes aes = new SF_Aes();
                     user.strMail = aes.EncryptToBase64String(mail);
-                    user.strPassword = Hash.GenerateSHA512String(password);
+                    user.strPassword = SF_Hash.GenerateSHA512String(password);
 
                     // Check if the combination exist in the database
                     using (SqlConnection connection = new SqlConnection(Environment.GetEnvironmentVariable("SQL_ConnectionsString")))
@@ -52,7 +52,7 @@ namespace Backend.Functions
                                     user.Id = Guid.Parse(reader["ID"].ToString());
                                     // Make a unique cookieId --> UserId + client ip-address
                                     var remoteAddress = req.HttpContext.Connection.RemoteIpAddress;
-                                    Aes aesCookies = new Aes(1);
+                                    SF_Aes aesCookies = new SF_Aes(1);
                                     objectResultReturn.Id = aesCookies.EncryptToBase64String(user.Id.ToString()+ "!!!" + remoteAddress.ToString());
                                 }
                                 else

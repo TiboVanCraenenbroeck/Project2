@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Backend.StaticFunctions
 {
-    public class Aes
+    public class SF_Aes
     {
         // BRON: https://gist.github.com/magicsih/be06c2f60288b54d9f52856feb96ce8c
         /*
@@ -36,7 +36,7 @@ namespace Backend.StaticFunctions
             rijndael.GenerateIV();
         }*/
 
-        public Aes()
+        public SF_Aes()
         {
             InitializeRijndael();
 
@@ -44,7 +44,7 @@ namespace Backend.StaticFunctions
             rijndael.IV = Convert.FromBase64String(Environment.GetEnvironmentVariable("AES_IV"));
         }
         
-        public Aes(int cookie)
+        public SF_Aes(int cookie)
         {
             InitializeRijndael();
 
@@ -52,7 +52,7 @@ namespace Backend.StaticFunctions
             rijndael.IV = Convert.FromBase64String(Environment.GetEnvironmentVariable("EAS_IV_Cookie"));
         }
 
-        public Aes(byte[] key, byte[] iv)
+        public SF_Aes(byte[] key, byte[] iv)
         {
             InitializeRijndael();
 

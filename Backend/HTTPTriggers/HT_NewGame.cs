@@ -14,7 +14,7 @@ using System.Data.SqlClient;
 
 namespace Backend.HTTPTriggers
 {
-    public static class NewGame
+    public static class HT_NewGame
     {
         [FunctionName("NewGame")]
         public static async Task<IActionResult> Run(
@@ -23,15 +23,15 @@ namespace Backend.HTTPTriggers
         {
             try
             {
-                ObjectResultReturn objectResultReturn = new ObjectResultReturn();
+                Model_ObjectResultReturn objectResultReturn = new Model_ObjectResultReturn();
                 Guid guidQuizId = Guid.Parse(QuizId);
 
                 // Check if the quiz exist
-                if (await QuizExists.CheckIfQuizExistsAsync(guidQuizId))
+                if (await SF_QuizExists.CheckIfQuizExistsAsync(guidQuizId))
                 {
                     //Ophalen van de data
                     string strJson = await new StreamReader(req.Body).ReadToEndAsync();
-                    Game newGame = JsonConvert.DeserializeObject<Game>(strJson);
+                    Model_Game newGame = JsonConvert.DeserializeObject<Model_Game>(strJson);
                     newGame.Id = Guid.NewGuid();
                     // Check if the teams haven't the same name and character
                     if (newGame.teams[0].strName != newGame.teams[1].strName && newGame.teams[0].avatar.Id != newGame.teams[1].avatar.Id)
@@ -39,7 +39,7 @@ namespace Backend.HTTPTriggers
                         // Get the team_id's
                         for (int i = 0; i < newGame.teams.Count; i++)
                         {
-                            newGame.teams[i].Id = await TeamFunctions.GetTeamIdAsync(newGame.teams[i]);
+                            newGame.teams[i].Id = await SF_TeamFunctions.GetTeamIdAsync(newGame.teams[i]);
                         }
                         // Insert the game into the database
                         using (SqlConnection connection = new SqlConnection(Environment.GetEnvironmentVariable("SQL_ConnectionsString")))
@@ -57,7 +57,7 @@ namespace Backend.HTTPTriggers
                                 reader.Close();
                             }
                             //Link teams to the game
-                            foreach (Team itemTeam in newGame.teams)
+                            foreach (Model_Team itemTeam in newGame.teams)
                             {
                                 using (SqlCommand command = new SqlCommand())
                                 {

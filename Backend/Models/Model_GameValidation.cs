@@ -5,16 +5,16 @@ using System.Text;
 
 namespace Backend.Models
 {
-    public class ModelGameValidation
+    public class Model_GameValidation
     {
         [JsonProperty(PropertyName = "game_status")]
         public int intGameStatus { get; set; }
         
         [JsonProperty(PropertyName = "team")]
-        public Team team { get; set; }
+        public Model_Team team { get; set; }
         
         [JsonProperty(PropertyName = "question")]
-        public Question question { get; set; }
+        public Model_Question question { get; set; }
         
         [JsonProperty(PropertyName = "time")]
         public int intTime { get; set; }

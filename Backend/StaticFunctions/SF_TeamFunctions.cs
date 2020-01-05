@@ -7,10 +7,10 @@ using System.Threading.Tasks;
 
 namespace Backend.StaticFunctions
 {
-    public class TeamFunctions
+    public class SF_TeamFunctions
     {
 
-        public static async Task<Guid> GetTeamIdAsync(Team team)
+        public static async Task<Guid> GetTeamIdAsync(Model_Team team)
         {
             try
             {
@@ -27,7 +27,7 @@ namespace Backend.StaticFunctions
                 throw ex;
             }
         }
-        public static async Task<Guid> TeamExistsAsync(Team team)
+        public static async Task<Guid> TeamExistsAsync(Model_Team team)
         {
             try
             {
@@ -61,7 +61,7 @@ namespace Backend.StaticFunctions
             }
         }
 
-        public static async Task<Guid> AddTeamAsync(Team team)
+        public static async Task<Guid> AddTeamAsync(Model_Team team)
         {
             try
             {
@@ -88,11 +88,11 @@ namespace Backend.StaticFunctions
             }
         }
 
-        public static async Task<List<Team>> GetTeamFromGameAsync(Guid guidGameId)
+        public static async Task<List<Model_Team>> GetTeamFromGameAsync(Guid guidGameId)
         {
             try
             {
-                List<Team> listTeam = new List<Team>();
+                List<Model_Team> listTeam = new List<Model_Team>();
                 using (SqlConnection connection = new SqlConnection(Environment.GetEnvironmentVariable("SQL_ConnectionsString")))
                 {
                     await connection.OpenAsync();
@@ -105,11 +105,11 @@ namespace Backend.StaticFunctions
                         SqlDataReader reader = await command.ExecuteReaderAsync();
                         while (reader.Read())
                         {
-                            listTeam.Add(new Team()
+                            listTeam.Add(new Model_Team()
                             {
                                 Id = Guid.Parse(reader["TeamId"].ToString()),
                                 strName = reader["TeamName"].ToString(),
-                                avatar = new Avatar()
+                                avatar = new Model_Avatar()
                                 {
                                     Id = Guid.Parse(reader["AvatarId"].ToString()),
                                     strName = reader["AvatarName"].ToString(),

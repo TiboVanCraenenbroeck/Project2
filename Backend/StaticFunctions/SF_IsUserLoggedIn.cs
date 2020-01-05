@@ -7,20 +7,20 @@ using System.Threading.Tasks;
 
 namespace Backend.StaticFunctions
 {
-    public class IsUserLoggedIn
+    public class SF_IsUserLoggedIn
     {
         public static async Task<bool> CheckIfUserIsLoggedInAsync(string strCookie_ID, string strIpAddress)
         {
             try
             {
-                Aes aesCookies = new Aes(1);
+                SF_Aes aesCookies = new SF_Aes(1);
                 string strDecryptedCookie = aesCookies.DecryptFromBase64String(strCookie_ID);
                 string[] strCookieSplit = strDecryptedCookie.Split("!!!");
                 Guid guidUserId = Guid.Parse(strCookieSplit[0]);
                 // Check if the ip-address are the same
                 if (strIpAddress == strCookieSplit[1])
                 {
-                    User Result = new User();
+                    Model_User Result = new Model_User();
                     using (SqlConnection connection = new SqlConnection(Environment.GetEnvironmentVariable("SQL_ConnectionsString")))
                     {
                         await connection.OpenAsync();

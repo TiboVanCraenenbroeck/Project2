@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Backend.StaticFunctions
 {
-    public class SearchAnswer
+    public class SF_SearchAnswer
     {
         public static async Task<Guid> SearchAnswerIdAsync(string strAnswer)
         {

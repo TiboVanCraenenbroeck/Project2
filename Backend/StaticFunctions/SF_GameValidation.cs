@@ -9,7 +9,7 @@ namespace Backend.StaticFunctions
 {
     public class SF_GameValidation
     {
-        public static async Task<ModelGameValidation> CheckAnswerAsync(ModelGameValidation modelGameValidation, Guid guidGameId)
+        public static async Task<Model_GameValidation> CheckAnswerAsync(Model_GameValidation modelGameValidation, Guid guidGameId)
         {
             try
             {
@@ -55,11 +55,11 @@ namespace Backend.StaticFunctions
                 throw ex;
             }
         }
-        public static async Task<Question> GetRandomQuestionAsync(Guid guidGameId, int intDifficulty)
+        public static async Task<Model_Question> GetRandomQuestionAsync(Guid guidGameId, int intDifficulty)
         {
             try
             {
-                Question question = new Question();
+                Model_Question question = new Model_Question();
                 Guid guidCorrectAnswer = new Guid();
                 // Get a random question
                 using (SqlConnection connection = new SqlConnection(Environment.GetEnvironmentVariable("SQL_ConnectionsString")))
@@ -85,7 +85,7 @@ namespace Backend.StaticFunctions
                     if (question.Id.ToString() != "00000000-0000-0000-0000-000000000000")
                     {
                         // Get the answers
-                        question.listAnswer = new List<Answer>();
+                        question.listAnswer = new List<Model_Answer>();
                         using (SqlCommand command = new SqlCommand())
                         {
                             command.Connection = connection;
@@ -101,7 +101,7 @@ namespace Backend.StaticFunctions
                                 {
                                     blnCorrectAnswer = true;
                                 }
-                                question.listAnswer.Add(new Answer()
+                                question.listAnswer.Add(new Model_Answer()
                                 {
                                     Id = Guid.Parse(reader["answerId"].ToString()),
                                     strAnswer = reader["answer"].ToString(),

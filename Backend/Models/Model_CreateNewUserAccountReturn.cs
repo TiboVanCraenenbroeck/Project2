@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Backend.Models
 {
-    public class CreateNewUserAccountReturn
+    public class Model_CreateNewUserAccountReturn
     {
 
         [JsonProperty(PropertyName = "succeeded")]

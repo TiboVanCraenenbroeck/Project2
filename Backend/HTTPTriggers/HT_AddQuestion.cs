@@ -13,7 +13,7 @@ using System.Data.SqlClient;
 
 namespace Backend.HTTPTriggers
 {
-    public static class AddQuestion
+    public static class HT_AddQuestion
     {
         [FunctionName("AddQuestion")]
         public static async Task<IActionResult> Run(
@@ -23,29 +23,29 @@ namespace Backend.HTTPTriggers
             try
             {
                 string cookies_ID = req.Query["cookie_id"];
-                ObjectResultReturn objectResultReturn = new ObjectResultReturn();
+                Model_ObjectResultReturn objectResultReturn = new Model_ObjectResultReturn();
                 Guid guidQuizId = Guid.Parse(QuizId);
                 // Check if the user is logged in
-                if (await IsUserLoggedIn.CheckIfUserIsLoggedInAsync(cookies_ID, req.HttpContext.Connection.RemoteIpAddress.ToString()))
+                if (await SF_IsUserLoggedIn.CheckIfUserIsLoggedInAsync(cookies_ID, req.HttpContext.Connection.RemoteIpAddress.ToString()))
                 {
                     //Ophalen van de data
                     string strJson = await new StreamReader(req.Body).ReadToEndAsync();
-                    Question newQuestion = JsonConvert.DeserializeObject<Question>(strJson);
+                    Model_Question newQuestion = JsonConvert.DeserializeObject<Model_Question>(strJson);
                     newQuestion.Id = Guid.NewGuid();
 
                     // Check if the subject exists in the database
-                    if (await QuizExists.CheckIfQuizExistsAsync(guidQuizId))
+                    if (await SF_QuizExists.CheckIfQuizExistsAsync(guidQuizId))
                     {
                         // Make the answer
                         Guid guidCorrectAnswer = new Guid();
                         Guid guidCheck = Guid.Parse("00000000-0000-0000-0000-000000000000");
                         for (int i = 0; i < newQuestion.listAnswer.Count; i++)
                         {
-                            newQuestion.listAnswer[i].Id = await SearchAnswer.SearchAnswerIdAsync(newQuestion.listAnswer[i].strAnswer);
+                            newQuestion.listAnswer[i].Id = await SF_SearchAnswer.SearchAnswerIdAsync(newQuestion.listAnswer[i].strAnswer);
                             // Check if the answer already exists
                             if (newQuestion.listAnswer[i].Id == guidCheck)
                             {
-                                newQuestion.listAnswer[i].Id = await SearchAnswer.AddAnswerAsync(newQuestion.listAnswer[i].strAnswer);
+                                newQuestion.listAnswer[i].Id = await SF_SearchAnswer.AddAnswerAsync(newQuestion.listAnswer[i].strAnswer);
                             }
                             // Check if this answer is the correct anwser
                             if (newQuestion.listAnswer[i].blnCorrect == true)
@@ -74,7 +74,7 @@ namespace Backend.HTTPTriggers
                                     readerA.Close();
                                 }
                                 //Put all the answers with the question in the database
-                                foreach (Answer itemAnswer in newQuestion.listAnswer)
+                                foreach (Model_Answer itemAnswer in newQuestion.listAnswer)
                                 {
                                     using (SqlCommand commandB = new SqlCommand())
                                     {

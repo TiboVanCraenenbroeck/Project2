@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Backend.Models
 {
-    public class QuizSubject
+    public class Model_QuizSubject
     {
 
         [JsonProperty(PropertyName = "quiz_id")]

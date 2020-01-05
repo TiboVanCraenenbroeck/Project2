@@ -13,7 +13,7 @@ using System.Data.SqlClient;
 
 namespace Backend.HTTPTriggers
 {
-    public static class CreateNewUserAccount
+    public static class HT_CreateNewUserAccount
     {
         [FunctionName("CreateNewUserAccount")]
         public static async Task<IActionResult> Run(
@@ -22,11 +22,11 @@ namespace Backend.HTTPTriggers
         {
             try
             {
-                CreateNewUserAccountReturn createNewUserAccountReturn = new CreateNewUserAccountReturn();
+                Model_CreateNewUserAccountReturn createNewUserAccountReturn = new Model_CreateNewUserAccountReturn();
 
                 //Get data from body
                 string strJson = await new StreamReader(req.Body).ReadToEndAsync();
-                User newUser = JsonConvert.DeserializeObject<User>(strJson);
+                Model_User newUser = JsonConvert.DeserializeObject<Model_User>(strJson);
                 newUser.Id = Guid.NewGuid();
                 string test = newUser.Id.ToString();
 
@@ -37,11 +37,11 @@ namespace Backend.HTTPTriggers
                     if (newUser.strPassword.Length >= 9)
                     {
                         // Encrypt everything
-                        Aes aes = new Aes();
+                        SF_Aes aes = new SF_Aes();
                         newUser.strSurname = aes.EncryptToBase64String(newUser.strSurname);
                         newUser.strName = aes.EncryptToBase64String(newUser.strName);
                         newUser.strMail = aes.EncryptToBase64String(newUser.strMail);
-                        newUser.strPassword = Hash.GenerateSHA512String(newUser.strPassword);
+                        newUser.strPassword = SF_Hash.GenerateSHA512String(newUser.strPassword);
                         // Put the new user into the database
                         using (SqlConnection connection = new SqlConnection(Environment.GetEnvironmentVariable("SQL_ConnectionsString")))
                         {

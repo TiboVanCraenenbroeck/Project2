@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Backend.Models
 {
-    public class Team
+    public class Model_Team
     {
 
         [JsonProperty(PropertyName = "team_id")]
@@ -15,7 +15,7 @@ namespace Backend.Models
         public string strName { get; set; }
         
         [JsonProperty(PropertyName = "avatar")]
-        public Avatar avatar { get; set; }
+        public Model_Avatar avatar { get; set; }
         
         [JsonProperty(PropertyName = "score")]
         public int intScore { get; set; }

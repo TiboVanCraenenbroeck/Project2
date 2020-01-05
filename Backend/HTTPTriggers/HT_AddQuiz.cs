@@ -13,7 +13,7 @@ using System.Data.SqlClient;
 
 namespace Backend.HTTPTriggers
 {
-    public static class AddQuiz
+    public static class HT_AddQuiz
     {
         [FunctionName("AddQuiz")]
         public static async Task<IActionResult> Run(
@@ -23,15 +23,15 @@ namespace Backend.HTTPTriggers
             try
             {
                 string cookies_ID = req.Query["cookie_id"];
-                ObjectResultReturn objectResultReturn = new ObjectResultReturn();
+                Model_ObjectResultReturn objectResultReturn = new Model_ObjectResultReturn();
                 //Ophalen van de data
                 string strJson = await new StreamReader(req.Body).ReadToEndAsync();
-                QuizSubject newQuizSubject = JsonConvert.DeserializeObject<QuizSubject>(strJson);
+                Model_QuizSubject newQuizSubject = JsonConvert.DeserializeObject<Model_QuizSubject>(strJson);
                 newQuizSubject.Id = Guid.NewGuid();
                 newQuizSubject.dtDateTime = DateTime.Now;
 
                 // Check if the user is logged in
-                if (await IsUserLoggedIn.CheckIfUserIsLoggedInAsync(cookies_ID, req.HttpContext.Connection.RemoteIpAddress.ToString()))
+                if (await SF_IsUserLoggedIn.CheckIfUserIsLoggedInAsync(cookies_ID, req.HttpContext.Connection.RemoteIpAddress.ToString()))
                 {
                     // Insert the subject onto the database
                     using (SqlConnection connection = new SqlConnection(Environment.GetEnvironmentVariable("SQL_ConnectionsString")))
