@@ -16,5 +16,8 @@ namespace Backend.Models
         
         [JsonProperty(PropertyName = "avatar")]
         public Avatar avatar { get; set; }
+        
+        [JsonProperty(PropertyName = "score")]
+        public int intScore { get; set; }
     }
 }

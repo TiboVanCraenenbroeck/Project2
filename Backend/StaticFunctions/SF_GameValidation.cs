@@ -9,6 +9,52 @@ namespace Backend.StaticFunctions
 {
     public class SF_GameValidation
     {
+        public static async Task<ModelGameValidation> CheckAnswerAsync(ModelGameValidation modelGameValidation, Guid guidGameId)
+        {
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(Environment.GetEnvironmentVariable("SQL_ConnectionsString")))
+                {
+                    await connection.OpenAsync();
+                    // Get score 
+                    using (SqlCommand command = new SqlCommand())
+                    {
+                        command.Connection = connection;
+                        string sql = "SELECT COUNT(ID) AS countPoints FROM TB_Questions where TB_Answers_ID=@answerId AND ID=@questionId";
+                        command.CommandText = sql;
+                        command.Parameters.AddWithValue("@answerId", modelGameValidation.question.listAnswer[0].Id);
+                        command.Parameters.AddWithValue("@questionId", modelGameValidation.question.Id);
+                        SqlDataReader reader = await command.ExecuteReaderAsync();
+                        if (reader.Read())
+                        {
+                            modelGameValidation.intNumberOfCorrectAttempts++;
+                            modelGameValidation.team.intScore = Convert.ToInt32(reader["countPoints"]) * modelGameValidation.intTime * modelGameValidation.intNumberOfCorrectAttempts * 1111;
+                        }
+                        reader.Close();
+                    }
+                    // Put the answer into the database
+                    using (SqlCommand command = new SqlCommand())
+                    {
+                        command.Connection = connection;
+                        string sql = " INSERT INTO TB_Games_Answers VALUES(@gameId, @questionId, @answerId, @teamId, @score, @timeNeeded)";
+                        command.CommandText = sql;
+                        command.Parameters.AddWithValue("@gameId", guidGameId);
+                        command.Parameters.AddWithValue("@questionId", modelGameValidation.question.Id);
+                        command.Parameters.AddWithValue("@answerId", modelGameValidation.question.listAnswer[0].Id);
+                        command.Parameters.AddWithValue("@teamId", modelGameValidation.team.Id);
+                        command.Parameters.AddWithValue("@score", modelGameValidation.team.intScore);
+                        command.Parameters.AddWithValue("@timeNeeded", modelGameValidation.intTime);
+                        SqlDataReader reader = await command.ExecuteReaderAsync();
+                        reader.Close();
+                    }
+                }
+                return modelGameValidation;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
         public static async Task<Question> GetRandomQuestionAsync(Guid guidGameId, int intDifficulty)
         {
             try
@@ -22,7 +68,8 @@ namespace Backend.StaticFunctions
                     using (SqlCommand command = new SqlCommand())
                     {
                         command.Connection = connection;
-                        string sql = "SELECT TOP 1 TB_Questions.ID AS questionId, TB_Questions.Question AS question, TB_Questions.TB_Answers_ID AS answerId FROM TB_Games INNER JOIN TB_Questions ON TB_Games.TB_Quizzes_ID = TB_Questions.TB_Quizzes_ID LEFT JOIN TB_Games_Answers ON TB_Games_Answers.TB_Games_ID = TB_Games.ID WHERE TB_Games.ID = @gameId AND TB_Games_Answers.TB_Games_ID IS NULL AND TB_Questions.Difficulty=@difficulty ORDER BY NEWID()";
+                        string sql = "SELECT TOP 1 TB_Questions.ID AS questionId, TB_Questions.Question AS question, TB_Questions.TB_Answers_ID AS answerId FROM TB_Games INNER JOIN TB_Questions ON TB_Games.TB_Quizzes_ID = TB_Questions.TB_Quizzes_ID LEFT JOIN TB_Games_Answers ON TB_Games_Answers.TB_Questions_ID = TB_Games.TB_Quizzes_ID WHERE TB_Games.ID = @gameId AND TB_Games_Answers.TB_Games_ID IS NULL AND TB_Questions.Difficulty=@difficulty AND (SELECT COUNT(*) FROM TB_Games_Answers WHERE TB_Questions_ID=TB_Questions.ID AND TB_Games_ID=TB_Games.ID)=0 ORDER BY NEWID()";
+                        //string sql = "SELECT TOP 1 TB_Questions.ID AS questionId, TB_Questions.Question AS question, TB_Questions.TB_Answers_ID AS answerId FROM TB_Games INNER JOIN TB_Questions ON TB_Games.TB_Quizzes_ID = TB_Questions.TB_Quizzes_ID LEFT JOIN TB_Games_Answers ON TB_Games_Answers.TB_Games_ID = TB_Games.ID WHERE TB_Games.ID = @gameId AND TB_Games_Answers.TB_Games_ID IS NULL AND TB_Questions.Difficulty=@difficulty ORDER BY NEWID()";
                         command.CommandText = sql;
                         command.Parameters.AddWithValue("@gameId", guidGameId);
                         command.Parameters.AddWithValue("@difficulty", intDifficulty);
@@ -35,31 +82,34 @@ namespace Backend.StaticFunctions
                             reader.Close();
                         }
                     }
-                    // Get the answers
-                    question.listAnswer = new List<Answer>();
-                    using (SqlCommand command = new SqlCommand())
+                    if (question.Id.ToString() != "00000000-0000-0000-0000-000000000000")
                     {
-                        command.Connection = connection;
-                        string sql = "SELECT TB_Answers.ID AS answerId, TB_Answers.Answer AS answer FROM TB_Questions_Answers INNER JOIN TB_Answers ON TB_Answers.ID = TB_Questions_Answers.TB_Answers_ID WHERE TB_Questions_Answers.TB_Questions_ID=@questionId";
-                        command.CommandText = sql;
-                        command.Parameters.AddWithValue("@questionId", question.Id);
-                        SqlDataReader reader = await command.ExecuteReaderAsync();
-                        while (reader.Read())
+                        // Get the answers
+                        question.listAnswer = new List<Answer>();
+                        using (SqlCommand command = new SqlCommand())
                         {
-                            bool blnCorrectAnswer = false;
-                            // Check if it is the correcvt answer
-                            if (Guid.Parse(reader["answerId"].ToString()) == guidCorrectAnswer)
+                            command.Connection = connection;
+                            string sql = "SELECT TB_Answers.ID AS answerId, TB_Answers.Answer AS answer FROM TB_Questions_Answers INNER JOIN TB_Answers ON TB_Answers.ID = TB_Questions_Answers.TB_Answers_ID WHERE TB_Questions_Answers.TB_Questions_ID=@questionId";
+                            command.CommandText = sql;
+                            command.Parameters.AddWithValue("@questionId", question.Id);
+                            SqlDataReader reader = await command.ExecuteReaderAsync();
+                            while (reader.Read())
                             {
-                                blnCorrectAnswer = true;
+                                bool blnCorrectAnswer = false;
+                                // Check if it is the correcvt answer
+                                if (Guid.Parse(reader["answerId"].ToString()) == guidCorrectAnswer)
+                                {
+                                    blnCorrectAnswer = true;
+                                }
+                                question.listAnswer.Add(new Answer()
+                                {
+                                    Id = Guid.Parse(reader["answerId"].ToString()),
+                                    strAnswer = reader["answer"].ToString(),
+                                    blnCorrect = blnCorrectAnswer
+                                });
                             }
-                            question.listAnswer.Add(new Answer()
-                            {
-                                Id = Guid.Parse(reader["answerId"].ToString()),
-                                strAnswer = reader["answer"].ToString(),
-                                blnCorrect = blnCorrectAnswer
-                            });
+                            reader.Close();
                         }
-                        reader.Close();
                     }
                 }
                 return question;

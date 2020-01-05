@@ -37,8 +37,6 @@ namespace Backend.HTTPTriggers
                         if (IncomingModelGameValidation.intGameStatus == 0)
                         {
                             // Select a random question
-                            //NewModelGameValidation.question = new Question();
-                            //Question question = await SF_GameValidation.GetRandomQuestionAsync(guidGameId, IncomingModelGameValidation.question.intDifficulty);
                             NewModelGameValidation.question = await SF_GameValidation.GetRandomQuestionAsync(guidGameId, IncomingModelGameValidation.question.intDifficulty);
                             // Select a random team
                             List<Team> listTeams = await TeamFunctions.GetTeamFromGameAsync(guidGameId);
@@ -49,8 +47,37 @@ namespace Backend.HTTPTriggers
                         else
                         {
                             // Check if the answer is correct
-                            // Check if it is the last question of the game
-                            // Else --> Select a random team + next random question
+                            ModelGameValidation validateModelGameValidation = await SF_GameValidation.CheckAnswerAsync(IncomingModelGameValidation, guidGameId);
+                            if (validateModelGameValidation.team.intScore == 0)
+                            {
+                                // Select other team
+                                List<Team> listTeams = await TeamFunctions.GetTeamFromGameAsync(guidGameId);
+                                foreach (Team itemTeam in listTeams)
+                                {
+                                    if (itemTeam.Id != validateModelGameValidation.team.Id)
+                                    {
+                                        NewModelGameValidation.team = itemTeam;
+                                        break;
+                                    }
+                                }
+                                NewModelGameValidation.intNumberOfCorrectAttempts = 0;
+                            }
+                            else
+                            {
+                                NewModelGameValidation.team = IncomingModelGameValidation.team;
+                                NewModelGameValidation.intNumberOfCorrectAttempts = validateModelGameValidation.intNumberOfCorrectAttempts;
+                            }
+                            // Select a random question
+                            NewModelGameValidation.question = await SF_GameValidation.GetRandomQuestionAsync(guidGameId, IncomingModelGameValidation.question.intDifficulty);
+                            // Check if there is a question
+                            if(NewModelGameValidation.question.Id.ToString()== "00000000-0000-0000-0000-000000000000")
+                            {
+                                NewModelGameValidation.intGameStatus = 2;
+                            }
+                            else
+                            {
+                                NewModelGameValidation.intGameStatus = 1;
+                            }
                         }
                     }
                     else

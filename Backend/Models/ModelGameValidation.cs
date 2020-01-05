@@ -16,6 +16,12 @@ namespace Backend.Models
         [JsonProperty(PropertyName = "question")]
         public Question question { get; set; }
         
+        [JsonProperty(PropertyName = "time")]
+        public int intTime { get; set; }
+        
+        [JsonProperty(PropertyName = "number_of_correct_attempts")]
+        public int intNumberOfCorrectAttempts { get; set; }
+        
         [JsonProperty(PropertyName = "error_message")]
         public string strErrorMessage { get; set; }
     }
