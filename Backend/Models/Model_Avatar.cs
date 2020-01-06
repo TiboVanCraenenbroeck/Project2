@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Backend.Models
 {
-    public class Avatar
+    public class Model_Avatar
     {
 
         [JsonProperty(PropertyName = "avatar_id")]

@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Backend.StaticFunctions
 {
-    public class Hash
+    public class SF_Hash
     {
         // BRON: https://codeshare.co.uk/blog/sha-256-and-sha-512-hash-examples/
         public static string GenerateSHA512String(string inputString)

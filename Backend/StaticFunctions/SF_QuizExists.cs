@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Backend.StaticFunctions
 {
-    public class QuizExists
+    public class SF_QuizExists
     {
         public static async Task<bool> CheckIfQuizExistsAsync(Guid guidQuizId)
         {

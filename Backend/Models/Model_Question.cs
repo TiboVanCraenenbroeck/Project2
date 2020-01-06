@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Backend.Models
 {
-    public class Question
+    public class Model_Question
     {
 
         [JsonProperty(PropertyName = "question_id")]
@@ -18,6 +18,6 @@ namespace Backend.Models
         public int intDifficulty { get; set; }
         
         [JsonProperty(PropertyName = "answers")]
-        public List<Answer> listAnswer { get; set; }
+        public List<Model_Answer> listAnswer { get; set; }
     }
 }

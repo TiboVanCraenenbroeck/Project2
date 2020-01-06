@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Backend.Models
 {
-    public class ObjectResultReturn
+    public class Model_ObjectResultReturn
     {
         [JsonProperty(PropertyName = "id")]
         public string Id { get; set; }
