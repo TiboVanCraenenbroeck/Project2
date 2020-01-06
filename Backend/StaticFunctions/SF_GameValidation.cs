@@ -28,6 +28,7 @@ namespace Backend.StaticFunctions
                             SqlDataReader reader = await command.ExecuteReaderAsync();
                             while (reader.Read())
                             {
+
                             }
                             reader.Close();
                         }
