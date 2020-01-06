@@ -9,6 +9,37 @@ namespace Backend.StaticFunctions
 {
     public class SF_GameValidation
     {
+        public static async Task<List<Model_Team>> GetScoreFromTeamsAsync(Guid guidGameId, List<Model_Team> listTeams)
+        {
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(Environment.GetEnvironmentVariable("SQL_ConnectionsString")))
+                {
+                    await connection.OpenAsync();
+                    for (int i = 0; i < listTeams.Count; i++)
+                    {
+                        using (SqlCommand command = new SqlCommand())
+                        {
+                            command.Connection = connection;
+                            string sql = "SELECT SUM(score) as countScore FROM TB_Games_Answers WHERE TB_Games_ID=@gameId AND TB_Teams_ID=@teamId";
+                            command.CommandText = sql;
+                            command.Parameters.AddWithValue("@gameId", guidGameId);
+                            command.Parameters.AddWithValue("@teamId", listTeams[i].Id);
+                            SqlDataReader reader = await command.ExecuteReaderAsync();
+                            while (reader.Read())
+                            {
+                            }
+                            reader.Close();
+                        }
+                    }
+                }
+                return listTeams;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
         public static async Task<Model_GameValidation> CheckAnswerAsync(Model_GameValidation modelGameValidation, Guid guidGameId)
         {
             try
