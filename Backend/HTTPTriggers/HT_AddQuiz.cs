@@ -10,6 +10,8 @@ using Newtonsoft.Json;
 using Backend.Models;
 using Backend.StaticFunctions;
 using System.Data.SqlClient;
+using System.Web;
+using System.Text;
 
 namespace Backend.HTTPTriggers
 {
