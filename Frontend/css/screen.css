@@ -615,7 +615,13 @@ grid
 	justify-content: center;
 	align-items: center;
 }
-
+.c-dashboard__vragen{
+    display: grid;
+    justify-content: center;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+	align-items: center;
+}
 .c-dashboard__item {
 	box-shadow: 0 2px 3px rgba(0, 0, 0, 0.125);
 }
@@ -624,7 +630,13 @@ grid
 
 	.c-dashboard__item {
         grid-column: 1/-1;
-	}
+    }
+    .c-dashboard__vragen{
+        display: grid;
+		grid-template-columns: repeat(3, 1fr);
+		justify-content: center;
+		align-items: center;
+}
 	.c-dashboard {
         display: grid;
         padding: 4rem;
@@ -633,12 +645,21 @@ grid
 		justify-content: center;
 		align-items: center;
     }
-    .c-dashboard__avatar{
-            display: grid;
-            /* grid-template-rows: auto minmax(auto,20rem); */
-            justify-content: center;
-            align-items: center;
-        }
+
+}
+/*
+spacing
+*/
+.c-spacing{
+    display: flex;
+    justify-content: space-between;
+}
+.c-img__center{
+    display: flex;
+    justify-content: center;
+}
+.c-table__spacing{
+    border-spacing: 16px;
 }
 /*
     Component: Logo
@@ -693,6 +714,25 @@ grid
     border-radius: var(--card-borderRadius, var(--global-borderRadius));
     box-shadow: 0 0 0 1px rgba(0,0,0, 0.05), 0 2px 4px rgba(0,0,0,.075);
     overflow: hidden;
+}
+.c-card__vragen {
+    --card-borderRadius: var(--global-borderRadius);
+    background-color: var(--card-backgroundColor, White);
+    border-radius: var(--card-borderRadius, var(--global-borderRadius));
+    box-shadow: 0 0 0 1px rgba(0,0,0, 0.05), 0 2px 4px rgba(0,0,0,.075);
+    overflow: hidden;
+}
+.c-card__img {
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+}
+
+.c-card__vraag {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+
 }
 
 /* Add padding to child for more flexibility */
@@ -1400,6 +1440,9 @@ grids
 .u-grid-x-2 {
 	grid-column: span 2;
 }
+.u-grid-x-3 {
+	grid-column: span 3;
+}
 .u-grid-x-4 {
 	grid-column: span 4;
 }
@@ -1417,6 +1460,9 @@ grids
 }
 .u-grid-y-2 {
 	grid-row: span 2;
+}
+.u-grid-y-3 {
+	grid-row: span 3;
 }
 .u-grid-y-4 {
 	grid-row: span 4;
