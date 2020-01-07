@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>Howest quiz - Log in</title>
+        <meta name="description" content="This is my HTML5 boilerplate.">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="msapplication-TileColor" content="#3385FF">
+        <meta name="theme-color" content="#3385FF">
+
+        <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+        <link rel="mask-icon" href="safari-pinned-tab.svg" color="#3385FF">
+
+        <link rel="stylesheet" href="css/normalize.css">
+        <link rel="stylesheet" href="css/screen.css">        
+        <script src="scripts/cookies.js"></script>
+        <script src="scripts/validation.js"></script>
+    </head>
+    <body>
+        <div class="c-background">
+        <section class="o-row o-row--lg o-row--login">
+            <div class="o-container u-max-width-xs">
+                <form class="c-card" action="#">
+                    <div class="c-card__body">
+                        <h2 class="c-logo">
+                            <label class="c-label-logo">
+                                Move for fortune
+                            </label>
+                        </h2>
+                        <p class="c-form-field js-username-field ">
+                            <label class="c-label" for="username">
+                                Email
+                                <span class="c-label__error-message js-username-error-message">
+                                    this field is required
+                                </span>                               
+                            </label>
+                            <input class="c-input" type="email" name="username" id="username" placeholder="e.g. john@howest.be" required>
+                        </p>
+                        <p class="c-form-field js-password-field">
+                            <label class="c-label" for="password">
+                                Wachtwoord
+                                <span class="c-label__error-message js-password-error-message">
+                                        this field is required
+                                </span>  						
+                            </label>
+                            <span class="c-password-toggle-container">
+                                <!-- we behouden de input van het password zelf -->
+                               <input class="c-input js-password-input" type="password"
+                               name="password" id="password" required>
+                               <span class="c-password-toggle ">
+                                   <!-- input voor onze ogen die we hiden -->
+                                   <input type="checkbox" class="c-password-toggle__checkbox o-hide-accessible js-password-toggle" id="passwordToggle">
+
+                                   <!-- label(voor de interactie) -->
+                                   <label for="passwordToggle" class="c-password-toggle__label">
+                                        <!-- hierin twee symbols(de svgs) -->
+                                        <svg class="c-password-toggle__symbol c-password-toggle__symbol--hide" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                                            <path d="M19.009,73.18l-1.77,1.78a3.908,3.908,0,0,0-1.037-.137,4,4,0,0,0-3.857,5.065l-.007-.028-2.76,2.75A11.106,11.106,0,0,1,6.4,78.82,11.014,11.014,0,0,1,19.076,73.2L19,73.18Zm3.8,1.85a11.163,11.163,0,0,1,3.2,3.79,11.014,11.014,0,0,1-12.7,5.622l.077.018,1.77-1.78a3.907,3.907,0,0,0,1.037.137,4,4,0,0,0,3.857-5.065l.007.028,2.76-2.75Zm-.25-3.99,1.42,1.42L9.839,86.6l-1.42-1.42Z" transform="translate(-6.199 -68.82)"/>
+                                          </svg>
+
+                                          <svg class="c-password-toggle__symbol c-password-toggle__symbol--show" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                                            <path d="M6.4,133.876a11,11,0,0,1,19.571-.061l.029.061a11,11,0,0,1-19.571.061l-.029-.061Zm9.8,4a4,4,0,1,0,0-8h0a4,4,0,0,0,0,8Zm0-2a2,2,0,0,1,0-4h0a2,2,0,1,1,0,4Z" transform="translate(-6.2 -123.876)"/>
+                                          </svg>
+                                        
+                                        <span class="o-hide-accessible">Show or hide password</span>
+
+                                   </label>                                       
+                               </span>
+                            </span>                             
+                        </p>
+                        <p class="u-mb-md">
+                            <!-- Button -->
+                            <button class="o-button-reset c-button js-sign-in-button">Log in</button>
+                        </p>
+                    </div>
+                </form>
+                
+            </div>
+        </section>
+        </div>
+    </body>
+</html>
