@@ -26,9 +26,9 @@ namespace Backend.StaticFunctions
                             command.Parameters.AddWithValue("@gameId", guidGameId);
                             command.Parameters.AddWithValue("@teamId", listTeams[i].Id);
                             SqlDataReader reader = await command.ExecuteReaderAsync();
-                            while (reader.Read())
+                            if (reader.Read())
                             {
-
+                                listTeams[i].intScore = Convert.ToInt32(reader["countScore"]);
                             }
                             reader.Close();
                         }

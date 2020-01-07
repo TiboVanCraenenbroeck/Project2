@@ -38,11 +38,21 @@ namespace Backend.HTTPTriggers
                         {
                             // Select a random question
                             NewModelGameValidation.question = await SF_GameValidation.GetRandomQuestionAsync(guidGameId, IncomingModelGameValidation.question.intDifficulty);
-                            // Select a random team
-                            List<Model_Team> listTeams = await SF_TeamFunctions.GetTeamFromGameAsync(guidGameId);
-                            Random random = new Random();
-                            int intRandom = random.Next(listTeams.Count);
-                            NewModelGameValidation.team = listTeams[intRandom];
+                            // Check if their are questions in the quiz
+                            if (NewModelGameValidation.question.Id.ToString() == "00000000-0000-0000-0000-000000000000")
+                            {
+                                NewModelGameValidation.strErrorMessage = "Er zitten geen vragen in dit onderwerp";
+                                NewModelGameValidation.intGameStatus = 2;
+                            }
+                            else
+                            {
+                                // Select a random team
+                                List<Model_Team> listTeams = await SF_TeamFunctions.GetTeamFromGameAsync(guidGameId);
+                                Random random = new Random();
+                                int intRandom = random.Next(listTeams.Count);
+                                NewModelGameValidation.team = listTeams[intRandom];
+                                NewModelGameValidation.intGameStatus = 1;
+                            }
                         }
                         else
                         {
@@ -67,10 +77,14 @@ namespace Backend.HTTPTriggers
                                 NewModelGameValidation.team = IncomingModelGameValidation.team;
                                 NewModelGameValidation.intNumberOfCorrectAttempts = validateModelGameValidation.intNumberOfCorrectAttempts;
                             }
+                            List<Model_Team> listTeamsForScore = new List<Model_Team>();
+                            listTeamsForScore.Add(NewModelGameValidation.team);
+                            listTeamsForScore = await SF_GameValidation.GetScoreFromTeamsAsync(guidGameId, listTeamsForScore);
+                            NewModelGameValidation.team.intScore = listTeamsForScore[0].intScore;
                             // Select a random question
                             NewModelGameValidation.question = await SF_GameValidation.GetRandomQuestionAsync(guidGameId, IncomingModelGameValidation.question.intDifficulty);
                             // Check if there is a question
-                            if(NewModelGameValidation.question.Id.ToString()== "00000000-0000-0000-0000-000000000000")
+                            if (NewModelGameValidation.question.Id.ToString() == "00000000-0000-0000-0000-000000000000")
                             {
                                 NewModelGameValidation.intGameStatus = 2;
                             }
