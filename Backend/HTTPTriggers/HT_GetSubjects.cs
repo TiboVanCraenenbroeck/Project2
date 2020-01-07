@@ -31,9 +31,8 @@ namespace Backend.HTTPTriggers
                     using (SqlCommand command = new SqlCommand())
                     {
                         command.Connection = connection;
-                        string sql = "SELECT * FROM TB_Quizzes";
+                        string sql = "SELECT * FROM TB_Quizzes ORDER BY Title";
                         command.CommandText = sql;
-                        //command.Parameters.AddWithValue("@day", day);
                         SqlDataReader reader = await command.ExecuteReaderAsync();
                         while (reader.Read())
                         {
@@ -45,18 +44,6 @@ namespace Backend.HTTPTriggers
                             });
 
                         }
-
-                        /*while (await reader.ReadAsync())
-                        {
-                            listResult.Add(new Model_QuizSubject()
-                            {
-                                Id = Guid.Parse(reader["quiz_id"].ToString()),
-                                strTitle = reader["title"].ToString(),
-                                strDescription = reader["description"].ToString()
-                            });
-
-                        }*/
-
                     }
                 }
                 return new OkObjectResult(listResult);
