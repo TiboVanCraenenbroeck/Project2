@@ -54,7 +54,7 @@ namespace Backend.HTTPTriggers
                                 NewModelGameValidation.intGameStatus = 1;
                             }
                         }
-                        else
+                        else if (IncomingModelGameValidation.intGameStatus == 1)
                         {
                             // Check if the answer is correct
                             Model_GameValidation validateModelGameValidation = await SF_GameValidation.CheckAnswerAsync(IncomingModelGameValidation, guidGameId);
@@ -87,6 +87,8 @@ namespace Backend.HTTPTriggers
                             if (NewModelGameValidation.question.Id.ToString() == "00000000-0000-0000-0000-000000000000")
                             {
                                 NewModelGameValidation.intGameStatus = 2;
+                                // Sum of the total score + put it into the database
+                                await SF_GameValidation.PutScoresIntoDatabaseAsync(guidGameId);
                             }
                             else
                             {

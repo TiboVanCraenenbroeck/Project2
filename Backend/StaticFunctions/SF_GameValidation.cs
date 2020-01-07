@@ -9,6 +9,35 @@ namespace Backend.StaticFunctions
 {
     public class SF_GameValidation
     {
+        public static async Task PutScoresIntoDatabaseAsync(Guid guidGameId)
+        {
+            try
+            {
+                List<Model_Team> listTeams = await SF_TeamFunctions.GetTeamFromGameAsync(guidGameId);
+                using (SqlConnection connection = new SqlConnection(Environment.GetEnvironmentVariable("SQL_ConnectionsString")))
+                {
+                    await connection.OpenAsync();
+                    foreach (Model_Team itemTeam in listTeams)
+                    {
+                        using (SqlCommand command = new SqlCommand())
+                        {
+                            command.Connection = connection;
+                            string sql = "UPDATE TB_Games_Teams SET Score=@score WHERE TB_Games_ID=@gameId AND TB_Teams_ID=@teamId";
+                            command.CommandText = sql;
+                            command.Parameters.AddWithValue("@score", itemTeam.intScore);
+                            command.Parameters.AddWithValue("@gameId", guidGameId);
+                            command.Parameters.AddWithValue("@teamId", itemTeam.Id);
+                            SqlDataReader reader = await command.ExecuteReaderAsync();
+                            reader.Close();
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
         public static async Task<List<Model_Team>> GetScoreFromTeamsAsync(Guid guidGameId, List<Model_Team> listTeams)
         {
             try
