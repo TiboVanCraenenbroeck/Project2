@@ -10,6 +10,7 @@ using Newtonsoft.Json;
 using System.Collections.Generic;
 using Backend.Models;
 using System.Data.SqlClient;
+using Backend.StaticFunctions;
 
 namespace Backend.HTTPTriggers
 {
@@ -22,29 +23,7 @@ namespace Backend.HTTPTriggers
         {
             try
             {
-
-                List<Model_AnswerQuestion> listResult = new List<Model_AnswerQuestion>();
-
-                using (SqlConnection connection = new SqlConnection(Environment.GetEnvironmentVariable("SQL_ConnectionsString")))
-                {
-                    await connection.OpenAsync();
-                    using (SqlCommand command = new SqlCommand())
-                    {
-                        command.Connection = connection;
-                        //string sql = "select TB_Questions.Question, TB_Answers.Answer from TB_Questions right join TB_Answers on TB_Questions.TB_Answers_ID = TB_Answers.ID;";
-                        command.CommandText = sql;
-                        //command.Parameters.AddWithValue("@day", day);
-                        SqlDataReader reader = await command.ExecuteReaderAsync();
-                        while (reader.Read())
-                        {
-                            listResult.Add(new Model_AnswerQuestion()
-                            {
-                                strRightAnswer = reader["Answer"].ToString(),
-                                strQuestion = reader["Question"].ToString()
-                            });
-                        }
-                    }
-                }
+                List<Model_Question> listResult = await SF_Question.GetQuestionsAsync(Guid.Parse(quizId));
                 return new OkObjectResult(listResult);
             }
             catch (Exception ex)
