@@ -25,20 +25,30 @@ namespace Backend.HTTPTriggers
                 Model_ObjectResultReturn objectResultReturn = new Model_ObjectResultReturn();
                 //Ophalen van de data
                 string strJson = await new StreamReader(req.Body).ReadToEndAsync();
-                Model_QuizSubject newQuizSubject = JsonConvert.DeserializeObject<Model_QuizSubject>(strJson);
-                newQuizSubject.Id = Guid.Parse(QuizId);
+                Model_Question updateQuestion = JsonConvert.DeserializeObject<Model_Question>(strJson);
+                updateQuestion.Id = Guid.Parse(QuizId);
 
                 // Check if the user is logged in
                 if (await SF_IsUserLoggedIn.CheckIfUserIsLoggedInAsync(cookies_ID, req.HttpContext.Connection.RemoteIpAddress.ToString()))
                 {
                     //Check if the quizz exist
-                    if (await SF_QuizExists.CheckIfQuizExistsAsync(newQuizSubject.Id))
+                    if (await SF_QuizExists.CheckIfQuizExistsAsync(updateQuestion.Id))
                     {
                         //Check if the question exists
-                        if (await SF_Question.CheckIfQuestionExistAsync(newQuizSubject.Id))
+                        if (await SF_Question.CheckIfQuestionExistAsync(updateQuestion.Id))
                         {
-                            //Change the question-title in the database
-
+                            //Change the question-title + correct answer in the database
+                            // Check if their is a correct answer
+                            if (await SF_Question.ChangeQuestionAsync(updateQuestion))
+                            {
+                                // Change the answers
+                                await SF_Question.ChangeAnswersAsync(updateQuestion);
+                            }
+                            else
+                            {
+                                objectResultReturn.Id = "ERROR";
+                                objectResultReturn.strErrorMessage = "Je moet een correct antwoord aanduiden";
+                            }
                         }
                         else
                         {
@@ -62,6 +72,7 @@ namespace Backend.HTTPTriggers
             }
             catch (Exception ex)
             {
+                log.LogError("HT_ChangeQuestion" + ex.ToString());
                 return new StatusCodeResult(500);
             }
         }
