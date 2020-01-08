@@ -17,7 +17,7 @@ namespace Backend.HTTPTriggers
     {
         [FunctionName("HT_GetQuestions")]
         public static async Task<IActionResult> Run(
-            [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "v1/Questions")] HttpRequest req,
+            [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "v1/questions/{quizId}")] HttpRequest req, string quizId,
             ILogger log)
         {
             try
@@ -31,7 +31,7 @@ namespace Backend.HTTPTriggers
                     using (SqlCommand command = new SqlCommand())
                     {
                         command.Connection = connection;
-                        string sql = "select TB_Questions.Question, TB_Answers.Answer from TB_Questions right join TB_Answers on TB_Questions.TB_Answers_ID = TB_Answers.ID;";
+                        //string sql = "select TB_Questions.Question, TB_Answers.Answer from TB_Questions right join TB_Answers on TB_Questions.TB_Answers_ID = TB_Answers.ID;";
                         command.CommandText = sql;
                         //command.Parameters.AddWithValue("@day", day);
                         SqlDataReader reader = await command.ExecuteReaderAsync();
