@@ -1,7 +1,7 @@
 let id; 
 let decid;
 let uri = "https://mctproject2.azurewebsites.net/api/v1/subject?cookie_id=";
-
+let domonderwerpen;
 
 const getDomElements = function(){
   console.log("dom geladen");
@@ -30,7 +30,7 @@ const buttonclick = function(){
   let btn = document.querySelector('.js-btn-onderwerp-verzenden');
   btn.addEventListener('click', function()
   {
-    var subjectinput = document.getElementById("js-btn-onderwerp-verzenden");
+    var subjectinput = document.getElementById("js-input-onderwerp");
     let valuesubject = subjectinput.value
     let data = {title: valuesubject, description: ''}
 
@@ -39,7 +39,7 @@ const buttonclick = function(){
     decid = id.replace("+", "%2B");
     console.log(decid);
     postdata(uri+decid, data)
-    document.getElementById("js-btn-onderwerp-verzenden").value = "";
+    document.getElementById("js-input-onderwerp").value = "";
   })
 }
 
@@ -92,10 +92,30 @@ const buttonclickvragen = function(){
   })
 }
 
+const getonderwerpen = function(){
+  handleData(`https://mctproject2.azurewebsites.net/api/v1/subjects`, showonderwerpen)
+}
+
+const showonderwerpen = function(data)
+{
+  domonderwerpen = document.querySelectorAll('.js-subject');
+  let arronderwerpen = data
+  console.log(data)
+  let OnderwerpHTML = ``;
+  for (o of arronderwerpen)
+  {
+    console.log(o.title);
+    OnderwerpHTML += `
+      <option value="${o.title}">
+    `
+  }
+  domonderwerpen.innerHTML = OnderwerpHTML;
+}
 
 document.addEventListener('DOMContentLoaded', function()
 {
     getDomElements();
     buttonclick();
     buttonclickvragen();
+    getonderwerpen();
 });

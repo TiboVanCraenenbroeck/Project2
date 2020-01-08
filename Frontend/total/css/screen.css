@@ -737,7 +737,7 @@ input::placeholder {
     Card with box shadow
 */
 
-/* .c-background{
+.c-background{
     position: absolute;
     top: 0;
     left:0;
@@ -746,10 +746,10 @@ input::placeholder {
     background-image: url("../fotos/retro.jpg");
     background-size: cover;
 
-} */
+}
 
 .c-card {
-    --card-backgroundColor: #F0F0F0;
+    --card-backgroundColor: #b1baf5f0;
     --card__footer-borderColor: var(--global-color-neutral-xxx-light);
     --card-borderRadius: var(--global-borderRadius);
     background-color: var(--card-backgroundColor);
@@ -758,6 +758,7 @@ input::placeholder {
     height: 600px;
     box-shadow: 0 0 0 1px rgba(0,0,0, 0.05), 0 2px 4px rgba(0,0,0,.075);
     overflow: hidden;
+    
 }
 
 /* Add padding to child for more flexibility */
@@ -869,12 +870,12 @@ more padding on the right to avoid overlap
     font-size: 14px;
     line-height: 16px;
     /* color: var(--label-color); */
-    color: #434343;
+    color: #07114F;
 }
 
 .c-label-logo{
     font-size:28px;
-    color: #434343;
+    color: #07114F;
 }
 
 .c-label--option {
@@ -906,8 +907,8 @@ more padding on the right to avoid overlap
     font-size: 16px;
     font-weight: 600;
     border-radius: 0px 25px 0px 25px;
-    border: 1px solid #A0A1A2;
-    background-color: #A0A1A2;
+    border: 1px solid #7E59B5;
+    background-color: #7E59B5;
     color: #fff;
     line-height: calc(var(--global-baseline) * 3);
     padding: calc(var(--global-baseline) * 1.5 - var(--global-borderWidth)) var(--global-whitespace-md);
