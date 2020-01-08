@@ -7,23 +7,23 @@ using Microsoft.Azure.WebJobs.Extensions.Http;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
-using System.Data.SqlClient;
-using Backend.Models;
 using System.Collections.Generic;
+using Backend.Models;
+using System.Data.SqlClient;
 
 namespace Backend.HTTPTriggers
 {
-    public static class HT_GetSubjects
+    public static class HT_GetAvatar
     {
-        [FunctionName("HT_GetSubjects")]
+        [FunctionName("HT_GetAvatar")]
         public static async Task<IActionResult> Run(
-            [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "v1/subjects")] HttpRequest req,
+            [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "v1/avatars")] HttpRequest req,
             ILogger log)
         {
             try
             {
 
-                List<Model_QuizSubject> listResult = new List<Model_QuizSubject>();
+                List<Model_Avatar> listResult = new List<Model_Avatar>();
 
                 using (SqlConnection connection = new SqlConnection(Environment.GetEnvironmentVariable("SQL_ConnectionsString")))
                 {
@@ -31,16 +31,16 @@ namespace Backend.HTTPTriggers
                     using (SqlCommand command = new SqlCommand())
                     {
                         command.Connection = connection;
-                        string sql = "SELECT * FROM TB_Quizzes ORDER BY Title";
+                        string sql = "SELECT * FROM TB_Avatars ORDER BY Name";
                         command.CommandText = sql;
                         SqlDataReader reader = await command.ExecuteReaderAsync();
                         while (reader.Read())
                         {
-                            listResult.Add(new Model_QuizSubject()
+                            listResult.Add(new Model_Avatar()
                             {
                                 Id = Guid.Parse(reader["ID"].ToString()),
-                                strTitle = reader["title"].ToString(),
-                                strDescription = reader["description"].ToString()
+                                strName = reader["Name"].ToString(),
+                                strLink = reader["Link"].ToString()
                             });
 
                         }
@@ -50,9 +50,10 @@ namespace Backend.HTTPTriggers
             }
             catch (Exception ex)
             {
-                log.LogError("getsubject " + ex.ToString());
+                log.LogError("GetAvatar " + ex.ToString());
                 return new StatusCodeResult(500);
             }
         }
     }
 }
+
