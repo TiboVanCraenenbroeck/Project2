@@ -1,4 +1,4 @@
-let teamAName,teamBName,couter=0;
+let teamAName,teamBName,couter=0,teamAAvatarId="69fbbdd6-bfbb-4802-8b0d-3e37350ced3d",teamBAvatarId="69fbbdd6-bfbb-4802-8b0d-3e37350ced3c";
 let dataName;
 
 const teamA =()=>{
@@ -12,12 +12,23 @@ const teamA =()=>{
         if(couter==1)
         {
             teamBName=teamNaam;
-            /* let teamBHTML='';
-            teamBHTML=`<p class="js-test">${teamAName},${teamBName}</p>`;
-            test2.innerHTML = teamBHTML;  */
             console.log(teamAName,teamBName);
-            dataName={teams:[{name:teamAName,avatar:{avatar_id:"69fbbdd6-bfbb-4802-8b0d-3e37350ced3d"}},{name:teamBName,avatar:{avatar_id:"69fbbdd6-bfbb-4802-8b0d-3e37350ced3c"}}]}
-            getAPI(dataName);
+            if (typeof(Storage) !== "undefined") {
+                // Store
+                localStorage.setItem('teamnaamA',teamAName); 
+                localStorage.setItem('teamnaamB',teamBName); 
+                localStorage.setItem('teamAvatarA',teamAAvatarId); 
+                localStorage.setItem('teamAvatarB',teamBAvatarId); 
+
+
+                let teamnaamA,teamnaamB,teamAvatarA,teamAvatarB;
+                teamnaamA=localStorage.getItem('teamnaamA');
+                teamnaamB=localStorage.getItem('teamnaamB');
+                teamAvatarA=localStorage.getItem('teamAvatarA');
+                teamAvatarB=localStorage.getItem('teamAvatarB');
+                //console.log("teama: "+localStorage.getItem('teamnaamA')+" teamb: "+localStorage.getItem('teamnaamB')+" avatara: "+localStorage.getItem('teamAvatarA')+" avatarb: "+localStorage.getItem('teamAvatarB'))
+                // Retrieve
+              }
             teamAName="";
             teamBName="";
             couter=0;
@@ -25,9 +36,8 @@ const teamA =()=>{
         }
         else
         {
-            
             let teamBHTML='';
-            teamBHTML=`<a class="js-volgende" href="#">Start Spel</a>`;
+            teamBHTML=`<a class="js-volgende" href="./total/loadscreen.html">Start Spel</a>`;
             volgende.innerHTML = teamBHTML;  
             teamAName=teamNaam;
             couter=1;
@@ -38,27 +48,7 @@ const teamA =()=>{
 
 
 
-const fetchData2 = async function( dataName,method = "POST", body = null) {
-    console.log("in fetch")
-	return fetch(`https://mctproject2.azurewebsites.net/api/v1/game/BEF11CA2-3FB0-4BDF-90D2-2AD0BE4787E6`, {
-	  method: method,
-	  body: JSON.stringify(dataName),
-	  headers: { "content-type": "application/json" }
-	})
-	  .then(r => r.json())
-	  .then(data => data);
-  };
-  
-  
-const getAPI = async function(dataName,url, method = "POST", body = null) {
-	try {
-      const dataURL = await fetchData2(dataName,url, method, body);
-      console.log("in try")
-	  console.log(dataURL);
-	} catch (error) {
-	  console.log(error);
-	}
-  };
+
  
 
 //DOM
