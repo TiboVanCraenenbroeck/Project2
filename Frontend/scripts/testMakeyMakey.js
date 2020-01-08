@@ -6,19 +6,18 @@ const makeymakey = () => {
 		switch (key.keyCode) {
 			case 37:
 				console.log('left');
-				counter = 1;
 				break;
 			case 38:
 				console.log('up');
-				counter = 1;
 				break;
 			case 39:
 				console.log('right');
-				counter = 1;
 				break;
 			case 40:
 				console.log('down');
-				counter = 1;
+				break;
+			case 13:
+				console.log('enter');
 				break;
 		}
 	});
