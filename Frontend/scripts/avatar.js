@@ -3,7 +3,6 @@ let dataName;
 
 const teamA =()=>{
     let volgende= document.querySelector(".js-volgende")
-    let test2= document.querySelector(".js-test")
     volgende.addEventListener('click', function() {
     let teamNaam=document.getElementById('username').value
 
@@ -16,8 +15,8 @@ const teamA =()=>{
             /* let teamBHTML='';
             teamBHTML=`<p class="js-test">${teamAName},${teamBName}</p>`;
             test2.innerHTML = teamBHTML;  */
-            console.log(teamAName,teamBName); 
-            dataName={teams:[{name:teamAName,avatar:{avatar_id:"69FBBDD6-BFBB-4802-8B0D-3E37350CED4C"}},{name:teamBName,avatar:{avatar_id:"69FBBDD6-BFBB-4802-8B0D-3E37350CED4C"}}]}
+            console.log(teamAName,teamBName);
+            dataName={teams:[{name:teamAName,avatar:{avatar_id:"69fbbdd6-bfbb-4802-8b0d-3e37350ced3d"}},{name:teamBName,avatar:{avatar_id:"69fbbdd6-bfbb-4802-8b0d-3e37350ced3c"}}]}
             getAPI(dataName);
             teamAName="";
             teamBName="";

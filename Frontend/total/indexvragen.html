@@ -13,6 +13,7 @@
     <link rel="stylesheet" href="css/screen.css">
     <script src="scripts/cookies.js"></script>
     <script src="scripts/questions.js"></script>
+    <script src="scripts/dataHandler.js"></script>
     
 </head>
 
@@ -23,14 +24,12 @@
             </div>
             <label class="c-lbl-subject">Onderwerp:</label>
             <button class="c-btn-send-subject js-btn-onderwerp-verzenden">verzenden</button>
-            <form class="c-subject" >
+            <div class="js-subject c-subject" >
                 <input list="onderwerpen" name="onderwerp" id="js-input-onderwerp">
                 <datalist id="onderwerpen">
-                  <option value="Wiskunde">
-                  <option value="Geschiedenis">
                   <option value="Biologie">
                 </datalist>
-            </form>
+            </div>
             <label class="c-label-q"> Geef een vraag in: </label>
             <input class="c-input" id="js-vraag"></input>
                 <input class="c-radio-a" id="js-rbtn-a" type="radio" name="vragen" value="a"><br>
