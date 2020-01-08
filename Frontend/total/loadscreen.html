@@ -7,7 +7,9 @@
     <title>Login</title>
 
     <!-- script -->
-    <script src="./scripts/app.js"></script>
+  
+    <script src="./scripts/loadingsscreen.js"></script>
+    <script src="./scripts/dataHandler.js"></script>
     <!-- css -->
     <link rel="stylesheet" href="css/normalize.css">
     <link rel="stylesheet" href="css/screenaiko.css">
@@ -16,13 +18,10 @@
 <body>
     <section class="o-row o-row--lg o-row--login" >
         <div class="o-container u-max-width-lg">
-            <div class="c-selectgrid">
-                <select class="c-select">
+            <div class="c-selectgrid ">
+                <select name="js-select" id="js-select" class="c-select js-select">
                     <option>
                         onderwerp
-                    </option>
-                    <option>
-                        onderwerp2
                     </option>
                 </select> 
                 <button class="c-btn-startgame">Start Game</button>
