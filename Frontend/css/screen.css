@@ -2,7 +2,7 @@
 #FONTS
 \*------------------------------------*/
 
-@font-face {
+/* @font-face {
     font-family: "Inter Web";
     font-weight: 400;
     src: url("../fonts/Inter-Regular.woff2") format("woff2")
@@ -12,7 +12,7 @@
     font-family: "Inter Web";
     font-weight: 600;
     src: url("../fonts/Inter-SemiBold.woff2") format("woff2")
-}
+} */
 
 /*------------------------------------*\
 #Variables
@@ -749,7 +749,7 @@ spacing
 }
 .c-card {
     --card-borderRadius: var(--global-borderRadius);
-    background-color: var(--card-backgroundColor, White);
+    background-color: var(--card-backgroundColor, #ffffffbf);
     margin-bottom: var(--global-whitespace);
     border-radius: var(--card-borderRadius, var(--global-borderRadius));
     box-shadow: 0 0 0 1px rgba(0,0,0, 0.05), 0 2px 4px rgba(0,0,0,.075);

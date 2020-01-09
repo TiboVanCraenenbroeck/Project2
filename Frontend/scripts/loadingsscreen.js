@@ -1,14 +1,32 @@
 let domonderwerpen,startGame,dataName,teamAName,teamBName,teamAAvatarId="",teamBAvatarId="",teamNameACard,teamNameBCard;
-
+let quiz_ids = [];
 
 const ontvangenOnderwerpen=(data)=>{
   //console.log(data[0].title)
   onderwerp=document.querySelector('.js-select');
   onderwerpHTML='';
+
   for (let i = 0; i < data.length; i++) {
     //console.log(data[i].title);
+ /*    console.log(data[i].quiz_id); */
+    let ids = {};
+    const quiziddata = data[i];
+    if(quiziddata.quiz_id){
+      ids['quiz_id'] = quiziddata.quiz_id;
+    }
 
-    onderwerpHTML += `<option>${data[i].title}</option>`;
+    if (quiziddata.title){
+      ids['title'] = quiziddata.title;
+    }
+
+    quiz_ids.push(ids);
+
+    onderwerpHTML += `
+    <select name="select" id="select" class=" u-grid-x-3 u-grid-y-1 js-select">
+    <option>${data[i].title}</option>
+    </select> 
+   `;
+    
   }
   onderwerp.innerHTML += onderwerpHTML;
 
@@ -44,8 +62,31 @@ const buttonEvent=()=>{
     dataName={teams:[{name:teamAName,avatar:{avatar_id:teamAAvatarId}},{name:teamBName,avatar:{avatar_id:teamBAvatarId}}]}
     //post naar database
     PostAPI(dataName);
+
+    let e = document.getElementById("select");
+    let aangeduidobject = e.options[e.selectedIndex].value;
+  /*   console.log(aangeduidobject);
+    console.log(quiz_ids); */
+    for (var quiz_id in quiz_ids){
+      if(!quiz_ids.hasOwnProperty(quiz_id)) continue;
+      const everything = quiz_ids[quiz_id];
+      const qid = everything.quiz_id;
+     /*  console.log(qid); */
+      const title = everything.title;
+      if (title == aangeduidobject)
+      {
+        localStorage.setItem('quizid',qid);
+      }
+  
+    }
+
+
+    window.open("../vragen.html");
+    
   });
 }
+
+
 //fetchPost
 const fetchData2 = async function( dataName,method = "POST", body = null) {
     //console.log("in fetch")
@@ -61,7 +102,12 @@ const PostAPI = async function(dataName, method = "POST", body = null) {
   try 
   {
     const dataURL = await fetchData2(dataName, method, body);
-	  console.log(dataURL);
+    console.log("gameid" + " " + dataURL.id);
+    let gameid = dataURL.id 
+    localStorage.SetItem('gameid', gameid);
+    
+    let id = localStorage.getItem('quizid');
+    console.log("quizid" + " " + id);
   } 
   catch (error) 
   {
