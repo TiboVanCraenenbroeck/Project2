@@ -81,7 +81,7 @@ const buttonEvent=()=>{
     }
 
 
-    window.open("../vragen.html");
+    window.open("./frontend/vragen.html");
     
   });
 }
