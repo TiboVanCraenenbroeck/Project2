@@ -7,9 +7,7 @@ const getDomElements = function(){
     let getidquiz, getidgame;
     getidquiz = localStorage.getItem('quizid');
     getidgame = localStorage.getItem('gameid');
-    getAPI("bef11ca2-3fb0-4bdf-90d2-2ad0be4787e6")
-   
-    
+    getAPI("bef11ca2-3fb0-4bdf-90d2-2ad0be4787e6") 
 };
 
 
@@ -56,11 +54,11 @@ let getAPI = async function(url, method = "GET", body = null) {
 const vragenophalen = function(){
     let vraag = "";
     vraag += `  <div class="js-vragen c-img__center">
-        <h3 class="c-zero_margin c-color_white">${datavragen[3].question}</h3>
+        <h3 class="c-zero_margin c-color_white">${datavragen[4].question}</h3>
      </div>  `;
     
     domvragen.innerHTML = vraag;
-    let answersarr = datavragen[3].answers;
+    let answersarr = datavragen[4].answers;
     for (let i = 0; i < answersarr.length; i++){
         const quizantwoord = answersarr[i];
         
