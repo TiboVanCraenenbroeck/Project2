@@ -109,6 +109,12 @@ namespace Backend.StaticFunctions
                         reader.Close();
                     }
                 }
+                // Difficulty ++ by 3 correct answers
+                if (modelGameValidation.question.intDifficulty < 3)
+                {
+                    modelGameValidation.question.intDifficulty = modelGameValidation.intNumberOfCorrectAttempts / 3;
+
+                }
                 return modelGameValidation;
             }
             catch (Exception ex)
