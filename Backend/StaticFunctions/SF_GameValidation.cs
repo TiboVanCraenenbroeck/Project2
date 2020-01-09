@@ -89,7 +89,8 @@ namespace Backend.StaticFunctions
                         if (reader.Read())
                         {
                             modelGameValidation.intNumberOfCorrectAttempts++;
-                            modelGameValidation.team.intScore = Convert.ToInt32(reader["countPoints"]) * modelGameValidation.intTime * modelGameValidation.intNumberOfCorrectAttempts * 1111;
+                            //countPoints = If the answer is correct --> return=1 else return=0
+                            modelGameValidation.team.intScore = Convert.ToInt32(reader["countPoints"]) * modelGameValidation.intNumberOfCorrectAttempts * 1111;
                         }
                         reader.Close();
                     }
