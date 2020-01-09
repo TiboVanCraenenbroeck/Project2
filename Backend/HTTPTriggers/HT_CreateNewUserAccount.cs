@@ -65,7 +65,7 @@ namespace Backend.HTTPTriggers
                                             using (SqlCommand commandA = new SqlCommand())
                                             {
                                                 commandA.Connection = connection;
-                                                string sqlA = "INSERT INTO TB_Users VALUES(@id,@surname,@lastname,@mail,@password)";
+                                                string sqlA = "INSERT INTO TB_Users VALUES(@id,@surname,@lastname,@mail,@password, null)";
                                                 commandA.CommandText = sqlA;
                                                 commandA.Parameters.AddWithValue("@id", newUser.Id);
                                                 commandA.Parameters.AddWithValue("@surname", newUser.strName);

@@ -63,7 +63,7 @@ namespace Backend.HTTPTriggers
                                 using (SqlCommand commandA = new SqlCommand())
                                 {
                                     commandA.Connection = connection;
-                                    string sqlA = "INSERT INTO TB_Questions VALUES(@questionId, @quizId, @answerId, @question, @difficulty)";
+                                    string sqlA = "INSERT INTO TB_Questions(ID, TB_Quizzes_ID, TB_Answers_ID, Question, Difficulty) VALUES(@questionId, @quizId, @answerId, @question, @difficulty)";
                                     commandA.CommandText = sqlA;
                                     commandA.Parameters.AddWithValue("@questionId", newQuestion.Id);
                                     commandA.Parameters.AddWithValue("@quizId", guidQuizId);

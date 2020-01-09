@@ -48,7 +48,7 @@ namespace Backend.HTTPTriggers
                             using (SqlCommand command = new SqlCommand())
                             {
                                 command.Connection = connection;
-                                string sql = "INSERT INTO TB_Games VALUES(@id, @QuizId, @dateTime)";
+                                string sql = "INSERT INTO TB_Games VALUES(@id, @QuizId, @dateTime, null)";
                                 command.CommandText = sql;
                                 command.Parameters.AddWithValue("@id", newGame.Id);
                                 command.Parameters.AddWithValue("@QuizId", guidQuizId);
@@ -62,7 +62,7 @@ namespace Backend.HTTPTriggers
                                 using (SqlCommand command = new SqlCommand())
                                 {
                                     command.Connection = connection;
-                                    string sql = "INSERT INTO TB_Games_Teams VALUES(@gameId, @teamId, 0)";
+                                    string sql = "INSERT INTO TB_Games_Teams VALUES(@gameId, @teamId, 0, null)";
                                     command.CommandText = sql;
                                     command.Parameters.AddWithValue("@gameId", newGame.Id);
                                     command.Parameters.AddWithValue("@teamId", itemTeam.Id);
