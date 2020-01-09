@@ -37,7 +37,7 @@ const teamA =()=>{
         else
         {
             let teamBHTML='';
-            teamBHTML=`<a class="js-volgende" href="./total/loadscreen.html">Start Spel</a>`;
+            teamBHTML=`<a class="js-volgende" href="./loadscreen.html">Start Spel</a>`;
             volgende.innerHTML = teamBHTML;  
             teamAName=teamNaam;
             couter=1;
