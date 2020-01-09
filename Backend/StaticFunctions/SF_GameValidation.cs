@@ -89,7 +89,8 @@ namespace Backend.StaticFunctions
                         if (reader.Read())
                         {
                             modelGameValidation.intNumberOfCorrectAttempts++;
-                            modelGameValidation.team.intScore = Convert.ToInt32(reader["countPoints"]) * modelGameValidation.intTime * modelGameValidation.intNumberOfCorrectAttempts * 1111;
+                            //countPoints = If the answer is correct --> return=1 else return=0
+                            modelGameValidation.team.intScore = Convert.ToInt32(reader["countPoints"]) * modelGameValidation.intNumberOfCorrectAttempts * 1111;
                         }
                         reader.Close();
                     }
@@ -108,6 +109,12 @@ namespace Backend.StaticFunctions
                         SqlDataReader reader = await command.ExecuteReaderAsync();
                         reader.Close();
                     }
+                }
+                // Difficulty ++ by 3 correct answers
+                if (modelGameValidation.question.intDifficulty < 3)
+                {
+                    modelGameValidation.question.intDifficulty = modelGameValidation.intNumberOfCorrectAttempts / 3;
+
                 }
                 return modelGameValidation;
             }

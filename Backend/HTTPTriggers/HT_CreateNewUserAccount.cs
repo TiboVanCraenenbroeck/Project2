@@ -23,76 +23,84 @@ namespace Backend.HTTPTriggers
             try
             {
                 Model_CreateNewUserAccountReturn createNewUserAccountReturn = new Model_CreateNewUserAccountReturn();
-
+                string cookies_ID = req.Query["cookie_id"];
                 //Get data from body
                 string strJson = await new StreamReader(req.Body).ReadToEndAsync();
                 Model_User newUser = JsonConvert.DeserializeObject<Model_User>(strJson);
                 newUser.Id = Guid.NewGuid();
                 string test = newUser.Id.ToString();
-
-                // Check if all fields are filled in
-                if (newUser.strMail.Length > 3 && newUser.strName.Length > 3 && newUser.strSurname.Length > 3)
+                // Check if the user is logged in
+                if (await SF_IsUserLoggedIn.CheckIfUserIsLoggedInAsync(cookies_ID, req.HttpContext.Connection.RemoteIpAddress.ToString()))
                 {
-                    // Check if the password is strong
-                    if (newUser.strPassword.Length >= 9)
+                    // Check if all fields are filled in
+                    if (newUser.strMail.Length > 3 && newUser.strName.Length > 3 && newUser.strSurname.Length > 3)
                     {
-                        // Encrypt everything
-                        SF_Aes aes = new SF_Aes();
-                        newUser.strSurname = aes.EncryptToBase64String(newUser.strSurname);
-                        newUser.strName = aes.EncryptToBase64String(newUser.strName);
-                        newUser.strMail = aes.EncryptToBase64String(newUser.strMail);
-                        newUser.strPassword = SF_Hash.GenerateSHA512String(newUser.strPassword);
-                        // Put the new user into the database
-                        using (SqlConnection connection = new SqlConnection(Environment.GetEnvironmentVariable("SQL_ConnectionsString")))
+                        // Check if the password is strong
+                        if (newUser.strPassword.Length >= 9)
                         {
-                            await connection.OpenAsync();
-                            // Check if the user already exist
-                            using (SqlCommand command = new SqlCommand())
+                            // Encrypt everything
+                            SF_Aes aes = new SF_Aes();
+                            newUser.strSurname = aes.EncryptToBase64String(newUser.strSurname);
+                            newUser.strName = aes.EncryptToBase64String(newUser.strName);
+                            newUser.strMail = aes.EncryptToBase64String(newUser.strMail);
+                            newUser.strPassword = SF_Hash.GenerateSHA512String(newUser.strPassword);
+                            // Put the new user into the database
+                            using (SqlConnection connection = new SqlConnection(Environment.GetEnvironmentVariable("SQL_ConnectionsString")))
                             {
-                                command.Connection = connection;
-                                string sql = "SELECT count(ID) as userCount FROM TB_Users WHERE Mail=@mail";
-                                command.CommandText = sql;
-                                command.Parameters.AddWithValue("@mail", newUser.strMail);
-                                SqlDataReader reader = await command.ExecuteReaderAsync();
-                                if (reader.Read())
+                                await connection.OpenAsync();
+                                // Check if the user already exist
+                                using (SqlCommand command = new SqlCommand())
                                 {
-                                    if (Convert.ToInt32(reader["userCount"]) == 0)
+                                    command.Connection = connection;
+                                    string sql = "SELECT count(ID) as userCount FROM TB_Users WHERE Mail=@mail";
+                                    command.CommandText = sql;
+                                    command.Parameters.AddWithValue("@mail", newUser.strMail);
+                                    SqlDataReader reader = await command.ExecuteReaderAsync();
+                                    if (reader.Read())
                                     {
-                                        reader.Close();
-                                        // Insert the user into the database
-                                        using (SqlCommand commandA = new SqlCommand())
+                                        if (Convert.ToInt32(reader["userCount"]) == 0)
                                         {
-                                            commandA.Connection = connection;
-                                            string sqlA = "INSERT INTO TB_Users VALUES(@id,@surname,@lastname,@mail,@password)";
-                                            commandA.CommandText = sqlA;
-                                            commandA.Parameters.AddWithValue("@id", newUser.Id);
-                                            commandA.Parameters.AddWithValue("@surname", newUser.strName);
-                                            commandA.Parameters.AddWithValue("@lastname", newUser.strName);
-                                            commandA.Parameters.AddWithValue("@mail", newUser.strMail);
-                                            commandA.Parameters.AddWithValue("@password", newUser.strPassword);
-                                            await commandA.ExecuteReaderAsync();
+                                            reader.Close();
+                                            // Insert the user into the database
+                                            using (SqlCommand commandA = new SqlCommand())
+                                            {
+                                                commandA.Connection = connection;
+                                                string sqlA = "INSERT INTO TB_Users VALUES(@id,@surname,@lastname,@mail,@password)";
+                                                commandA.CommandText = sqlA;
+                                                commandA.Parameters.AddWithValue("@id", newUser.Id);
+                                                commandA.Parameters.AddWithValue("@surname", newUser.strName);
+                                                commandA.Parameters.AddWithValue("@lastname", newUser.strName);
+                                                commandA.Parameters.AddWithValue("@mail", newUser.strMail);
+                                                commandA.Parameters.AddWithValue("@password", newUser.strPassword);
+                                                await commandA.ExecuteReaderAsync();
+                                            }
+                                            createNewUserAccountReturn.blSucceeded = true;
                                         }
-                                        createNewUserAccountReturn.blSucceeded = true;
-                                    }
-                                    else
-                                    {
-                                        createNewUserAccountReturn.blSucceeded = false;
-                                        createNewUserAccountReturn.strMessage = "Er bestaat al een gebruiker met dit mailadres";
+                                        else
+                                        {
+                                            createNewUserAccountReturn.blSucceeded = false;
+                                            createNewUserAccountReturn.strMessage = "Er bestaat al een gebruiker met dit mailadres";
+                                        }
                                     }
                                 }
                             }
+                        }
+                        else
+                        {
+                            createNewUserAccountReturn.blSucceeded = false;
+                            createNewUserAccountReturn.strMessage = "Het wachtwoord moet minstens 9 karakters lang zijn";
                         }
                     }
                     else
                     {
                         createNewUserAccountReturn.blSucceeded = false;
-                        createNewUserAccountReturn.strMessage = "Het wachtwoord moet minstens 9 karakters lang zijn";
+                        createNewUserAccountReturn.strMessage = "Gelieve alle velden in te vullen";
                     }
                 }
                 else
                 {
                     createNewUserAccountReturn.blSucceeded = false;
-                    createNewUserAccountReturn.strMessage = "Gelieve alle velden in te vullen";
+                    createNewUserAccountReturn.strMessage = "Je bent afgemeld";
                 }
                 return new OkObjectResult(createNewUserAccountReturn);
             }

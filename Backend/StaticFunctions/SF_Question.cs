@@ -25,6 +25,7 @@ namespace Backend.StaticFunctions
                         SqlDataReader reader = await command.ExecuteReaderAsync();
                         if (reader.Read())
                         {
+                            int test = Convert.ToInt32(reader["countQuestion"]);
                             if (Convert.ToInt32(reader["countQuestion"]) == 1)
                             {
                                 return true;
@@ -54,14 +55,21 @@ namespace Backend.StaticFunctions
                         command.CommandText = sql;
                         command.Parameters.AddWithValue("@question", question.strQuestion);
                         command.Parameters.AddWithValue("@difficulty", question.intDifficulty);
-                        command.Parameters.AddWithValue("@questionId", question.intDifficulty);
+                        command.Parameters.AddWithValue("@questionId", question.Id);
                         // Check wich answer is correct
                         Guid guidCorrectAnswerId = new Guid();
                         foreach (Model_Answer itemAnswer in question.listAnswer)
                         {
                             if (itemAnswer.blnCorrect == true)
                             {
-                                guidCorrectAnswerId = itemAnswer.Id;
+                                // Search the answerId in the database
+                                guidCorrectAnswerId = await SF_SearchAnswer.SearchAnswerIdAsync(itemAnswer.strAnswer);
+                                if (guidCorrectAnswerId == Guid.Parse("00000000-0000-0000-0000-000000000000"))
+                                {
+                                    // Put the new answer into the database
+                                    guidCorrectAnswerId = await SF_SearchAnswer.AddAnswerAsync(itemAnswer.strAnswer);
+                                }
+                                break;
                             }
                         }
                         // Check if their is a correct answer
@@ -87,50 +95,38 @@ namespace Backend.StaticFunctions
         {
             try
             {
-                foreach (Model_Answer itemAnswer in question.listAnswer)
+                using (SqlConnection connection = new SqlConnection(Environment.GetEnvironmentVariable("SQL_ConnectionsString")))
                 {
-                    bool blIsLinked = false;
-                    // Check if the answer is in the database
-                    itemAnswer.Id = await SF_SearchAnswer.SearchAnswerIdAsync(itemAnswer.strAnswer);
-                    if (itemAnswer.Id == Guid.Parse("00000000-0000-0000-0000-000000000000"))
+                    await connection.OpenAsync();
+                    // Delete all linked answers
+                    using (SqlCommand command = new SqlCommand())
                     {
-                        // Put the new answer into the database
-                        itemAnswer.Id = await SF_SearchAnswer.AddAnswerAsync(itemAnswer.strAnswer);
+                        command.Connection = connection;
+                        string sql = "DELETE FROM TB_Questions_Answers WHERE TB_Questions_ID=@questionId";
+                        command.CommandText = sql;
+                        command.Parameters.AddWithValue("@questionId", question.Id);
+                        SqlDataReader reader = await command.ExecuteReaderAsync();
+                        reader.Close();
                     }
-                    // Check if the answer is linked
-                    using (SqlConnection connection = new SqlConnection(Environment.GetEnvironmentVariable("ConnectionString")))
+                    foreach (Model_Answer itemAnswer in question.listAnswer)
                     {
-                        await connection.OpenAsync();
+                        // Check if the answer is in the database
+                        itemAnswer.Id = await SF_SearchAnswer.SearchAnswerIdAsync(itemAnswer.strAnswer);
+                        if (itemAnswer.Id == Guid.Parse("00000000-0000-0000-0000-000000000000"))
+                        {
+                            // Put the new answer into the database
+                            itemAnswer.Id = await SF_SearchAnswer.AddAnswerAsync(itemAnswer.strAnswer);
+                        }
+                        // Put the answerId and the QuestionId in the database
                         using (SqlCommand command = new SqlCommand())
                         {
                             command.Connection = connection;
-                            string sql = "SELECT COUNT(*) AS countTotal FROM TB_Questions_Answers WHERE TB_Answers_ID = @answerId AND TB_Questions_ID=@questionId";
+                            string sql = "INSERT INTO TB_Questions_Answers VALUES(@answerID, @questionId)";
                             command.CommandText = sql;
                             command.Parameters.AddWithValue("@answerId", itemAnswer.Id);
                             command.Parameters.AddWithValue("@questionId", question.Id);
                             SqlDataReader reader = await command.ExecuteReaderAsync();
-                            if (reader.Read())
-                            {
-                                if (Convert.ToInt32(reader["countTotal"]) == 1)
-                                {
-                                    blIsLinked = true;
-                                }
-                            }
                             reader.Close();
-                        }
-                        // If the answer is not linked --> Link id
-                        if (!blIsLinked)
-                        {
-                            using (SqlCommand command = new SqlCommand())
-                            {
-                                command.Connection = connection;
-                                string sql = "INSERT INTO TB_Questions_Answers VALUES(@answerID, @quizId)";
-                                command.CommandText = sql;
-                                command.Parameters.AddWithValue("@answerId", itemAnswer.Id);
-                                command.Parameters.AddWithValue("@questionId", question.Id);
-                                SqlDataReader reader = await command.ExecuteReaderAsync();
-                                reader.Close();
-                            }
                         }
                     }
                 }
@@ -207,6 +203,19 @@ namespace Backend.StaticFunctions
             {
                 throw ex;
             }
+        }
+        public static bool CheckIfTheirIsACorrectAnswer(Model_Question question)
+        {
+            bool blCorrectAnswer = false;
+            foreach (Model_Answer itemAnswer in question.listAnswer)
+            {
+                if (itemAnswer.blnCorrect)
+                {
+                    blCorrectAnswer = true;
+                    break;
+                }
+            }
+            return blCorrectAnswer;
         }
     }
 }
