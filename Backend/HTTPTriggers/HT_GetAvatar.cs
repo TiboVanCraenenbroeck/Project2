@@ -40,7 +40,9 @@ namespace Backend.HTTPTriggers
                             {
                                 Id = Guid.Parse(reader["ID"].ToString()),
                                 strName = reader["Name"].ToString(),
-                                strLink = reader["Link"].ToString()
+                                strMovingAvatar = reader["MovingAvatar"].ToString(),
+                                strStaticAvatarBig = reader["StaticAvatarBig"].ToString(),
+                                strStaticAvatarSmall = reader["StaticAvatarSmall"].ToString()
                             });
 
                         }

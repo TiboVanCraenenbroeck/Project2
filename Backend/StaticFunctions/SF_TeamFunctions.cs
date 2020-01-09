@@ -113,7 +113,9 @@ namespace Backend.StaticFunctions
                                 {
                                     Id = Guid.Parse(reader["AvatarId"].ToString()),
                                     strName = reader["AvatarName"].ToString(),
-                                    strLink = reader["AvatarLink"].ToString()
+                                    strMovingAvatar = reader["MovingAvatar"].ToString(),
+                                    strStaticAvatarBig = reader["StaticAvatarBig"].ToString(),
+                                    strStaticAvatarSmall = reader["StaticAvatarSmall"].ToString()
                                 }
                             });
                         }

@@ -14,7 +14,13 @@ namespace Backend.Models
         [JsonProperty(PropertyName = "name")]
         public string strName { get; set; }
         
-        [JsonProperty(PropertyName = "link")]
-        public string strLink { get; set; }
+        [JsonProperty(PropertyName = "moving_avatar")]
+        public string strMovingAvatar { get; set; }
+        
+        [JsonProperty(PropertyName = "static_avatar_big")]
+        public string strStaticAvatarBig { get; set; }
+        
+        [JsonProperty(PropertyName = "static_avatar_small")]
+        public string strStaticAvatarSmall { get; set; }
     }
 }
