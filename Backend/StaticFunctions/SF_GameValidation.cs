@@ -98,7 +98,7 @@ namespace Backend.StaticFunctions
                     using (SqlCommand command = new SqlCommand())
                     {
                         command.Connection = connection;
-                        string sql = " INSERT INTO TB_Games_Answers VALUES(@gameId, @questionId, @answerId, @teamId, @score, @timeNeeded)";
+                        string sql = " INSERT INTO TB_Games_Answers VALUES(@gameId, @questionId, @answerId, @teamId, @score, @timeNeeded, null)";
                         command.CommandText = sql;
                         command.Parameters.AddWithValue("@gameId", guidGameId);
                         command.Parameters.AddWithValue("@questionId", modelGameValidation.question.Id);
