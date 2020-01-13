@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -180,6 +181,8 @@ namespace Backend.StaticFunctions
                         }
                     }
                 }
+                // Shuffle list of answers
+                question.listAnswer.Shuffle();
                 return question;
             }
             catch (Exception ex)
