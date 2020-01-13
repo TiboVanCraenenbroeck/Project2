@@ -99,7 +99,7 @@ namespace Backend.StaticFunctions
                     using (SqlCommand command = new SqlCommand())
                     {
                         command.Connection = connection;
-                        string sql = "SELECT TB_Teams.ID AS TeamId, TB_Teams.Name AS TeamName, TB_Avatars.Name AS AvatarName, TB_Avatars.ID AS AvatarId, TB_Avatars.Link AS AvatarLink FROM TB_Games_Teams INNER JOIN TB_Teams ON TB_Teams.ID = TB_Games_Teams.TB_Teams_ID INNER JOIN TB_Avatars ON TB_Avatars.ID = TB_Teams.TB_Avatars_ID WHERE TB_Games_Teams.TB_Games_ID=@gameId";
+                        string sql = "SELECT TB_Teams.ID AS TeamId, TB_Teams.Name AS TeamName, TB_Avatars.Name AS AvatarName, TB_Avatars.ID AS AvatarId, TB_Avatars.MovingAvatar AS MovingAvatar, TB_Avatars.StaticAvatarSmall AS StaticAvatarSmall, TB_Avatars.StaticAvatarBig AS StaticAvatarBig FROM TB_Games_Teams INNER JOIN TB_Teams ON TB_Teams.ID = TB_Games_Teams.TB_Teams_ID INNER JOIN TB_Avatars ON TB_Avatars.ID = TB_Teams.TB_Avatars_ID WHERE TB_Games_Teams.TB_Games_ID=@gameId";
                         command.CommandText = sql;
                         command.Parameters.AddWithValue("@gameId", guidGameId);
                         SqlDataReader reader = await command.ExecuteReaderAsync();

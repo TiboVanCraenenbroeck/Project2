@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -144,6 +145,7 @@ namespace Backend.StaticFunctions
                 using (SqlConnection connection = new SqlConnection(Environment.GetEnvironmentVariable("SQL_ConnectionsString")))
                 {
                     await connection.OpenAsync();
+                    // Get all the questions from a quiz (subject)
                     using (SqlCommand command = new SqlCommand())
                     {
                         command.Connection = connection;
@@ -166,6 +168,8 @@ namespace Backend.StaticFunctions
                         }
                         reader.Close();
                     }
+                    // Get all the answers from the question
+                    var rnd = new Random();
                     for (int i = 0; i < listQuestions.Count; i++)
                     {
                         using (SqlCommand command = new SqlCommand())
@@ -193,6 +197,8 @@ namespace Backend.StaticFunctions
                                     });
                                 }
                             }
+                            // Shuffle list of answers
+                            listQuestions[i].listAnswer.Shuffle();
                             reader.Close();
                         }
                     }
