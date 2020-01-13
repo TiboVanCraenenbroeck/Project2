@@ -58,7 +58,16 @@ namespace Backend.StaticFunctions
                             SqlDataReader reader = await command.ExecuteReaderAsync();
                             if (reader.Read())
                             {
-                                listTeams[i].intScore = Convert.ToInt32(reader["countScore"]);
+                                // Check if the team has a score
+                                if (reader["countScore"].ToString() != "")
+                                {
+                                    listTeams[i].intScore = Convert.ToInt32(reader["countScore"]);
+                                }
+                                else
+                                {
+                                    listTeams[i].intScore = 0;
+
+                                }
                             }
                             reader.Close();
                         }
