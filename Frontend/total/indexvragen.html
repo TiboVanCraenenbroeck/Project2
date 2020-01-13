@@ -25,8 +25,8 @@
             <label class="c-lbl-subject">Onderwerp:</label>
             <button class="c-btn-send-subject js-btn-onderwerp-verzenden">verzenden</button>
             <div class="js-subject c-subject" >
-                <input list="onderwerpen" name="onderwerp" id="js-input-onderwerp">
-                <datalist id="onderwerpen">
+                <input list="onderwerpen" name="js-input-onderwerp" id="js-input-onderwerp">
+                <datalist class="js-selecteditem" name="onderwerpen" id="onderwerpen">
                   <option value="Biologie">
                 </datalist>
             </div>
@@ -44,7 +44,14 @@
             <input class="c-input-c" id="js-antwoordc"></input>
             <input class="c-input-d" id="js-antwoordd"></input>
             <label class="c-lbl-level">level: </label>
-            <input class="c-input-level " id="js-level"></input>
+            <div class="c-input-level" class="slidecontainer">
+                <input type="range" min="0" max="2" value="2" class="c-input-level c-range" id="js-level">
+                <div class="c-sliderticks">
+                    <p>Makkelijk</p>
+                    <p>Normaal</p>
+                    <p>Moeilijk</p>
+                </div>
+            </div>           
             <button class="c-btn-add js-btn-verzenden">+</button>
 
             <div class="c-form-2">     
@@ -52,10 +59,8 @@
             <label class="c-lbl-subject-2">Onderwerp:</label>
             <form class="c-subject-2" >
                 <select name="onderwerpen">
-                  <option value="Biologie">Biologie</option>
-                  <option value="Wiskunde">Wiskunde</option>
-                  <option value="Geschiedenis">Geschiedenis</option>
-                  </select>
+                  <option>Biologie</option>
+                </select>
             </form>
             <label class="c-label-q-2"> Reeds ingegeven vraag: </label>
             <input class="c-input-2" placeholder="hoeveel poten heeft een spin?"></input>
