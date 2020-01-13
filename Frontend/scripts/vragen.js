@@ -2,6 +2,7 @@ let datavragen = [];
 let dataantwoord = [];
 let domvragen, domantwoord;
 let randomnr;
+let counter=0; 
 
 
 const getDomElements = function(){
@@ -16,7 +17,6 @@ const getDomElements = function(){
 
 const getrandomnr = function(min, max){
     randomnr = Math.floor(Math.random() * (max - min)) + min;
- 
 }
 
 
@@ -84,6 +84,7 @@ const vragenophalen = function(){
     }
 
     let antwoord = "";
+    
     antwoord += `<div id="card-a" class="c-dashboard__item c-card__antwoorden  u-grid-x-1 u-grid-y-1">
     <div class="c-card__body">
         <h4 class="c-img__center">A: ${dataantwoord[0].answer}</h4>
@@ -110,6 +111,18 @@ const vragenophalen = function(){
     
 }
 
+const changenames = function(){
+    document.addEventListener('keyup', function(key)
+    {
+        counter ++;
+        if (counter == 1)
+        {
+            let teamnamea = '';
+        }
+    })
+
+}
+
 //makeymakey code + antwoord controle goed of fout. 
 const makeymakey = () => {
 	document.addEventListener('keyup', function(key) {
@@ -117,6 +130,7 @@ const makeymakey = () => {
         let divb = document.getElementById('card-b');
         let divc = document.getElementById('card-c');
         let divd = document.getElementById('card-d');
+        
 		//keyup omdat je geen probleem zou hebben met het lan inihouden van een bepaalde toets
 		switch (key.keyCode) {
 			case 37:
