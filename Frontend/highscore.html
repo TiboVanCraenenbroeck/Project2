@@ -7,7 +7,7 @@
     <title>highscore</title>
 
     <!-- script -->
-    <script src="./scripts/app.js"></script>
+    <script src="./scripts/highscore.js"></script>
     <!-- css -->
     <link rel="stylesheet" href="css/normalize.css">
     <link rel="stylesheet" href="css/screen.css">
@@ -15,40 +15,24 @@
 <body>
     <section class="o-row o-row--lg o-row--login" >
         <div class=" o-container u-max-width-lg">
-            <div class="c-dashboard__avatar">         
-                    <form class="c-card u-grid-x-1 u-grid-y-1" action="#">
-                        <div class="c-card__body">
-                            <div class="c-img__center">
-                                <h3>highscore</h3>   
-                            </div>
-                            <div class="c-img__center">
-                              <table class="c-table__spacing">
-                                <thead>
-                                  <tr>
-                                    <th>plaats</th>
-                                    <th>naam</th>
-                                    <th>score</th>
-                                  </tr>
-                                </thead>
-                                <tbody>
-                                  <tr>
-                                    <td>1</td>
-                                    <td>team a</td> 
-                                    <td>200</td>
-                                  </tr>
-                                  <tr>
-                                    <td>2</td>
-                                    <td>team b</td> 
-                                    <td>199</td>
-                                  </tr>
-                                </tbody>
-                              </table>
-                            </div>
-                        </div>   
-                    </form>
-                </div>
+          <div class="c-card u-grid-x-1 u-grid-y-1">
+            <div class="c-img__center">
+              <h3>highscore</h3>   
             </div>
+            <div class="c-dashboard__highscore">
+              <div class="u-grid-x-1 u-grid-y-1 js-team">
+                <div class="c-img__start">
+<!--                   <img src="./img/smiley.gif" alt="">
+ -->                  <p class="c-zero_margin ">teamA</p>
+                </div>
+              </div>
+              <div class="u-grid-x-1 u-grid-y-1 js-punten">
+                <p class="c-text__end c-zero_margin ">500</p>
+              </div>
+            </div>
+          </div>
         </div>
+      </div>
     </section>
 </body>
 </html>

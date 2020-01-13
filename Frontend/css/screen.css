@@ -658,6 +658,12 @@ grid
 		justify-content: center;
 		align-items: center;
 }
+.c-dashboard__highscore{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    justify-content: center;
+    align-items: center;
+}
 	.c-dashboard {
         display: grid;
         padding: 4rem;
@@ -693,9 +699,19 @@ spacing
     display: flex;
     justify-content: space-between;
 }
+.c-img__start{
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
 .c-img__center{
     display: flex;
     justify-content: center;
+    align-items: center;
+}
+.c-text__end{
+    display: flex;
+    justify-content: flex-end;
     align-items: center;
 }
 .c-table__spacing{
