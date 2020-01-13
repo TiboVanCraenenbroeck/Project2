@@ -104,7 +104,7 @@ const PostAPI = async function(dataName, method = "POST", body = null) {
     const dataURL = await fetchData2(dataName, method, body);
     console.log("gameid" + " " + dataURL.id);
     let gameid = dataURL.id 
-    localStorage.SetItem('gameid', gameid);
+    localStorage.setItem('gameid', gameid);
     
     let id = localStorage.getItem('quizid');
     console.log("quizid" + " " + id);
