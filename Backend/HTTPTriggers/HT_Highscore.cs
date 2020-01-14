@@ -17,7 +17,7 @@ namespace Backend.HTTPTriggers
     {
         [FunctionName("Highscore")]
         public static async Task<IActionResult> Run(
-            [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "v1/Highscores")] HttpRequest req,
+            [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "v1/highscores")] HttpRequest req,
             ILogger log)
         {
             try
@@ -50,7 +50,7 @@ namespace Backend.HTTPTriggers
             }
             catch (Exception ex)
             {
-                log.LogError("GetAvatar " + ex.ToString());
+                log.LogError("Highscore " + ex.ToString());
                 return new StatusCodeResult(500);
             }
         }

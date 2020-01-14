@@ -223,5 +223,28 @@ namespace Backend.StaticFunctions
             }
             return blCorrectAnswer;
         }
+        public static async Task DeleteQuesitonAsync(Guid guidQuizId,Guid guidQuestionId)
+        {
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(Environment.GetEnvironmentVariable("SQL_ConnectionsString")))
+                {
+                    await connection.OpenAsync();
+                    using (SqlCommand command = new SqlCommand())
+                    {
+                        command.Connection = connection;
+                        string sql = "UPDATE TB_Questions SET IsDeleted=1 WHERE TB_Quizzes_ID=@quizId AND ID=@questionId";
+                        command.CommandText = sql;
+                        command.Parameters.AddWithValue("@quizId", guidQuizId);
+                        command.Parameters.AddWithValue("@questionId", guidQuestionId);
+                        await command.ExecuteReaderAsync();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
     }
 }

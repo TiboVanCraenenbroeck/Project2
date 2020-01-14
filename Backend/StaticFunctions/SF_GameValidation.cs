@@ -233,5 +233,16 @@ namespace Backend.StaticFunctions
                 throw ex;
             }
         }
+        public static void DeleteHighScores(Guid guidQuizId)
+        {
+            try
+            {
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
     }
 }
