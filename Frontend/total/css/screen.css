@@ -521,6 +521,11 @@ input::placeholder {
 
 /* vragen */
 
+.c-app__main{
+    background-color: #203959;
+    background-image: url("../fotos/background2.png");
+}
+
 .c-grid{
     display: grid;
     grid-template-columns: repeat(8,1fr);
@@ -530,6 +535,7 @@ input::placeholder {
 }
 
 .c-form{
+    background-color: #fffbf9c9;
     box-shadow: 0px 3px 6px 0px rgba(0,0,0,0.16);
     grid-column: 2/8;
     grid-row: 2/20;
@@ -537,6 +543,7 @@ input::placeholder {
 }
 
 .c-form-2{
+    background-color: #fffbf9c9;
     box-shadow: 0px 3px 6px 0px rgba(0,0,0,0.16);
     grid-column: 2/8;
     grid-row: 24/44;
@@ -673,6 +680,33 @@ input::placeholder {
     grid-row: 17;
 }
 
+.c-range{
+    width: 200px;
+}
+
+.c-sliderticks{
+    display: flex;
+    justify-content: space-between;
+    padding: 0 10px;
+}
+
+.slidecontainer{
+    width: 100%;
+}
+
+.c-sliderticks p {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    width: 1px;
+    background: #D3D3D3;
+    height: 10px;
+    line-height: 40px;
+    margin: 0 0 20px 0;
+  }
+
+
 
 .c-btn-add{
     border-radius: 25px;
@@ -698,6 +732,13 @@ input::placeholder {
     grid-column: 5;
     grid-row: 2;
 }
+
+
+/* .c-oil-bg{
+    background-image: url("../fotos/background_oil.png");
+    grid-column: 2/7;
+    grid-row: 2/8;
+} */
 
 
 
@@ -741,22 +782,20 @@ input::placeholder {
     position: absolute;
     top: 0;
     left:0;
-    height: 100vh;
-    width: 100vw;
-    background-image: url("../fotos/retro.jpg");
+    height: auto;
+    width: 100%;
+    background-image: url("../fotos/background2.png");
+    background-color: #203959;
     background-size: cover;
 
 }
 
 .c-card {
-    --card-backgroundColor: #b1baf5f0;
-    --card__footer-borderColor: var(--global-color-neutral-xxx-light);
-    --card-borderRadius: var(--global-borderRadius);
-    background-color: var(--card-backgroundColor);
+    background-image: url("../fotos/background_oil.png");
+    background-size: cover;
+   /*  background-color: var(--card-backgroundColor); */
     margin-bottom: var(--global-whitespace);
-    border-radius: var(--card-borderRadius);
     height: 600px;
-    box-shadow: 0 0 0 1px rgba(0,0,0, 0.05), 0 2px 4px rgba(0,0,0,.075);
     overflow: hidden;
     
 }
@@ -822,7 +861,7 @@ input::placeholder {
     width: 100%;
     border: var(--global-borderWidth) solid var(--input-borderColor, var(--global-input-borderColor));
     border-radius: var(--global-borderRadius);
-    background-color: var(--global-input-backgroundColor);
+    background-color: #FFFBF9;
     color: var(--global-input-color);
     font-family: inherit;
     font-size: 16px;
@@ -870,13 +909,21 @@ more padding on the right to avoid overlap
     font-size: 14px;
     line-height: 16px;
     /* color: var(--label-color); */
-    color: #07114F;
+    color: #FFFBF9;
 }
 
-.c-label-logo{
-    font-size:28px;
-    color: #07114F;
+
+
+.c-dot{
+    height: 150px;
+    width: 150px;
+    background-color: #203959;
+    background-image: url("https://aikovanryssel.github.io/project2IMG/img/svg/loginsymbol.svg?fbclid=IwAR3mBy3m9-XYkYSgU_tStKyISsIk5dqGc1leNT7UMrXFI6F3msSptIkdgAI");
+    background-size: cover;
+    border-radius: 50%;
+    display: inline-block;
 }
+
 
 .c-label--option {
     padding-bottom: 0;
@@ -906,10 +953,10 @@ more padding on the right to avoid overlap
     --button-focus-boxShadow: var(--global-input-focus-boxShadow); */
     font-size: 16px;
     font-weight: 600;
-    border-radius: 0px 25px 0px 25px;
-    border: 1px solid #7E59B5;
-    background-color: #7E59B5;
-    color: #fff;
+    border-radius: 4px;
+    border: 1px solid #F6D9CF;
+    background-color: #F6D9CF;
+    color: #474242;
     line-height: calc(var(--global-baseline) * 3);
     padding: calc(var(--global-baseline) * 1.5 - var(--global-borderWidth)) var(--global-whitespace-md);
     width: 100%;

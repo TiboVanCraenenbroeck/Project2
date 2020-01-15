@@ -2,17 +2,16 @@ let id;
 let decid;
 let uri = "https://mctproject2.azurewebsites.net/api/v1/subject?cookie_id=";
 let domonderwerpen;
+let quiz_ids = [];
 
 const getDomElements = function(){
   console.log("dom geladen");
   id = getCookie('id');
   decid = id.replace("+", "%2B");
-  console.log(decid);  
 };
 
 function postdata(url = '', data= {})
 {
-  console.log('ik zit hier')
   fetch(url, {
     method: 'POST', 
     body: JSON.stringify(data),
@@ -20,6 +19,7 @@ function postdata(url = '', data= {})
   .then((response) => response.json())
   .then((data)=> {
     console.log('success:', data);
+    /* location.reload(); */
   })
   .catch((error)=>{
     console.error('error: ', error);
@@ -35,11 +35,25 @@ const buttonclick = function(){
     let data = {title: valuesubject, description: ''}
 
     id = getCookie('id');
-    console.log(id);
     decid = id.replace("+", "%2B");
-    console.log(decid);
     postdata(uri+decid, data)
     document.getElementById("js-input-onderwerp").value = "";
+
+   /*  console.log(valuesubject); */
+    /* console.log(quiz_ids); */
+   /*  for (var quiz_id in quiz_ids)
+    {
+      if(!quiz_ids.hasOwnProperty(quiz_id)) continue;
+      const everything = quiz_ids[quiz_id];
+      const qid = everything.quiz_id;
+      const title = everything.title;
+      if (title == valuesubject)
+      {
+        console.log(qid);
+        localStorage.setItem('quizid', qid);
+      }
+    } */
+   
   })
 }
 
@@ -56,10 +70,11 @@ const buttonclickvragen = function(){
     var radiobtnc = document.getElementById('js-rbtn-c').checked;
     var radiobtnd = document.getElementById('js-rbtn-d').checked; 
     var level = document.getElementById('js-level').value;
+    var levelnr = Number(level);
 
     let data = {
       question: vraag, 
-      difficult: level,
+      difficult: levelnr,
       answers: [
         {
         answer: antwoorda,
@@ -79,18 +94,36 @@ const buttonclickvragen = function(){
         }
       ]  
     }
-
     console.log(data);
-    /* let onderwerpid = "bef11ca2-3fb0-4bdf-90d2-2ad0be4787e6" */
-    let apionderwerp = "https://mctproject2.azurewebsites.net/api/v1/question/bef11ca2-3fb0-4bdf-90d2-2ad0be4787e6?cookie_id="
+    var subjectinput = document.getElementById("js-input-onderwerp");
+    let valuesubject = subjectinput.value
+    for (var quiz_id in quiz_ids)
+    {
+      if(!quiz_ids.hasOwnProperty(quiz_id)) continue;
+      const everything = quiz_ids[quiz_id];
+      const qid = everything.quiz_id;
+      const title = everything.title;
+      if (title == valuesubject)
+      {
+        console.log(qid);
+        localStorage.setItem('quizid', qid);
+      }
+    }
+
+    let onderwerpid = "bef11ca2-3fb0-4bdf-90d2-2ad0be4787e6"
+    let apio = "https://mctproject2.azurewebsites.net/api/v1/question/"+onderwerpid+"?cookie_id=";
+   /*  let apionderwerp = "https://mctproject2.azurewebsites.net/api/v1/question/bef11ca2-3fb0-4bdf-90d2-2ad0be4787e6?cookie_id=" */
     id = getCookie('id');
-    console.log(id);
     decid = id.replace("+", "%2B");
-    console.log(decid);
-    postdata(apionderwerp+decid,data)
+    
+    postdata(apio+decid,data)
+
+    
 
   })
 }
+
+//get onderwerpen
 
 const getonderwerpen = function(){
   handleData(`https://mctproject2.azurewebsites.net/api/v1/subjects`, showonderwerpen)
@@ -98,19 +131,75 @@ const getonderwerpen = function(){
 
 const showonderwerpen = function(data)
 {
-  domonderwerpen = document.querySelectorAll('.js-subject');
+  
+  domonderwerpen = document.querySelector('.js-selecteditem');
   let arronderwerpen = data
-  console.log(data)
   let OnderwerpHTML = ``;
-  for (o of arronderwerpen)
+  
+  for (let i = 0; i < data.length; i++)
   {
-    console.log(o.title);
+    let ids = {};
+    const quizdata = data[i];
+    if(quizdata.quiz_id){
+      ids['quiz_id'] = quizdata.quiz_id;
+    }
+    if (quizdata.title)
+    {
+      ids['title'] = quizdata.title;
+    }
+    
+    quiz_ids.push(ids);
+
     OnderwerpHTML += `
-      <option value="${o.title}">
-    `
+    <datalist class="js-selecteditem" id="onderwerpen">
+                  <option value=${data[i].title}>
+    </datalist>
+    `;
+   
   }
+
   domonderwerpen.innerHTML = OnderwerpHTML;
 }
+
+//get vragen
+
+const fetchData = async function(url, method = "GET", body = null) {
+  return fetch(`https://mctproject2.azurewebsites.net/api/v1/questions/${url}`, {
+    method: method,
+    body: body,
+    headers: { "content-type": "application/json" }
+  })
+    .then(r => r.json())
+    .then(data => data);
+};
+
+let getAPI = async function(url, method = "GET", body = null) {
+    try {
+      const data = await fetchData(url, method, body);
+      getrandomnr(0, data.length);
+     /*  console.log(data.error_message) */
+      for (let i = 0; i < data.length; i++)
+      {
+          let vragen = {};
+          const quizvragen = data[i];
+          if (quizvragen)
+          {
+              vragen['question'] = quizvragen.question;
+              vragen['answers'] = quizvragen.answers;
+          } 
+          datavragen.push(vragen);
+       
+      }
+
+      vragenophalen();
+
+
+      
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
 
 document.addEventListener('DOMContentLoaded', function()
 {
@@ -118,4 +207,5 @@ document.addEventListener('DOMContentLoaded', function()
     buttonclick();
     buttonclickvragen();
     getonderwerpen();
+    getAPI("bef11ca2-3fb0-4bdf-90d2-2ad0be4787e6");
 });

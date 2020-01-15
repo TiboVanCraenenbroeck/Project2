@@ -31,6 +31,8 @@ namespace Backend.HTTPTriggers
                     if (await SF_QuizExists.CheckIfQuizExistsAsync(guidQuizId))
                     {
                         // Delete all the games with this QuizId
+                        await SF_GameValidation.DeleteHighScoresAsync(guidQuizId);
+                        ObjectResultReturn.Id = "true";
                     }
                     else
                     {
