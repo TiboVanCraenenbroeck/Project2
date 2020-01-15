@@ -17,7 +17,7 @@ namespace Backend.HTTPTriggers
     {
         [FunctionName("Highscore")]
         public static async Task<IActionResult> Run(
-            [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "v1/Highscores")] HttpRequest req,
+            [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "v1/highscores")] HttpRequest req,
             ILogger log)
         {
             try
@@ -31,7 +31,7 @@ namespace Backend.HTTPTriggers
                     using (SqlCommand command = new SqlCommand())
                     {
                         command.Connection = connection;
-                        string sql = " SELECT top(10) TB_Teams.ID AS teamID, TB_Teams.Name as NameTeam, TB_Games_Teams.Score AS score  FROM TB_Teams INNER JOIN TB_Games_Teams ON TB_Teams.ID = TB_Games_Teams.TB_Teams_ID order by score Desc";
+                        string sql = "SELECT top(10) TB_Teams.ID AS teamID, TB_Teams.Name as NameTeam, TB_Games_Teams.Score AS score  FROM TB_Teams INNER JOIN TB_Games_Teams ON TB_Teams.ID = TB_Games_Teams.TB_Teams_ID INNER JOIN TB_Games ON TB_Games.ID = TB_Games_Teams.TB_Games_ID WHERE TB_Games.IsDeleted=0 order by score Desc";
                         command.CommandText = sql;
                         SqlDataReader reader = await command.ExecuteReaderAsync();
                         while (reader.Read())
@@ -42,7 +42,6 @@ namespace Backend.HTTPTriggers
                                 TeamName = reader["NameTeam"].ToString(),
                                 score = int.Parse(reader["score"].ToString())
                             });
-
                         }
                     }
                 }
@@ -50,7 +49,7 @@ namespace Backend.HTTPTriggers
             }
             catch (Exception ex)
             {
-                log.LogError("GetAvatar " + ex.ToString());
+                log.LogError("Highscore " + ex.ToString());
                 return new StatusCodeResult(500);
             }
         }

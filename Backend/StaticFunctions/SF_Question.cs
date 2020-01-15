@@ -20,7 +20,7 @@ namespace Backend.StaticFunctions
                     using (SqlCommand command = new SqlCommand())
                     {
                         command.Connection = connection;
-                        string sql = "SELECT COUNT(ID) AS countQuestion FROM TB_Questions WHERE ID=@questionId";
+                        string sql = "SELECT COUNT(ID) AS countQuestion FROM TB_Questions WHERE ID=@questionId AND IsDeleted=0";
                         command.CommandText = sql;
                         command.Parameters.AddWithValue("@questionId", guidQuestion);
                         SqlDataReader reader = await command.ExecuteReaderAsync();
@@ -149,7 +149,7 @@ namespace Backend.StaticFunctions
                     using (SqlCommand command = new SqlCommand())
                     {
                         command.Connection = connection;
-                        string sql = "SELECT ID, TB_Answers_ID, Question, Difficulty FROM TB_Questions WHERE TB_Quizzes_ID=@quizId";
+                        string sql = "SELECT ID, TB_Answers_ID, Question, Difficulty FROM TB_Questions WHERE TB_Quizzes_ID=@quizId AND IsDeleted=0";
                         command.CommandText = sql;
                         command.Parameters.AddWithValue("@quizId", guidQuizId);
                         SqlDataReader reader = await command.ExecuteReaderAsync();
@@ -222,6 +222,29 @@ namespace Backend.StaticFunctions
                 }
             }
             return blCorrectAnswer;
+        }
+        public static async Task DeleteQuesitonAsync(Guid guidQuizId,Guid guidQuestionId)
+        {
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(Environment.GetEnvironmentVariable("SQL_ConnectionsString")))
+                {
+                    await connection.OpenAsync();
+                    using (SqlCommand command = new SqlCommand())
+                    {
+                        command.Connection = connection;
+                        string sql = "UPDATE TB_Questions SET IsDeleted=1 WHERE TB_Quizzes_ID=@quizId AND ID=@questionId";
+                        command.CommandText = sql;
+                        command.Parameters.AddWithValue("@quizId", guidQuizId);
+                        command.Parameters.AddWithValue("@questionId", guidQuestionId);
+                        await command.ExecuteReaderAsync();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
     }
 }

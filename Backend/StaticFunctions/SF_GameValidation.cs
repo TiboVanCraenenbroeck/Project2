@@ -58,7 +58,16 @@ namespace Backend.StaticFunctions
                             SqlDataReader reader = await command.ExecuteReaderAsync();
                             if (reader.Read())
                             {
-                                listTeams[i].intScore = Convert.ToInt32(reader["countScore"]);
+                                // Check if the team has a score
+                                if (reader["countScore"].ToString() != "")
+                                {
+                                    listTeams[i].intScore = Convert.ToInt32(reader["countScore"]);
+                                }
+                                else
+                                {
+                                    listTeams[i].intScore = 0;
+
+                                }
                             }
                             reader.Close();
                         }
@@ -137,8 +146,7 @@ namespace Backend.StaticFunctions
                     using (SqlCommand command = new SqlCommand())
                     {
                         command.Connection = connection;
-                        string sql = "SELECT TOP 1 TB_Questions.ID AS questionId, TB_Questions.Question AS question, TB_Questions.TB_Answers_ID AS answerId FROM TB_Games INNER JOIN TB_Questions ON TB_Games.TB_Quizzes_ID = TB_Questions.TB_Quizzes_ID LEFT JOIN TB_Games_Answers ON TB_Games_Answers.TB_Questions_ID = TB_Games.TB_Quizzes_ID WHERE TB_Games.ID = @gameId AND TB_Games_Answers.TB_Games_ID IS NULL AND TB_Questions.Difficulty=@difficulty AND (SELECT COUNT(*) FROM TB_Games_Answers WHERE TB_Questions_ID=TB_Questions.ID AND TB_Games_ID=TB_Games.ID)=0 ORDER BY NEWID()";
-                        //string sql = "SELECT TOP 1 TB_Questions.ID AS questionId, TB_Questions.Question AS question, TB_Questions.TB_Answers_ID AS answerId FROM TB_Games INNER JOIN TB_Questions ON TB_Games.TB_Quizzes_ID = TB_Questions.TB_Quizzes_ID LEFT JOIN TB_Games_Answers ON TB_Games_Answers.TB_Games_ID = TB_Games.ID WHERE TB_Games.ID = @gameId AND TB_Games_Answers.TB_Games_ID IS NULL AND TB_Questions.Difficulty=@difficulty ORDER BY NEWID()";
+                        string sql = "SELECT TOP 1 TB_Questions.ID AS questionId, TB_Questions.Question AS question, TB_Questions.TB_Answers_ID AS answerId FROM TB_Games INNER JOIN TB_Questions ON TB_Games.TB_Quizzes_ID = TB_Questions.TB_Quizzes_ID LEFT JOIN TB_Games_Answers ON TB_Games_Answers.TB_Questions_ID = TB_Games.TB_Quizzes_ID WHERE TB_Games.ID = @gameId AND TB_Games_Answers.TB_Games_ID IS NULL AND TB_Questions.Difficulty=@difficulty AND (SELECT COUNT(*) FROM TB_Games_Answers WHERE TB_Questions_ID=TB_Questions.ID AND TB_Games_ID=TB_Games.ID)=0 AND TB_Questions.IsDeleted=0 ORDER BY NEWID()";
                         command.CommandText = sql;
                         command.Parameters.AddWithValue("@gameId", guidGameId);
                         command.Parameters.AddWithValue("@difficulty", intDifficulty);
@@ -216,6 +224,28 @@ namespace Backend.StaticFunctions
                         {
                             return false;
                         }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        public static async Task DeleteHighScoresAsync(Guid guidQuizId)
+        {
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(Environment.GetEnvironmentVariable("SQL_ConnectionsString")))
+                {
+                    await connection.OpenAsync();
+                    using (SqlCommand command = new SqlCommand())
+                    {
+                        command.Connection = connection;
+                        string sql = "UPDATE TB_Games SET IsDeleted=1 WHERE TB_Quizzes_ID=@quizId";
+                        command.CommandText = sql;
+                        command.Parameters.AddWithValue("@quizId", guidQuizId);
+                        await command.ExecuteReaderAsync();
                     }
                 }
             }
