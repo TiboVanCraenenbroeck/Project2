@@ -43,7 +43,7 @@ const getApi = async function(SERVER_ENDPOINT) {
 
 document.addEventListener('DOMContentLoaded', function()
 {
-  let test="https://mctproject2.azurewebsites.net/api/v1/Highscores"
+  let test="https://mctproject2.azurewebsites.net/api/v1/highscores"
   getApi(test);
   domonderwerpen = document.querySelector('.js-select')
 });
