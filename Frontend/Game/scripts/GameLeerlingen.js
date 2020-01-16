@@ -15,13 +15,14 @@ let playingTeam,
   questionDuration,
   btnIdAnswerSelected;
 // Vars from dom
-let domTeamnamePlayingTeam, domQuestion, domAnswers;
+let domTeamnamePlayingTeam, domQuestion, domAnswers, domAvatarPlayingTeam;
 
 // Functions
 // Fucntion for display the playing team
 const displayPlayingTeam = function(dataPlayingTeam) {
   playingTeam = dataPlayingTeam;
   domTeamnamePlayingTeam.innerHTML = dataPlayingTeam["name"];
+  domAvatarPlayingTeam.src = `https://aikovanryssel.github.io/project2IMG/img/raket/svg/${dataPlayingTeam["avatar"]["name"]}.svg`;
 };
 // Function for display the new question
 const displayQuestion = function(dataQuestion) {
@@ -167,6 +168,7 @@ const loadDomElements = function() {
   domTeamnamePlayingTeam = document.querySelector(".js-teamName--playing");
   domQuestion = document.querySelector(".js-question");
   domAnswers = document.querySelectorAll(".js-answer");
+  domAvatarPlayingTeam = document.querySelector(".js-img__playing-team-avatar");
   // Check if the users click on the button (on the screen)
   for (const btnAnswer of domAnswers) {
     btnAnswer.addEventListener("click", function() {
@@ -188,7 +190,7 @@ document.addEventListener("DOMContentLoaded", function() {
   console.log("Spelen maar😎😎😎");
   // TIJDELIJK ZET GAMEID IN LOCALSTORAGE
   localStorage.setItem("quizid", "BEF11CA2-3FB0-4BDF-90D2-2AD0BE4787E6");
-  localStorage.setItem("gameid", "4ac580d4-815c-486c-a98f-a0bfd5e1cbcc");
+  localStorage.setItem("gameid", "51826506-3c57-4e8e-adec-43c2c78a995b");
   // Load DOM-elements
   loadDomElements();
   // Load the first game (data)

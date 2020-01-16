@@ -123,7 +123,7 @@ background: radial-gradient(circle, rgba(251,192,45,1) 0%, rgba(255,235,59,1) 70
 
 html {
   background-color: var(--global-page-backgroundColor);
-  background-image: url("https://aikovanryssel.github.io/project2IMG/img/achtergrond/svg/backgroundsterren.svg");
+  background-image: url("https://aikovanryssel.github.io/project2IMG/img/achtergrond/svg/backgrounddoorzichtig.svg");
   color: var(--global-page-color);
   font-size: 16px;
   line-height: 1.5;
@@ -660,7 +660,13 @@ grid
 .c-dashboard__item {
   box-shadow: 0 2px 3px rgba(0, 0, 0, 0.125);
 }
-
+.c-planet {
+  position: fixed;
+  z-index: 999;
+  bottom: 71%;
+  left: 3%;
+  width: 160px;
+}
 @media screen and (min-width: 960px) {
   .c-dashboard__item {
     grid-column: 1/-1;
