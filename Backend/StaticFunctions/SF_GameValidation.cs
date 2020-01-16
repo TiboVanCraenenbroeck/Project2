@@ -187,10 +187,10 @@ namespace Backend.StaticFunctions
                             }
                             reader.Close();
                         }
+                        // Shuffle list of answers
+                        question.listAnswer.Shuffle();
                     }
                 }
-                // Shuffle list of answers
-                question.listAnswer.Shuffle();
                 return question;
             }
             catch (Exception ex)
