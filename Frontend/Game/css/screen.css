@@ -660,12 +660,33 @@ grid
 .c-dashboard__item {
   box-shadow: 0 2px 3px rgba(0, 0, 0, 0.125);
 }
-.c-planet {
+.c-score {
+  --score--planet-size: 10rem;
+  --score-bottom-team-a: 0%;
+  --score-bottom-team-b: 0%;
   position: fixed;
   z-index: 999;
+  transition: bottom 500ms ease-in-out;
+}
+.c-score__planet-team-a {
   bottom: 71%;
   left: 3%;
-  width: 160px;
+  width: var(--score--planet-size);
+}
+.c-score__raket-team-a {
+  bottom: var(--score-bottom-team-a);
+  left: 0%;
+  width: calc(var(--score--planet-size) * 1.5);
+}
+.c-score__planet-team-b {
+  bottom: 71%;
+  right: 3%;
+  width: var(--score--planet-size);
+}
+.c-score__raket-team-b {
+  bottom: var(--score-bottom-team-b);
+  right: 0%;
+  width: calc(var(--score--planet-size) * 1.5);
 }
 @media screen and (min-width: 960px) {
   .c-dashboard__item {

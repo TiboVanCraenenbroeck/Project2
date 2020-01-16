@@ -1,6 +1,8 @@
 // Vars
 const homaPage = "https://google.com",
-  chars = ["A", "B", "C", "D"];
+  chars = ["A", "B", "C", "D"],
+  linkImg = "https://aikovanryssel.github.io/project2IMG/",
+  maxScore = 3000;
 let gameId,
   quizId,
   urlGetQuestion = "gamevalidation/",
@@ -15,14 +17,39 @@ let playingTeam,
   questionDuration,
   btnIdAnswerSelected;
 // Vars from dom
-let domTeamnamePlayingTeam, domQuestion, domAnswers, domAvatarPlayingTeam;
+let domTeamnamePlayingTeam,
+  domQuestion,
+  domAnswers,
+  domAvatarPlayingTeam,
+  domRockets;
 
 // Functions
+// Change the distance of the bottom of the rocket
+const changeHeightOfRocket = function(teamId, score) {
+  // Clac the bottom
+  const bottom = (score / maxScore) * 71;
+  for (const domRocket of domRockets) {
+    // Check if the element is the rocket of the team
+    if (domRocket.getAttribute("data-teamId") == teamId) {
+      // Set the bottom
+      domRocket.style.bottom = `${bottom}%`;
+    }
+  }
+};
+// Function that gets the AvatarIds of the teams
+const getAvatarsFromTeam = function(data) {
+  for (const [index, domRocket] of domRockets.entries()) {
+    try {
+      domRocket.src = `${linkImg}img/raketrecht/svg/${data[index]["avatar"]["name"]}.svg`;
+      domRocket.setAttribute("data-teamId", data[index]["team_id"]);
+    } catch (error) {}
+  }
+};
 // Fucntion for display the playing team
 const displayPlayingTeam = function(dataPlayingTeam) {
   playingTeam = dataPlayingTeam;
   domTeamnamePlayingTeam.innerHTML = dataPlayingTeam["name"];
-  domAvatarPlayingTeam.src = `https://aikovanryssel.github.io/project2IMG/img/raket/svg/${dataPlayingTeam["avatar"]["name"]}.svg`;
+  domAvatarPlayingTeam.src = `${linkImg}img/raket/svg/${dataPlayingTeam["avatar"]["name"]}.svg`;
 };
 // Function for display the new question
 const displayQuestion = function(dataQuestion) {
@@ -73,6 +100,8 @@ const firstGame = function() {
   }
   // Check if the quizId and the gameId aren't null
   if (quizId != null && gameId != null) {
+    // Get the avatars
+    getAPI(`game/teams/${gameId}`, getAvatarsFromTeam);
     // Get the first question from the API
     urlGetQuestion += `${quizId}/${gameId}`;
     getAPI(urlGetQuestion, proccesGameValidation);
@@ -169,6 +198,7 @@ const loadDomElements = function() {
   domQuestion = document.querySelector(".js-question");
   domAnswers = document.querySelectorAll(".js-answer");
   domAvatarPlayingTeam = document.querySelector(".js-img__playing-team-avatar");
+  domRockets = document.querySelectorAll(".js-rocket");
   // Check if the users click on the button (on the screen)
   for (const btnAnswer of domAnswers) {
     btnAnswer.addEventListener("click", function() {
