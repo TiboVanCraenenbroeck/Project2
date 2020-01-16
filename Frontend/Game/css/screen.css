@@ -353,7 +353,7 @@ input::placeholder {
 .o-container {
   margin-left: auto;
   margin-right: auto;
-  max-width: 79.5em; /* 79.5 * 16px = 1272 */
+  max-width: 51em; /* 79.5 * 16px = 1272 */
   width: 100%;
 }
 

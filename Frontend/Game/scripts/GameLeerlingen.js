@@ -128,7 +128,7 @@ const showCorrectAnswer = function(jsonBody) {
     const jsonApiBody = JSON.stringify(jsonBody);
     // Send the answer to the API
     getAPI(urlGetQuestion, proccesGameValidation, "POST", jsonApiBody);
-  }, 5000);
+  }, 1000000);
 };
 // Function that send the user answer to the backend
 const answerValidation = function() {
@@ -188,7 +188,7 @@ document.addEventListener("DOMContentLoaded", function() {
   console.log("Spelen maar😎😎😎");
   // TIJDELIJK ZET GAMEID IN LOCALSTORAGE
   localStorage.setItem("quizid", "BEF11CA2-3FB0-4BDF-90D2-2AD0BE4787E6");
-  localStorage.setItem("gameid", "61247c36-843e-4b11-b2bb-817b5facefc3");
+  localStorage.setItem("gameid", "4ac580d4-815c-486c-a98f-a0bfd5e1cbcc");
   // Load DOM-elements
   loadDomElements();
   // Load the first game (data)
