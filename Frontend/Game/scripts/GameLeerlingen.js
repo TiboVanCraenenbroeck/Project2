@@ -23,7 +23,7 @@ const displayPlayingTeam = function(dataPlayingTeam) {
   playingTeam = dataPlayingTeam;
   domTeamnamePlayingTeam.innerHTML = dataPlayingTeam["name"];
 };
-// Fucntion for display the new question
+// Function for display the new question
 const displayQuestion = function(dataQuestion) {
   console.log(dataQuestion);
   playingQuestion = dataQuestion;
@@ -36,7 +36,7 @@ const displayQuestion = function(dataQuestion) {
     domAnswers[index].setAttribute("data-answerId", answer["answer_id"]);
   }
 };
-// Fucntions that handles the response from the API (GameValidation)
+// Fucntion that handles the response from the API (GameValidation)
 const proccesGameValidation = function(data) {
   // check if it is the first game
   if (countGames > 0) {
@@ -53,8 +53,9 @@ const proccesGameValidation = function(data) {
     numberOfCorrectAttemps = data["number_of_correct_attempts"];
     // Start the timer
     questionStart = new Date().getTime();
-  } else {
+  } else if (data["game_status"] == 2) {
     // Send the user to the winningScreen
+    window.location.href = homaPage;
   }
   countGames++;
 };
@@ -116,6 +117,7 @@ const showCorrectAnswer = function(jsonBody) {
     } else if (btnAnswer.hasAttribute("data-answerSelected")) {
       // Check if the it is true
       if (btnAnswer.getAttribute("data-answerSelected")) {
+        btnAnswer.removeAttribute("data-answerSelected");
         btnAnswer.classList.add("c-answer-wrong");
       }
     }
@@ -186,7 +188,7 @@ document.addEventListener("DOMContentLoaded", function() {
   console.log("Spelen maar😎😎😎");
   // TIJDELIJK ZET GAMEID IN LOCALSTORAGE
   localStorage.setItem("quizid", "BEF11CA2-3FB0-4BDF-90D2-2AD0BE4787E6");
-  localStorage.setItem("gameid", "793CE34C-E715-4955-8371-D6494331C5A1");
+  localStorage.setItem("gameid", "61247c36-843e-4b11-b2bb-817b5facefc3");
   // Load DOM-elements
   loadDomElements();
   // Load the first game (data)

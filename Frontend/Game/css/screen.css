@@ -648,6 +648,9 @@ grid
   grid-template-rows: repeat(2, 1fr);
   align-items: center;
 }
+/* .c-card__antwoorden .c-card__body .c-answer[data-answerSelected="true"] {
+  background-color: blue;
+} */
 .c-answer-correct {
   background-color: green;
 }
@@ -698,6 +701,13 @@ grid
     justify-content: center;
     align-items: center;
   }
+}
+/* IMG */
+.c-img__circle {
+  background-color: white;
+  border-radius: 50%;
+  width: 160px;
+  height: 160px;
 }
 /*
 spacing
