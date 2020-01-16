@@ -72,7 +72,7 @@ namespace Backend.StaticFunctions
                     using (SqlCommand command = new SqlCommand())
                     {
                         command.Connection = connection;
-                        string sql = "INSERT INTO TB_Teams VALUES(@id, @avatarId, @name)";
+                        string sql = "INSERT INTO TB_Teams VALUES(@id, @avatarId, @name, null)";
                         command.CommandText = sql;
                         command.Parameters.AddWithValue("@id", guidTeamId);
                         command.Parameters.AddWithValue("@avatarId", team.avatar.Id);
@@ -99,7 +99,7 @@ namespace Backend.StaticFunctions
                     using (SqlCommand command = new SqlCommand())
                     {
                         command.Connection = connection;
-                        string sql = "SELECT TB_Teams.ID AS TeamId, TB_Teams.Name AS TeamName, TB_Avatars.Name AS AvatarName, TB_Avatars.ID AS AvatarId, TB_Avatars.MovingAvatar AS MovingAvatar, TB_Avatars.StaticAvatarSmall AS StaticAvatarSmall, TB_Avatars.StaticAvatarBig AS StaticAvatarBig FROM TB_Games_Teams INNER JOIN TB_Teams ON TB_Teams.ID = TB_Games_Teams.TB_Teams_ID INNER JOIN TB_Avatars ON TB_Avatars.ID = TB_Teams.TB_Avatars_ID WHERE TB_Games_Teams.TB_Games_ID=@gameId";
+                        string sql = "SELECT TB_Teams.ID AS TeamId, TB_Teams.Name AS TeamName, TB_Avatars.Name AS AvatarName, TB_Avatars.ID AS AvatarId, TB_Games_Teams.Score AS teamScore FROM TB_Games_Teams INNER JOIN TB_Teams ON TB_Teams.ID = TB_Games_Teams.TB_Teams_ID INNER JOIN TB_Avatars ON TB_Avatars.ID = TB_Teams.TB_Avatars_ID WHERE TB_Games_Teams.TB_Games_ID=@gameId";
                         command.CommandText = sql;
                         command.Parameters.AddWithValue("@gameId", guidGameId);
                         SqlDataReader reader = await command.ExecuteReaderAsync();
@@ -112,10 +112,7 @@ namespace Backend.StaticFunctions
                                 avatar = new Model_Avatar()
                                 {
                                     Id = Guid.Parse(reader["AvatarId"].ToString()),
-                                    strName = reader["AvatarName"].ToString(),
-                                    strMovingAvatar = reader["MovingAvatar"].ToString(),
-                                    strStaticAvatarBig = reader["StaticAvatarBig"].ToString(),
-                                    strStaticAvatarSmall = reader["StaticAvatarSmall"].ToString()
+                                    strName = reader["AvatarName"].ToString()
                                 }
                             });
                         }

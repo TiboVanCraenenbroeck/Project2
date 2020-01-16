@@ -1,6 +1,8 @@
 // Vars
 const homaPage = "https://google.com",
-  chars = ["A", "B", "C", "D"];
+  chars = ["A", "B", "C", "D"],
+  linkImg = "https://aikovanryssel.github.io/project2IMG/",
+  maxScore = 3000;
 let gameId,
   quizId,
   urlGetQuestion = "gamevalidation/",
@@ -15,15 +17,41 @@ let playingTeam,
   questionDuration,
   btnIdAnswerSelected;
 // Vars from dom
-let domTeamnamePlayingTeam, domQuestion, domAnswers;
+let domTeamnamePlayingTeam,
+  domQuestion,
+  domAnswers,
+  domAvatarPlayingTeam,
+  domRockets;
 
 // Functions
+// Change the distance of the bottom of the rocket
+const changeHeightOfRocket = function(teamId, score) {
+  // Clac the bottom
+  const bottom = (score / maxScore) * 71;
+  for (const domRocket of domRockets) {
+    // Check if the element is the rocket of the team
+    if (domRocket.getAttribute("data-teamId") == teamId) {
+      // Set the bottom
+      domRocket.style.bottom = `${bottom}%`;
+    }
+  }
+};
+// Function that gets the AvatarIds of the teams
+const getAvatarsFromTeam = function(data) {
+  for (const [index, domRocket] of domRockets.entries()) {
+    try {
+      domRocket.src = `${linkImg}img/raketrecht/svg/${data[index]["avatar"]["name"]}.svg`;
+      domRocket.setAttribute("data-teamId", data[index]["team_id"]);
+    } catch (error) {}
+  }
+};
 // Fucntion for display the playing team
 const displayPlayingTeam = function(dataPlayingTeam) {
   playingTeam = dataPlayingTeam;
   domTeamnamePlayingTeam.innerHTML = dataPlayingTeam["name"];
+  domAvatarPlayingTeam.src = `${linkImg}img/raket/svg/${dataPlayingTeam["avatar"]["name"]}.svg`;
 };
-// Fucntion for display the new question
+// Function for display the new question
 const displayQuestion = function(dataQuestion) {
   console.log(dataQuestion);
   playingQuestion = dataQuestion;
@@ -36,7 +64,7 @@ const displayQuestion = function(dataQuestion) {
     domAnswers[index].setAttribute("data-answerId", answer["answer_id"]);
   }
 };
-// Fucntions that handles the response from the API (GameValidation)
+// Fucntion that handles the response from the API (GameValidation)
 const proccesGameValidation = function(data) {
   // check if it is the first game
   if (countGames > 0) {
@@ -53,8 +81,9 @@ const proccesGameValidation = function(data) {
     numberOfCorrectAttemps = data["number_of_correct_attempts"];
     // Start the timer
     questionStart = new Date().getTime();
-  } else {
+  } else if (data["game_status"] == 2) {
     // Send the user to the winningScreen
+    window.location.href = homaPage;
   }
   countGames++;
 };
@@ -71,6 +100,8 @@ const firstGame = function() {
   }
   // Check if the quizId and the gameId aren't null
   if (quizId != null && gameId != null) {
+    // Get the avatars
+    getAPI(`game/teams/${gameId}`, getAvatarsFromTeam);
     // Get the first question from the API
     urlGetQuestion += `${quizId}/${gameId}`;
     getAPI(urlGetQuestion, proccesGameValidation);
@@ -116,6 +147,7 @@ const showCorrectAnswer = function(jsonBody) {
     } else if (btnAnswer.hasAttribute("data-answerSelected")) {
       // Check if the it is true
       if (btnAnswer.getAttribute("data-answerSelected")) {
+        btnAnswer.removeAttribute("data-answerSelected");
         btnAnswer.classList.add("c-answer-wrong");
       }
     }
@@ -165,6 +197,8 @@ const loadDomElements = function() {
   domTeamnamePlayingTeam = document.querySelector(".js-teamName--playing");
   domQuestion = document.querySelector(".js-question");
   domAnswers = document.querySelectorAll(".js-answer");
+  domAvatarPlayingTeam = document.querySelector(".js-img__playing-team-avatar");
+  domRockets = document.querySelectorAll(".js-rocket");
   // Check if the users click on the button (on the screen)
   for (const btnAnswer of domAnswers) {
     btnAnswer.addEventListener("click", function() {
@@ -186,7 +220,7 @@ document.addEventListener("DOMContentLoaded", function() {
   console.log("Spelen maar😎😎😎");
   // TIJDELIJK ZET GAMEID IN LOCALSTORAGE
   localStorage.setItem("quizid", "BEF11CA2-3FB0-4BDF-90D2-2AD0BE4787E6");
-  localStorage.setItem("gameid", "793CE34C-E715-4955-8371-D6494331C5A1");
+  localStorage.setItem("gameid", "51826506-3c57-4e8e-adec-43c2c78a995b");
   // Load DOM-elements
   loadDomElements();
   // Load the first game (data)

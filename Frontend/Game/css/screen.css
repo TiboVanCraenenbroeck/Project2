@@ -123,7 +123,7 @@ background: radial-gradient(circle, rgba(251,192,45,1) 0%, rgba(255,235,59,1) 70
 
 html {
   background-color: var(--global-page-backgroundColor);
-  background-image: url("https://aikovanryssel.github.io/project2IMG/img/achtergrond/svg/backgroundsterren.svg");
+  background-image: url("https://aikovanryssel.github.io/project2IMG/img/achtergrond/svg/backgrounddoorzichtig.svg");
   color: var(--global-page-color);
   font-size: 16px;
   line-height: 1.5;
@@ -353,7 +353,7 @@ input::placeholder {
 .o-container {
   margin-left: auto;
   margin-right: auto;
-  max-width: 79.5em; /* 79.5 * 16px = 1272 */
+  max-width: 51em; /* 79.5 * 16px = 1272 */
   width: 100%;
 }
 
@@ -648,6 +648,9 @@ grid
   grid-template-rows: repeat(2, 1fr);
   align-items: center;
 }
+/* .c-card__antwoorden .c-card__body .c-answer[data-answerSelected="true"] {
+  background-color: blue;
+} */
 .c-answer-correct {
   background-color: green;
 }
@@ -657,7 +660,34 @@ grid
 .c-dashboard__item {
   box-shadow: 0 2px 3px rgba(0, 0, 0, 0.125);
 }
-
+.c-score {
+  --score--planet-size: 10rem;
+  --score-bottom-team-a: 0%;
+  --score-bottom-team-b: 0%;
+  position: fixed;
+  z-index: 999;
+  transition: bottom 500ms ease-in-out;
+}
+.c-score__planet-team-a {
+  bottom: 71%;
+  left: 3%;
+  width: var(--score--planet-size);
+}
+.c-score__raket-team-a {
+  bottom: var(--score-bottom-team-a);
+  left: 0%;
+  width: calc(var(--score--planet-size) * 1.5);
+}
+.c-score__planet-team-b {
+  bottom: 71%;
+  right: 3%;
+  width: var(--score--planet-size);
+}
+.c-score__raket-team-b {
+  bottom: var(--score-bottom-team-b);
+  right: 0%;
+  width: calc(var(--score--planet-size) * 1.5);
+}
 @media screen and (min-width: 960px) {
   .c-dashboard__item {
     grid-column: 1/-1;
@@ -698,6 +728,13 @@ grid
     justify-content: center;
     align-items: center;
   }
+}
+/* IMG */
+.c-img__circle {
+  background-color: white;
+  border-radius: 50%;
+  width: 160px;
+  height: 160px;
 }
 /*
 spacing

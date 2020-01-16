@@ -39,10 +39,7 @@ namespace Backend.HTTPTriggers
                             listResult.Add(new Model_Avatar()
                             {
                                 Id = Guid.Parse(reader["ID"].ToString()),
-                                strName = reader["Name"].ToString(),
-                                strMovingAvatar = reader["MovingAvatar"].ToString(),
-                                strStaticAvatarBig = reader["StaticAvatarBig"].ToString(),
-                                strStaticAvatarSmall = reader["StaticAvatarSmall"].ToString()
+                                strName = reader["Name"].ToString()
                             });
 
                         }
