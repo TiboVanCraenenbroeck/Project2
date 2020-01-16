@@ -128,7 +128,7 @@ const showCorrectAnswer = function(jsonBody) {
     const jsonApiBody = JSON.stringify(jsonBody);
     // Send the answer to the API
     getAPI(urlGetQuestion, proccesGameValidation, "POST", jsonApiBody);
-  }, 1000000);
+  }, 5000);
 };
 // Function that send the user answer to the backend
 const answerValidation = function() {
