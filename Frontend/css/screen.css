@@ -129,7 +129,7 @@ background: radial-gradient(circle, rgba(251,192,45,1) 0%, rgba(255,235,59,1) 70
 html {
     background: url(https://aikovanryssel.github.io/project2IMG/img/achtergrond/svg/backgroundsterren.svg);
     background-color:var(--global-page-backgroundColor);
-    color: var(--global-page-color);
+    color: var( --global-color-button-background);
     font-size: 16px;
     line-height: 1.5;
     font-family: "Inter Web", Helvetica, arial, sans-serif;
@@ -626,20 +626,46 @@ grid
 */
 
 .c-raket{
-    position: absolute;
+    position: fixed;
+    z-index: 0;
     right: 0rem;
     bottom:0rem;
-    height: 656px; 
-    width: 672px;  
+    /* height: 656px; 
+    width: 672px; */  
+    height:85%; 
+    width: auto;  
 
+}
+.c-olievlek{ 
+    z-index: 1; 
+    height: 100%;
+    width: 100%;
+    background-size: 100% 100%;
+    background-image: url('https://aikovanryssel.github.io/project2IMG/img/svg/loadingscreenblur.svg');
 }
 .c-maan{
     position: absolute;
     bottom:0rem;
 }
+.c-img-scale{
+    height: 80%;
+    width: 80%;
+} 
+.c-margin{
+    margin-left: 1rem;
+
+}
+.c-select{
+    border-color: var(--global-color-border-button);
+    background-color: var(--global-color-button-background);
+    height: calc(var(--global-baseline) * 6);
+    border-radius: 4px;
+
+}
 @media screen and (min-width: 1600px) {
     .c-raket{
         position: absolute;
+        z-index: 0;
         right: 0rem;
         bottom:0rem;
         height: 856px; 
@@ -707,7 +733,7 @@ grid
         display: grid;
         padding: 1rem;
         grid-gap: 4rem;
-		grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: repeat(2, 1fr);
 		justify-content: center;
 		align-items: center;
     }
@@ -1011,6 +1037,8 @@ more padding on the right to avoid overlap
 */
 
 .c-button {
+    position: relative;
+    z-index: 1;
     font-size: 16px;
     font-weight: 600;
     border-radius: var(--button-borderRadius, var(--global-borderRadius));
@@ -1024,6 +1052,7 @@ more padding on the right to avoid overlap
     box-shadow: var(--button-boxShadow, 0);
     transition: all var(--global-transitionDuration-alpha) var(--global-transitionEasing-out);
 }
+
 
 .c-button:hover {
     border-color: var(--button-hover-borderColor, var( --global-color-border-button));
@@ -1654,7 +1683,7 @@ grids
 }
 
 .u-max-width-lg {
-    max-width: 63.5em !important;
+    max-width: 73.5em !important;/*normaal 63.5*/
 }
 
 .u-max-width-none {
