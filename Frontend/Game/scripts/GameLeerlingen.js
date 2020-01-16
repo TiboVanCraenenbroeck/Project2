@@ -181,11 +181,6 @@ const showCorrectAnswer = function(jsonBody) {
   const correctAnswerId = returnCorrectAnswerId();
   // Show the correct answer
   for (const btnAnswer of domAnswers) {
-    console.log(
-      btnAnswer.getAttribute("data-answerId"),
-      " !!! ",
-      correctAnswerId
-    );
     // Check if the button has the same id
     if (btnAnswer.getAttribute("data-answerId") == correctAnswerId) {
       btnAnswer.classList.add("c-answer-correct");

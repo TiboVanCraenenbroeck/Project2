@@ -109,6 +109,7 @@ namespace Backend.StaticFunctions
                             {
                                 Id = Guid.Parse(reader["TeamId"].ToString()),
                                 strName = reader["TeamName"].ToString(),
+                                intScore = Convert.ToInt32(reader["teamScore"]),
                                 avatar = new Model_Avatar()
                                 {
                                     Id = Guid.Parse(reader["AvatarId"].ToString()),
