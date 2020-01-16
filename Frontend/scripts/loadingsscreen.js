@@ -22,7 +22,7 @@ const ontvangenOnderwerpen=(data)=>{
     quiz_ids.push(ids);
 
     onderwerpHTML += `
-    <select name="select" id="select" class=" u-grid-x-3 u-grid-y-1 js-select">
+    <select name="select" id="select" class=" c-select u-grid-x-3 u-grid-y-1 js-select">
     <option>${data[i].title}</option>
     </select> 
    `;
