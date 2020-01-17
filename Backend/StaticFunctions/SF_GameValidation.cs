@@ -102,7 +102,8 @@ namespace Backend.StaticFunctions
                         {
                             modelGameValidation.intNumberOfCorrectAttempts++;
                             //countPoints = If the answer is correct --> return=1 else return=0
-                            modelGameValidation.team.intScore = Convert.ToInt32(reader["countPoints"]) * modelGameValidation.intNumberOfCorrectAttempts * 1111;
+                            modelGameValidation.team.intScore = Convert.ToInt32(reader["countPoints"]) * ((modelGameValidation.question.intDifficulty + 1) * 50);
+                            //modelGameValidation.team.intScore = Convert.ToInt32(reader["countPoints"]) * 50;
                         }
                         reader.Close();
                     }
@@ -121,6 +122,33 @@ namespace Backend.StaticFunctions
                         SqlDataReader reader = await command.ExecuteReaderAsync();
                         reader.Close();
                     }
+                }
+                // Select the team
+                if (modelGameValidation.intNumberOfCorrectAttempts <= 5 && modelGameValidation.team.intScore > 0)
+                {
+                    // Set a new level
+                    if (modelGameValidation.intNumberOfCorrectAttempts == 1 || modelGameValidation.intNumberOfCorrectAttempts == 2)
+                    {
+                        modelGameValidation.question.intDifficulty = 1;
+                    }
+                    else if (modelGameValidation.intNumberOfCorrectAttempts == 3 || modelGameValidation.intNumberOfCorrectAttempts == 4)
+                    {
+                        modelGameValidation.question.intDifficulty = 2;
+                    }
+                }
+                else
+                {
+                    // Select other team
+                    List<Model_Team> listTeams = await SF_TeamFunctions.GetTeamFromGameAsync(guidGameId);
+                    foreach (Model_Team itemTeam in listTeams)
+                    {
+                        if (itemTeam.Id != modelGameValidation.team.Id)
+                        {
+                            modelGameValidation.team = itemTeam;
+                            break;
+                        }
+                    }
+                    modelGameValidation.intNumberOfCorrectAttempts = 0;
                 }
                 // Difficulty ++ by 3 correct answers
                 if (modelGameValidation.question.intDifficulty < 3)
