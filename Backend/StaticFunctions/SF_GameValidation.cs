@@ -15,6 +15,8 @@ namespace Backend.StaticFunctions
             try
             {
                 List<Model_Team> listTeams = await SF_TeamFunctions.GetTeamFromGameAsync(guidGameId);
+                // Get score from team
+                listTeams = await GetScoreFromTeamsAsync(guidGameId, listTeams);
                 using (SqlConnection connection = new SqlConnection(Environment.GetEnvironmentVariable("SQL_ConnectionsString")))
                 {
                     await connection.OpenAsync();

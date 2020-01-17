@@ -21,9 +21,54 @@ let domTeamnamePlayingTeam,
   domQuestion,
   domAnswers,
   domAvatarPlayingTeam,
-  domRockets;
+  domRockets,
+  domPlanets,
+  domWinnarScreen;
 
 // Functions
+// Set the winning rocket
+const winningRocket = function(winningRocket) {};
+// Function that clear the screen
+const clearscreen = function() {
+  // rockets out of window
+  for (const domRocket of domRockets) {
+    domRocket.style.bottom = "131%";
+  }
+  setInterval(() => {
+    // Drop the planets
+    for (const [index, domPlanet] of domPlanets.entries()) {
+      // Set the planet in the correct position
+      if (index == 0) {
+        domPlanet.style.bottom = "47%";
+        domPlanets[0].style.transform = "translateX(650%)";
+      } else {
+        domPlanet.style.bottom = "-31%";
+      }
+    }
+  }, 300);
+  // Show the winner-screen
+  domWinnarScreen.style.height = "100vh";
+  domWinnarScreen.style.opacity = "1";
+};
+// function if one of the teams wins
+const teamWins = function(data) {
+  let teamScore = 0,
+    winningTeamName,
+    winningTeamAvatar;
+  // Get the winning team
+  for (const team of data) {
+    if (team["score"] > teamScore) {
+      teamScore = team["score"];
+      winningTeamName = team["name"];
+      winningTeamAvatar = team["avatar"]["name"];
+    }
+  }
+  clearscreen();
+  winningRocket(winningTeamAvatar);
+  // Set the score and the name of the winning team in the DOM
+  domWinnarScreen.innerHTML = `<h1>Bedankt ${winningTeamName} jij Bent de winnaar!</h1>
+  <h1>Punten: ${teamScore}</h1>`;
+};
 // Change the distance of the bottom of the rocket
 const changeHeightOfRocket = function(teamId, score) {
   // Clac the bottom
@@ -82,8 +127,8 @@ const proccesGameValidation = function(data) {
     // Start the timer
     questionStart = new Date().getTime();
   } else if (data["game_status"] == 2) {
-    // Send the user to the winningScreen
-    window.location.href = homaPage;
+    // Show the winning-screen
+    getAPI(`game/teams/${gameId}`, teamWins);
   }
   countGames++;
 };
@@ -136,11 +181,6 @@ const showCorrectAnswer = function(jsonBody) {
   const correctAnswerId = returnCorrectAnswerId();
   // Show the correct answer
   for (const btnAnswer of domAnswers) {
-    console.log(
-      btnAnswer.getAttribute("data-answerId"),
-      " !!! ",
-      correctAnswerId
-    );
     // Check if the button has the same id
     if (btnAnswer.getAttribute("data-answerId") == correctAnswerId) {
       btnAnswer.classList.add("c-answer-correct");
@@ -199,6 +239,8 @@ const loadDomElements = function() {
   domAnswers = document.querySelectorAll(".js-answer");
   domAvatarPlayingTeam = document.querySelector(".js-img__playing-team-avatar");
   domRockets = document.querySelectorAll(".js-rocket");
+  domPlanets = document.querySelectorAll(".js-planet");
+  domWinnarScreen = document.querySelector(".c-winner");
   // Check if the users click on the button (on the screen)
   for (const btnAnswer of domAnswers) {
     btnAnswer.addEventListener("click", function() {

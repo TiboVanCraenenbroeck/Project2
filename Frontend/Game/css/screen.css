@@ -42,6 +42,11 @@
   --global-color-error-transparent: #ff3333bf;
   --global-color-error-x-transparent: #ff33334d;
 
+  --color-answer-border--correct: #93f676;
+  --color-answer-background--correct: #93f67673;
+  --color-answer-border--wrong: #ff4444;
+  --color-answer-background--wrong: #f5908d;
+
   /* global page settings */
   --global-page-color: #f6d9cf;
   --global-page-backgroundColor: #203959;
@@ -131,6 +136,7 @@ html {
   box-sizing: border-box;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  transition: all 300ms ease-in-out;
 }
 
 *,
@@ -651,11 +657,16 @@ grid
 /* .c-card__antwoorden .c-card__body .c-answer[data-answerSelected="true"] {
   background-color: blue;
 } */
+.c-answer {
+  padding: 8px;
+}
 .c-answer-correct {
-  background-color: green;
+  background-color: var(--color-answer-background--correct);
+  border: 3px solid var(--color-answer-border--correct);
 }
 .c-answer-wrong {
-  background-color: red;
+  background-color: var(--color-answer-background--wrong);
+  border: 3px solid var(--color-answer-border--wrong);
 }
 .c-dashboard__item {
   box-shadow: 0 2px 3px rgba(0, 0, 0, 0.125);
@@ -687,6 +698,21 @@ grid
   bottom: var(--score-bottom-team-b);
   right: 0%;
   width: calc(var(--score--planet-size) * 1.5);
+}
+.c-winner {
+  top: 0;
+  left: 0;
+  position: fixed;
+  z-index: 999;
+  height: 0;
+  width: 100vw;
+  opacity: 0;
+  background-color: var(--global-page-backgroundColor);
+  background-image: url("https://aikovanryssel.github.io/project2IMG/img/achtergrond/svg/backgroundsterren.svg");
+  color: var(--global-page-color);
+  text-align: center;
+  padding-top: 9%;
+  transition: all 500ms ease-in-out;
 }
 @media screen and (min-width: 960px) {
   .c-dashboard__item {
@@ -820,7 +846,6 @@ spacing
 }
 .c-card__antwoorden {
   --card-borderRadius: var(--global-borderRadius);
-  padding: 8px;
   background-color: var(--card-backgroundColor, White);
   border-radius: var(--card-borderRadius, var(--global-borderRadius));
   box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.05), 0 2px 4px rgba(0, 0, 0, 0.075);
@@ -828,10 +853,7 @@ spacing
   color: black;
 }
 .c-card__antwoorden:hover {
-  background-color: red;
-}
-.c-card__antwoorden .c-card__body .c-answer[data-answerSelected="true"] {
-  background-color: blue;
+  background-color: var(--global-page-color);
 }
 .c-card__vragen {
   --card-borderRadius: var(--global-borderRadius);
@@ -1731,7 +1753,7 @@ grids
 }
 
 .u-max-width-lg {
-  max-width: 63.5em !important;
+  max-width: 51em !important;
 }
 
 .u-max-width-none {
