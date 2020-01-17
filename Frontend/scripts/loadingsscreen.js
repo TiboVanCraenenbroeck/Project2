@@ -1,5 +1,4 @@
-let domonderwerpen,startGame,dataName,teamAName,teamBName,teamAAvatarId="",teamBAvatarId="",teamNameACard,teamNameBCard;
-let quiz_ids = [];
+let domonderwerpen,startGame,dataName,teamAName,teamBName,teamAAvatarId="31fdb58c-69e2-4abe-b011-f612928cec9f",teamBAvatarId="40bdd510-398e-4b79-97e1-d4a0be1fd1a4",teamNameACard,teamNameBCard,onderwerpId;
 
 const ontvangenOnderwerpen=(data)=>{
   //console.log(data[0].title)
@@ -7,29 +6,11 @@ const ontvangenOnderwerpen=(data)=>{
   onderwerpHTML='';
 
   for (let i = 0; i < data.length; i++) {
-    //console.log(data[i].title);
- /*    console.log(data[i].quiz_id); */
-    let ids = {};
-    const quiziddata = data[i];
-    if(quiziddata.quiz_id){
-      ids['quiz_id'] = quiziddata.quiz_id;
-    }
-
-    if (quiziddata.title){
-      ids['title'] = quiziddata.title;
-    }
-
-    quiz_ids.push(ids);
-
-    onderwerpHTML += `
-    <select name="select" id="select" class=" c-select u-grid-x-3 u-grid-y-1 js-select">
-    <option>${data[i].title}</option>
-    </select> 
-   `;
-    
+    onderwerpHTML += `<option value="${data[i].quiz_id}">${data[i].title}</option>`;  
   }
-  onderwerp.innerHTML += onderwerpHTML;
 
+  onderwerp.innerHTML += onderwerpHTML;
+  //changeOptionVal();
 }
 
 //veranderen van de namen in de cards
@@ -47,11 +28,20 @@ const changeName=(teamA, teamB)=>{
   teamNameBCard.innerHTML = teamNameBHTML;
 
 }
+/* const changeOptionVal=()=>{
+  options=document.querySelector('#select');
+  options.addEventListener('change', function() {
+    console.log(options.value);
+  })
+} */
 //addEventListener voor button hierbij worsd er een Post naar de database gedaan
 const buttonEvent=()=>{
   startGame=document.querySelector('.js-button_startGame');
+  options=document.querySelector('#select');
+
   startGame.addEventListener('click', function() {
     console.log('in button event')
+    console.log(options.value);
     //items opvragen uit local storage
     teamAName=localStorage.getItem('teamnaamA');
     teamBName=localStorage.getItem('teamnaamB');
@@ -59,38 +49,19 @@ const buttonEvent=()=>{
     teamBAvatarId=localStorage.getItem('teamAvatarB');
     //console.log(teamAName,teamBName,teamAAvatarId,teamBAvatarId)
     //datastrucuur doorsturen
-    dataName={teams:[{name:teamAName,avatar:{avatar_id:teamAAvatarId}},{name:teamBName,avatar:{avatar_id:teamBAvatarId}}]}
+    dataName={"teams":[{"name":`${teamAName}`,"avatar":{"avatar_id":`${teamAAvatarId}`}},{"name":`${teamBName}`,"avatar":{"avatar_id":`${teamBAvatarId}`}}]}
+    onderwerpId=options.value;
     //post naar database
-    PostAPI(dataName);
-
-    let e = document.getElementById("select");
-    let aangeduidobject = e.options[e.selectedIndex].value;
-  /*   console.log(aangeduidobject);
-    console.log(quiz_ids); */
-    for (var quiz_id in quiz_ids){
-      if(!quiz_ids.hasOwnProperty(quiz_id)) continue;
-      const everything = quiz_ids[quiz_id];
-      const qid = everything.quiz_id;
-     /*  console.log(qid); */
-      const title = everything.title;
-      if (title == aangeduidobject)
-      {
-        localStorage.setItem('quizid',qid);
-      }
-  
-    }
-
-
-    window.open("./vragen.html");
-    
+    PostAPI(onderwerpId,dataName);
   });
 }
 
 
 //fetchPost
-const fetchData2 = async function( dataName,method = "POST", body = null) {
+const fetchData2 = async function( onderwerpId,dataName,method = "POST", body = null) {
     //console.log("in fetch")
-	  return fetch(`https://mctproject2.azurewebsites.net/api/v1/game/BEF11CA2-3FB0-4BDF-90D2-2AD0BE4787E6`, {
+/*     console.log(onderwerpId)*/	  
+    return fetch(`https://mctproject2.azurewebsites.net/api/v1/game/${onderwerpId}`, {
 	  method: method,
 	  body: JSON.stringify(dataName),
 	  headers: { "content-type": "application/json" }
@@ -98,16 +69,17 @@ const fetchData2 = async function( dataName,method = "POST", body = null) {
 	  .then(r => r.json())
 	  .then(data => data);
 }; 
-const PostAPI = async function(dataName, method = "POST", body = null) {
+const PostAPI = async function(onderwerpId,dataName, method = "POST", body = null) {
   try 
   {
-    const dataURL = await fetchData2(dataName, method, body);
-    console.log("gameid" + " " + dataURL.id);
+    const dataURL = await fetchData2(onderwerpId,dataName, method, body);
+    console.log(dataURL)
+    /* console.log("gameid" + " " + dataURL.id);
     let gameid = dataURL.id 
     localStorage.setItem('gameid', gameid);
     
     let id = localStorage.getItem('quizid');
-    console.log("quizid" + " " + id);
+    console.log("quizid" + " " + id); */
   } 
   catch (error) 
   {
@@ -136,5 +108,6 @@ document.addEventListener('DOMContentLoaded', function()
   buttonEvent();
   let test="https://mctproject2.azurewebsites.net/api/v1/subjects"
   getApi(test);
+
   domonderwerpen = document.querySelector('.js-select')
 });
