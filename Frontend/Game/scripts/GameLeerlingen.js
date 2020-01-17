@@ -1,22 +1,102 @@
 // Vars
 const homaPage = "https://google.com",
-  chars = ["A", "B", "C", "D"];
+  chars = ["A", "B", "C", "D"],
+  linkImg = "https://aikovanryssel.github.io/project2IMG/",
+  maxScore = 3000;
 let gameId,
   quizId,
   urlGetQuestion = "gamevalidation/",
   countGames = 0;
 // vars from the game
-let playingTeam, playingQuestion;
+let playingTeam,
+  playingQuestion,
+  selectedAnswerId,
+  numberOfCorrectAttemps,
+  questionStart,
+  questionStop,
+  questionDuration,
+  btnIdAnswerSelected;
 // Vars from dom
-let domTeamnamePlayingTeam, domQuestion, domAnswers;
+let domTeamnamePlayingTeam,
+  domQuestion,
+  domAnswers,
+  domAvatarPlayingTeam,
+  domRockets,
+  domPlanets,
+  domWinnarScreen;
 
-// Function
+// Functions
+// Set the winning rocket
+const winningRocket = function(winningRocket) {};
+// Function that clear the screen
+const clearscreen = function() {
+  // rockets out of window
+  for (const domRocket of domRockets) {
+    domRocket.style.bottom = "131%";
+  }
+  setInterval(() => {
+    // Drop the planets
+    for (const [index, domPlanet] of domPlanets.entries()) {
+      // Set the planet in the correct position
+      if (index == 0) {
+        domPlanet.style.bottom = "47%";
+        domPlanets[0].style.transform = "translateX(650%)";
+      } else {
+        domPlanet.style.bottom = "-31%";
+      }
+    }
+  }, 300);
+  // Show the winner-screen
+  domWinnarScreen.style.height = "100vh";
+  domWinnarScreen.style.opacity = "1";
+};
+// function if one of the teams wins
+const teamWins = function(data) {
+  let teamScore = 0,
+    winningTeamName,
+    winningTeamAvatar;
+  // Get the winning team
+  for (const team of data) {
+    if (team["score"] > teamScore) {
+      teamScore = team["score"];
+      winningTeamName = team["name"];
+      winningTeamAvatar = team["avatar"]["name"];
+    }
+  }
+  clearscreen();
+  winningRocket(winningTeamAvatar);
+  // Set the score and the name of the winning team in the DOM
+  domWinnarScreen.innerHTML = `<h1>Bedankt ${winningTeamName} jij Bent de winnaar!</h1>
+  <h1>Punten: ${teamScore}</h1>`;
+};
+// Change the distance of the bottom of the rocket
+const changeHeightOfRocket = function(teamId, score) {
+  // Clac the bottom
+  const bottom = (score / maxScore) * 71;
+  for (const domRocket of domRockets) {
+    // Check if the element is the rocket of the team
+    if (domRocket.getAttribute("data-teamId") == teamId) {
+      // Set the bottom
+      domRocket.style.bottom = `${bottom}%`;
+    }
+  }
+};
+// Function that gets the AvatarIds of the teams
+const getAvatarsFromTeam = function(data) {
+  for (const [index, domRocket] of domRockets.entries()) {
+    try {
+      domRocket.src = `${linkImg}img/raketrecht/svg/${data[index]["avatar"]["name"]}.svg`;
+      domRocket.setAttribute("data-teamId", data[index]["team_id"]);
+    } catch (error) {}
+  }
+};
 // Fucntion for display the playing team
 const displayPlayingTeam = function(dataPlayingTeam) {
   playingTeam = dataPlayingTeam;
   domTeamnamePlayingTeam.innerHTML = dataPlayingTeam["name"];
+  domAvatarPlayingTeam.src = `${linkImg}img/raket/svg/${dataPlayingTeam["avatar"]["name"]}.svg`;
 };
-// Fucntion for display the new question
+// Function for display the new question
 const displayQuestion = function(dataQuestion) {
   console.log(dataQuestion);
   playingQuestion = dataQuestion;
@@ -24,23 +104,35 @@ const displayQuestion = function(dataQuestion) {
   domQuestion.innerHTML = dataQuestion["question"];
   // Change the answer-buttons
   for (const [index, answer] of dataQuestion["answers"].entries()) {
-    domAnswers[index].innerHTML = `${chars[index]}: ${answer["answer"]}`;
+    domAnswers[index].innerHTML = `<b>${chars[index]}</b>: ${answer["answer"]}`;
     // Set the id in the DOM
     domAnswers[index].setAttribute("data-answerId", answer["answer_id"]);
   }
 };
-// Fucntions that handles the response from the API (GameValidation)
+// Fucntion that handles the response from the API (GameValidation)
 const proccesGameValidation = function(data) {
-  // Check if the gameStatug is 1
+  // check if it is the first game
+  if (countGames > 0) {
+    // Clear all the answerStyles
+    clearAnswers();
+  }
+  // Check if the gameStatus is 1
   if (data["game_status"] == 1) {
     // Display the playing team
     displayPlayingTeam(data["team"]);
     // Display the question
     displayQuestion(data["question"]);
-  } else {
-    // Send the user to the winningScreen
+    // Get the number of correct attemps of this team
+    numberOfCorrectAttemps = data["number_of_correct_attempts"];
+    // Start the timer
+    questionStart = new Date().getTime();
+  } else if (data["game_status"] == 2) {
+    // Show the winning-screen
+    getAPI(`game/teams/${gameId}`, teamWins);
   }
+  countGames++;
 };
+// Fucntion for the first game
 const firstGame = function() {
   // Get the gameId and the quizId from the local storage
   try {
@@ -53,6 +145,8 @@ const firstGame = function() {
   }
   // Check if the quizId and the gameId aren't null
   if (quizId != null && gameId != null) {
+    // Get the avatars
+    getAPI(`game/teams/${gameId}`, getAvatarsFromTeam);
     // Get the first question from the API
     urlGetQuestion += `${quizId}/${gameId}`;
     getAPI(urlGetQuestion, proccesGameValidation);
@@ -62,17 +156,113 @@ const firstGame = function() {
     window.location.href = homaPage;
   }
 };
+// Function that returns ethe correct answer
+const returnCorrectAnswerId = function() {
+  for (const answer of playingQuestion["answers"]) {
+    if (answer["correct"] == true) {
+      return answer["answer_id"];
+    }
+  }
+};
+// Function that delete all the attributes
+const clearAnswers = function() {
+  for (const btnAnswer of domAnswers) {
+    if (btnAnswer.hasAttribute("data-answerSelected")) {
+      btnAnswer.removeAttribute("data-answerSelected");
+    }
+    // Delete the css class
+    btnAnswer.classList.remove("c-answer-correct");
+    btnAnswer.classList.remove("c-answer-wrong");
+  }
+};
+// Function that show the correct answer
+const showCorrectAnswer = function(jsonBody) {
+  // Get the answerId
+  const correctAnswerId = returnCorrectAnswerId();
+  // Show the correct answer
+  for (const btnAnswer of domAnswers) {
+    // Check if the button has the same id
+    if (btnAnswer.getAttribute("data-answerId") == correctAnswerId) {
+      btnAnswer.classList.add("c-answer-correct");
+    } else if (btnAnswer.hasAttribute("data-answerSelected")) {
+      // Check if the it is true
+      if (btnAnswer.getAttribute("data-answerSelected")) {
+        btnAnswer.removeAttribute("data-answerSelected");
+        btnAnswer.classList.add("c-answer-wrong");
+      }
+    }
+  }
+  // Get the new question after 5 seconds
+  setTimeout(function() {
+    // Convert the object to json
+    const jsonApiBody = JSON.stringify(jsonBody);
+    // Send the answer to the API
+    getAPI(urlGetQuestion, proccesGameValidation, "POST", jsonApiBody);
+  }, 5000);
+};
+// Function that send the user answer to the backend
+const answerValidation = function() {
+  // Stop the timer
+  questionStop = new Date().getTime();
+  // Calc the time that the users needs for answering this question in seconds
+  questionDuration = Math.round((questionStop - questionStart) / 1000);
+  // Make the API-body
+  const apiBody = {
+    game_status: 1,
+    team: playingTeam,
+    question: {
+      question_id: playingQuestion["question_id"],
+      question: playingQuestion["question"],
+      difficulty: playingQuestion["difficulty"],
+      answers: [
+        {
+          answer_id: selectedAnswerId
+        }
+      ]
+    },
+    time: questionDuration,
+    number_of_correct_attempts: numberOfCorrectAttemps
+  };
+  showCorrectAnswer(apiBody);
+};
+// Function that gets the Id from the selected answer
+const answerSelected = function(btnAnswer) {
+  let answerIdSelected = btnAnswer.getAttribute("data-answerId");
+  btnAnswer.setAttribute("data-answerSelected", "true");
+  selectedAnswerId = answerIdSelected;
+  answerValidation();
+};
+// Function that loads the DOM elements into a var
 const loadDomElements = function() {
   domTeamnamePlayingTeam = document.querySelector(".js-teamName--playing");
   domQuestion = document.querySelector(".js-question");
   domAnswers = document.querySelectorAll(".js-answer");
+  domAvatarPlayingTeam = document.querySelector(".js-img__playing-team-avatar");
+  domRockets = document.querySelectorAll(".js-rocket");
+  domPlanets = document.querySelectorAll(".js-planet");
+  domWinnarScreen = document.querySelector(".c-winner");
+  // Check if the users click on the button (on the screen)
+  for (const btnAnswer of domAnswers) {
+    btnAnswer.addEventListener("click", function() {
+      btnIdAnswerSelected = btnAnswer;
+      answerSelected(btnAnswer);
+    });
+  }
+  // When the user clicked on a key
+  document.addEventListener("keyup", function(e) {
+    // Check wich key the user has clicked
+    if ([37, 38, 39, 40].includes(e.keyCode)) {
+      console.log(e.keyCode);
+      domAnswers[40 - e.keyCode].click();
+    }
+  });
 };
 // Load the DOM
 document.addEventListener("DOMContentLoaded", function() {
   console.log("Spelen maar😎😎😎");
   // TIJDELIJK ZET GAMEID IN LOCALSTORAGE
   localStorage.setItem("quizid", "BEF11CA2-3FB0-4BDF-90D2-2AD0BE4787E6");
-  localStorage.setItem("gameid", "793CE34C-E715-4955-8371-D6494331C5A1");
+  localStorage.setItem("gameid", "51826506-3c57-4e8e-adec-43c2c78a995b");
   // Load DOM-elements
   loadDomElements();
   // Load the first game (data)

@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Login</title>
+    <title>Klaar om te spelen!</title>
 
     <!-- script -->
   
@@ -13,44 +13,34 @@
     <!-- css -->
     <link rel="stylesheet" href="css/normalize.css">
     <link rel="stylesheet" href="css/screen.css">
-    <link rel="stylesheet" href="css/gradient.css">
 </head>
 <body>
     <section class="o-row o-row--lg o-row--login" >
         <div class="o-container u-max-width-lg">
             <div class="c-dashboard_onderwerpen">
-                <select name="select" id="select" class=" u-grid-x-3 u-grid-y-1 js-select">
+                <select name="select" id="select" class=" c-select u-grid-x-3 u-grid-y-1 js-select">
                     <option>
                         kies een onderwerp
                     </option>
                 </select> 
-                <button class="u-grid-x-1 u-grid-y-1 js-button_startGame">Start Game</button>
+                <button class="c-margin c-button u-grid-x-1 u-grid-y-1 js-button_startGame">Start Game</button>
             </div>
-            <div class="c-dashboard_loading">     
-                    <form class="c-card u-grid-x-1 u-grid-y-1 " action="#">
-                        <div class="c-card__body">
-                            <div>
-                                <figure class="c-figure "> 
-                                    <img class=" c-img" src="./img/voetbalTest.png" alt="leerling img">
-                                </figure>  
-                            </div>
-                            <div class="c-card__space">
-                                <h1 class="c-img__center js-teamA">IIIIIIIIIIIII</h1>
-                            </div>
-                        </div>
-                    </form>   
-                    <form class="c-card u-grid-x-1 u-grid-y-1" action="#">
-                        <div class="c-card__body">
-                            <div>
-                                <figure class="c-figure "> 
-                                    <img class=" c-img" src="./img/voetbalTest.png" alt="leerkracht img">
-                                </figure>  
-                            </div>
-                            <div class="c-card__space">
-                                <h1 class="c-img__center js-teamB">TeamB</h1>
-                            </div>
-                        </div>   
-                    </form>
+
+            <div  class="c-dashboard_loading">
+                <div class="c-olievlek">
+                    <img class="c-img-scale" src="https://aikovanryssel.github.io/project2IMG/img/raket/svg/raketorangeorange.svg"  alt="raket team 1">
+               </div>
+                <div class="c-olievlek">
+                    <img class="c-img-scale" src="https://aikovanryssel.github.io/project2IMG/img/raket/svg/raketorangeorange.svg" alt="raket team 2">
+                </div>
+            </div>
+            <div class="c-dashboard_loading c-img-center">
+                <div class="c-img__center">
+                    <h1 class="c-teamname js-teamA"></h1>
+                </div>
+                <div class="c-img__center">
+                    <h1 class="c-teamname js-teamB"></h1>
+                </div>
             </div>
         </div>
     </section>
