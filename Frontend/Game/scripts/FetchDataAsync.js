@@ -1,5 +1,5 @@
-const baseURL = "https://mctproject2.azurewebsites.net/api/v1";
-//const baseURL = "http://localhost:7071/api/v1";
+//const baseURL = "https://mctproject2.azurewebsites.net/api/v1";
+const baseURL = "http://localhost:7071/api/v1";
 
 const fetchData = async function(url, method = "GET", body = null) {
   //url = encodeURIComponent(url);

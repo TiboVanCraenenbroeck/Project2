@@ -26,6 +26,11 @@ let domTeamnamePlayingTeam,
   domWinnarScreen;
 
 // Functions
+// Function that gets the max-score for each team
+const getMaxScore = function(data) {
+  console.log(data);
+  maxScore = data["max_score"];
+};
 // Set the winning rocket
 const winningRocket = function(winningRocketId) {
   console.log("hier");
@@ -47,7 +52,7 @@ const clearscreen = function() {
   for (const domRocket of domRockets) {
     domRocket.style.bottom = "131%";
   }
-  setInterval(() => {
+  setTimeout(() => {
     // Drop the planets
     for (const [index, domPlanet] of domPlanets.entries()) {
       // Set the planet in the correct position
@@ -161,6 +166,8 @@ const firstGame = function() {
   if (quizId != null && gameId != null) {
     // Get the avatars
     getAPI(`game/teams/${gameId}`, getAvatarsFromTeam);
+    // Load the max-score of the quiz (subject)
+    getAPI(`quiz/score/${quizId}`, getMaxScore);
     // Get the first question from the API
     urlGetQuestion += `${quizId}/${gameId}`;
     getAPI(urlGetQuestion, proccesGameValidation);
