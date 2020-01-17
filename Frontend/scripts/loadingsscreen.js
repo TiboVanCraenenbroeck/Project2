@@ -61,12 +61,13 @@ const buttonEvent=()=>{
     //datastrucuur doorsturen
     dataName={teams:[{name:teamAName,avatar:{avatar_id:teamAAvatarId}},{name:teamBName,avatar:{avatar_id:teamBAvatarId}}]}
     //post naar database
-    PostAPI(dataName);
+    //PostAPI(dataName);
 
     let e = document.getElementById("select");
+    console.log(e)
     let aangeduidobject = e.options[e.selectedIndex].value;
-  /*   console.log(aangeduidobject);
-    console.log(quiz_ids); */
+    console.log(aangeduidobject);
+    console.log(quiz_ids); 
     for (var quiz_id in quiz_ids){
       if(!quiz_ids.hasOwnProperty(quiz_id)) continue;
       const everything = quiz_ids[quiz_id];
@@ -79,9 +80,6 @@ const buttonEvent=()=>{
       }
   
     }
-
-
-    window.open("./vragen.html");
     
   });
 }

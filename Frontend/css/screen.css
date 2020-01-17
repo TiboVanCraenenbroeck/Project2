@@ -731,8 +731,6 @@ grid
     }
     .c-dashboard_loading {
         display: grid;
-        padding: 1rem;
-        grid-gap: 4rem;
         grid-template-columns: repeat(2, 1fr);
 		justify-content: center;
 		align-items: center;
