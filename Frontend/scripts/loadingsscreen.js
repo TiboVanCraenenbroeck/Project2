@@ -45,8 +45,10 @@ const buttonEvent=()=>{
     //items opvragen uit local storage
     teamAName=localStorage.getItem('teamnaamA');
     teamBName=localStorage.getItem('teamnaamB');
-    teamAAvatarId=localStorage.getItem('teamAvatarA');
-    teamBAvatarId=localStorage.getItem('teamAvatarB');
+
+    //teamAAvatarId=localStorage.getItem('teamAvatarA');
+    //teamBAvatarId=localStorage.getItem('teamAvatarB');
+
     //console.log(teamAName,teamBName,teamAAvatarId,teamBAvatarId)
     //datastrucuur doorsturen
     dataName={"teams":[{"name":`${teamAName}`,"avatar":{"avatar_id":`${teamAAvatarId}`}},{"name":`${teamBName}`,"avatar":{"avatar_id":`${teamBAvatarId}`}}]}
@@ -74,12 +76,6 @@ const PostAPI = async function(onderwerpId,dataName, method = "POST", body = nul
   {
     const dataURL = await fetchData2(onderwerpId,dataName, method, body);
     console.log(dataURL)
-    /* console.log("gameid" + " " + dataURL.id);
-    let gameid = dataURL.id 
-    localStorage.setItem('gameid', gameid);
-    
-    let id = localStorage.getItem('quizid');
-    console.log("quizid" + " " + id); */
   } 
   catch (error) 
   {
@@ -106,8 +102,8 @@ document.addEventListener('DOMContentLoaded', function()
 {
   changeName(localStorage.getItem('teamnaamA'),localStorage.getItem('teamnaamB'));
   buttonEvent();
-  let test="https://mctproject2.azurewebsites.net/api/v1/subjects"
-  getApi(test);
+  let url="https://mctproject2.azurewebsites.net/api/v1/subjects"
+  getApi(url);
 
   domonderwerpen = document.querySelector('.js-select')
 });
