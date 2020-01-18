@@ -1,8 +1,7 @@
 // Vars
 const homaPage = "https://google.com",
   chars = ["A", "B", "C", "D"],
-  linkImg = "https://aikovanryssel.github.io/project2IMG/",
-  maxScore = 3000;
+  linkImg = "https://aikovanryssel.github.io/project2IMG/";
 let gameId,
   quizId,
   urlGetQuestion = "gamevalidation/",
@@ -15,7 +14,8 @@ let playingTeam,
   questionStart,
   questionStop,
   questionDuration,
-  btnIdAnswerSelected;
+  btnIdAnswerSelected,
+  maxScore = 3000;
 // Vars from dom
 let domTeamnamePlayingTeam,
   domQuestion,
@@ -26,21 +26,38 @@ let domTeamnamePlayingTeam,
   domWinnarScreen;
 
 // Functions
+// Function that gets the max-score for each team
+const getMaxScore = function(data) {
+  console.log(data);
+  maxScore = data["max_score"];
+};
 // Set the winning rocket
-const winningRocket = function(winningRocket) {};
+const winningRocket = function(winningRocketId) {
+  console.log("hier");
+  domRockets[1].style.right = "111%";
+  domRockets[1].src = `${linkImg}img/raket/svg/${winningRocketId}.svg`;
+  setTimeout(() => {
+    domRockets[1].style.bottom = "-11%";
+  }, 500);
+  setTimeout(() => {
+    domRockets[1].classList.add("c-winning-rocket__fly");
+    domRockets[1].style.bottom = "43%";
+    domRockets[1].style.right = "0%";
+    domRockets[1].style.transform = "scale(0.3)";
+  }, 1000);
+};
 // Function that clear the screen
 const clearscreen = function() {
   // rockets out of window
   for (const domRocket of domRockets) {
     domRocket.style.bottom = "131%";
   }
-  setInterval(() => {
+  setTimeout(() => {
     // Drop the planets
     for (const [index, domPlanet] of domPlanets.entries()) {
       // Set the planet in the correct position
-      if (index == 0) {
+      if (index == 1) {
         domPlanet.style.bottom = "47%";
-        domPlanets[0].style.transform = "translateX(650%)";
       } else {
         domPlanet.style.bottom = "-31%";
       }
@@ -64,7 +81,9 @@ const teamWins = function(data) {
     }
   }
   clearscreen();
-  winningRocket(winningTeamAvatar);
+  setTimeout(() => {
+    winningRocket(winningTeamAvatar);
+  }, 300);
   // Set the score and the name of the winning team in the DOM
   domWinnarScreen.innerHTML = `<h1>Bedankt ${winningTeamName} jij Bent de winnaar!</h1>
   <h1>Punten: ${teamScore}</h1>`;
@@ -98,7 +117,6 @@ const displayPlayingTeam = function(dataPlayingTeam) {
 };
 // Function for display the new question
 const displayQuestion = function(dataQuestion) {
-  console.log(dataQuestion);
   playingQuestion = dataQuestion;
   // Change the title
   domQuestion.innerHTML = dataQuestion["question"];
@@ -118,6 +136,8 @@ const proccesGameValidation = function(data) {
   }
   // Check if the gameStatus is 1
   if (data["game_status"] == 1) {
+    // Set the rocket from the winning team on the correct height
+    changeHeightOfRocket(data["team"]["team_id"], data["team"]["score"]);
     // Display the playing team
     displayPlayingTeam(data["team"]);
     // Display the question
@@ -147,6 +167,8 @@ const firstGame = function() {
   if (quizId != null && gameId != null) {
     // Get the avatars
     getAPI(`game/teams/${gameId}`, getAvatarsFromTeam);
+    // Load the max-score of the quiz (subject)
+    getAPI(`quiz/score/${quizId}`, getMaxScore);
     // Get the first question from the API
     urlGetQuestion += `${quizId}/${gameId}`;
     getAPI(urlGetQuestion, proccesGameValidation);

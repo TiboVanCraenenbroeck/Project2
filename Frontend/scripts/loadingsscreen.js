@@ -1,4 +1,4 @@
-let domonderwerpen,startGame,dataName,teamAName,teamBName,teamAAvatarId="69FBBDD6-BFBB-4802-8B0D-3E37350CED3C",teamBAvatarId="69FBBDD6-BFBB-4802-8B0D-3E37350CED3D",teamNameACard,teamNameBCard,onderwerpId;
+let domonderwerpen,startGame,dataName,teamAName,teamBName,teamAAvatarId="31fdb58c-69e2-4abe-b011-f612928cec9f",teamBAvatarId="40bdd510-398e-4b79-97e1-d4a0be1fd1a4",teamNameACard,teamNameBCard,onderwerpId;
 
 const ontvangenOnderwerpen=(data)=>{
   //console.log(data[0].title)
@@ -45,11 +45,13 @@ const buttonEvent=()=>{
     //items opvragen uit local storage
     teamAName=localStorage.getItem('teamnaamA');
     teamBName=localStorage.getItem('teamnaamB');
-    teamAAvatarId=localStorage.getItem('teamAvatarA');
-    teamBAvatarId=localStorage.getItem('teamAvatarB');
+
+    //teamAAvatarId=localStorage.getItem('teamAvatarA');
+    //teamBAvatarId=localStorage.getItem('teamAvatarB');
+
     //console.log(teamAName,teamBName,teamAAvatarId,teamBAvatarId)
     //datastrucuur doorsturen
-    dataName={teams:[{name:teamAName,avatar:{avatar_id:teamAAvatarId}},{name:teamBName,avatar:{avatar_id:teamBAvatarId}}]}
+    dataName={"teams":[{"name":`${teamAName}`,"avatar":{"avatar_id":`${teamAAvatarId}`}},{"name":`${teamBName}`,"avatar":{"avatar_id":`${teamBAvatarId}`}}]}
     onderwerpId=options.value;
     //post naar database
     PostAPI(onderwerpId,dataName);
@@ -60,7 +62,8 @@ const buttonEvent=()=>{
 //fetchPost
 const fetchData2 = async function( onderwerpId,dataName,method = "POST", body = null) {
     //console.log("in fetch")
-	  return fetch(`https://mctproject2.azurewebsites.net/api/v1/game/${onderwerpId}`, {
+/*     console.log(onderwerpId)*/	  
+    return fetch(`https://mctproject2.azurewebsites.net/api/v1/game/${onderwerpId}`, {
 	  method: method,
 	  body: JSON.stringify(dataName),
 	  headers: { "content-type": "application/json" }
@@ -72,12 +75,7 @@ const PostAPI = async function(onderwerpId,dataName, method = "POST", body = nul
   try 
   {
     const dataURL = await fetchData2(onderwerpId,dataName, method, body);
-    console.log("gameid" + " " + dataURL.id);
-    let gameid = dataURL.id 
-    localStorage.setItem('gameid', gameid);
-    
-    let id = localStorage.getItem('quizid');
-    console.log("quizid" + " " + id);
+    console.log(dataURL)
   } 
   catch (error) 
   {
@@ -104,8 +102,8 @@ document.addEventListener('DOMContentLoaded', function()
 {
   changeName(localStorage.getItem('teamnaamA'),localStorage.getItem('teamnaamB'));
   buttonEvent();
-  let test="https://mctproject2.azurewebsites.net/api/v1/subjects"
-  getApi(test);
+  let url="https://mctproject2.azurewebsites.net/api/v1/subjects"
+  getApi(url);
 
   domonderwerpen = document.querySelector('.js-select')
 });

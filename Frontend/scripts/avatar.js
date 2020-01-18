@@ -2,12 +2,22 @@ let teamAName,teamBName,couter=0,teamAAvatarId="69fbbdd6-bfbb-4802-8b0d-3e37350c
 let dataName;
 let teamNamechange; 
 
+
+
+
+const raketKeuze=()=>{
+    let raket= document.querySelector(".js-raket");
+    raket.addEventListener('click', function() {
+        console.log(raket.value)
+
+    });
+
+}
 const teamA =()=>{
     let volgende= document.querySelector(".js-volgende")
     let naamverandering = document.querySelector(".js-name");
     volgende.addEventListener('click', function() {
     let teamNaam=document.getElementById('username').value
-
         console.log("klik");
         //console.log(teamNaam)
 
@@ -61,5 +71,6 @@ document.addEventListener('DOMContentLoaded', function()
 {
 	console.info('DOM is ready to roll.. 👌');
     teamA();
+    raketKeuze();
 
 });
