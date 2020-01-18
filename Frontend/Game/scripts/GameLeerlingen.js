@@ -117,7 +117,6 @@ const displayPlayingTeam = function(dataPlayingTeam) {
 };
 // Function for display the new question
 const displayQuestion = function(dataQuestion) {
-  console.log(dataQuestion);
   playingQuestion = dataQuestion;
   // Change the title
   domQuestion.innerHTML = dataQuestion["question"];
@@ -137,6 +136,8 @@ const proccesGameValidation = function(data) {
   }
   // Check if the gameStatus is 1
   if (data["game_status"] == 1) {
+    // Set the rocket from the winning team on the correct height
+    changeHeightOfRocket(data["team"]["team_id"], data["team"]["score"]);
     // Display the playing team
     displayPlayingTeam(data["team"]);
     // Display the question
