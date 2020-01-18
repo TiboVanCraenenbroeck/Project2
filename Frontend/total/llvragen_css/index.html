@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en" class="">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <script src="scripts/dataHandler.js"></script>
+    <script src="scripts/cookies.js"></script>
+    <script src="scripts/questions.js"></script>
+    <link rel="stylesheet" href="css/screen.css">
+</head>
+
+<body>
+    <main class="c-app__main">
+        <div class="c-bg-oil">
+            <div class="c-homeknop-bg"> 
+                <div class="c-homebtn">
+                    <label class="lbl-home">home</label>
+                </div>
+            </div>
+            <div class="c-onderwerp-form">
+                <div class="c-btn-send-subject js-btn-onderwerp-verzenden"></div>
+                    <input class="c-input-onderwerp js-input-onderwerp" placeholder="Voeg een onderwerp toe" id="js-input-onderwerp"></input>
+            </div>
+            <div class="c-form">
+                <input class="c-input-vragen" placeholder="Geef een vraag in" id="js-vraag"></input>
+                <div class="js-subject c-subject-vragen" >
+                    <input class="c-subject-vragen" list="onderwerpen" name="js-input-onderwerp-vragen" placeholder="onderwerp" id="js-input-onderwerp-vragen">
+                    <datalist class="c-subject-vragen js-selecteditem" name="onderwerpen" id="onderwerpen">
+                    <option value="Biologie">
+                    </datalist>
+                </div>
+                <label class="c-lbl-antwoorden c-margin">Antwoorden:</label>
+                <input class="c-radio-a c-radiobtn-option" id="js-rbtn-a" type="radio" name="vragen" value="a"><br>
+                        
+                <input class="c-radio-b c-radiobtn-option" id="js-rbtn-b" type="radio" name="vragen" value="b"><br>
+                    
+                <input class="c-radio-c c-radiobtn-option" id="js-rbtn-c" type="radio" name="vragen" value="c"><br>
+                
+                <input class="c-radio-d c-radiobtn-option" id="js-rbtn-d" type="radio" name="vragen" value="d">  
+                <input class="c-input-a c-input-style" id="js-antwoorda"></input>
+                <input class="c-input-b c-input-style" id="js-antwoordb"></input>
+                <input class="c-input-c c-input-style" id="js-antwoordc"></input>
+                <input class="c-input-d c-input-style" id="js-antwoordd"></input>
+                <div class="c-div-level c-margin">
+                    <label class="c-lbl-level ">Moeilijkheid: </label>
+                    <label class="c-lbl-1 js-moeilijkheid1">1</label>
+                    <label class="c-lbl-2 js-moeilijkheid2">2</label>
+                    <label class="c-lbl-3 js-moeilijkheid3">3</label>
+                </div>
+                <div class="c-btn-add js-btn-verzenden"></div>
+            </div>
+            <div class="c-ingegevenvragen-space">
+                <div class="c-lbl-ingegevenvragen">Reeds ingegeven vragen:</div>
+            </div>
+            <div class="c-form-delete">
+                <input class="c-input-vragen" placeholder="Geef een vraag in" id="js-vraag"></input>
+                <div class="js-subject c-subject-vragen" >
+                    <input class="c-subject-vragen" list="onderwerpen" name="js-input-onderwerp-vragen" placeholder="onderwerp" id="js-input-onderwerp-vragen">
+                    <datalist class="c-subject-vragen js-selecteditem" name="onderwerpen" id="onderwerpen">
+                    <option value="Biologie">
+                    </datalist>
+                </div>
+                <label class="c-lbl-antwoorden c-margin">Antwoorden:</label>
+                <input class="c-radio-a c-radiobtn-option" id="js-rbtn-a" type="radio" name="vragen" value="a"><br>
+                        
+                <input class="c-radio-b c-radiobtn-option" id="js-rbtn-b" type="radio" name="vragen" value="b"><br>
+                    
+                <input class="c-radio-c c-radiobtn-option" id="js-rbtn-c" type="radio" name="vragen" value="c"><br>
+                
+                <input class="c-radio-d c-radiobtn-option" id="js-rbtn-d" type="radio" name="vragen" value="d">  
+                <input class="c-input-a c-input-style" id="js-antwoorda"></input>
+                <input class="c-input-b c-input-style" id="js-antwoordb"></input>
+                <input class="c-input-c c-input-style" id="js-antwoordc"></input>
+                <input class="c-input-d c-input-style" id="js-antwoordd"></input>
+                <div class="c-div-level c-margin">
+                    <label class="c-lbl-level ">Moeilijkheid: </label>
+                    <label class="c-lbl-1 js-moeilijkheid1">1</label>
+                    <label class="c-lbl-2 js-moeilijkheid2">2</label>
+                    <label class="c-lbl-3 js-moeilijkheid3">3</label>
+                </div>
+                <div class="c-btn-delete js-btn-verzenden"></div>
+            </div>
+            
+        </div>        
+    </main>
+</body>
+
+</html>
