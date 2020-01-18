@@ -103,7 +103,6 @@ namespace Backend.StaticFunctions
                             modelGameValidation.intNumberOfCorrectAttempts++;
                             //countPoints = If the answer is correct --> return=1 else return=0
                             modelGameValidation.team.intScore = Convert.ToInt32(reader["countPoints"]) * ((modelGameValidation.question.intDifficulty + 1) * 50);
-                            //modelGameValidation.team.intScore = Convert.ToInt32(reader["countPoints"]) * 50;
                         }
                         reader.Close();
                     }
@@ -135,6 +134,10 @@ namespace Backend.StaticFunctions
                     {
                         modelGameValidation.question.intDifficulty = 2;
                     }
+                    else
+                    {
+                        modelGameValidation.question.intDifficulty = 2;
+                    }
                 }
                 else
                 {
@@ -149,12 +152,6 @@ namespace Backend.StaticFunctions
                         }
                     }
                     modelGameValidation.intNumberOfCorrectAttempts = 0;
-                }
-                // Difficulty ++ by 3 correct answers
-                if (modelGameValidation.question.intDifficulty < 3)
-                {
-                    modelGameValidation.question.intDifficulty = modelGameValidation.intNumberOfCorrectAttempts / 3;
-
                 }
                 return modelGameValidation;
             }

@@ -57,32 +57,14 @@ namespace Backend.HTTPTriggers
                         else if (IncomingModelGameValidation.intGameStatus == 1)
                         {
                             // Check if the answer is correct
-                            Model_GameValidation validateModelGameValidation = await SF_GameValidation.CheckAnswerAsync(IncomingModelGameValidation, guidGameId);
-                            if (validateModelGameValidation.team.intScore == 0)
-                            {
-                                // Select other team
-                                List<Model_Team> listTeams = await SF_TeamFunctions.GetTeamFromGameAsync(guidGameId);
-                                foreach (Model_Team itemTeam in listTeams)
-                                {
-                                    if (itemTeam.Id != validateModelGameValidation.team.Id)
-                                    {
-                                        NewModelGameValidation.team = itemTeam;
-                                        break;
-                                    }
-                                }
-                                NewModelGameValidation.intNumberOfCorrectAttempts = 0;
-                            }
-                            else
-                            {
-                                NewModelGameValidation.team = IncomingModelGameValidation.team;
-                                NewModelGameValidation.intNumberOfCorrectAttempts = validateModelGameValidation.intNumberOfCorrectAttempts;
-                            }
+                            NewModelGameValidation = await SF_GameValidation.CheckAnswerAsync(IncomingModelGameValidation, guidGameId);
+                            // Select the score from the team
                             List<Model_Team> listTeamsForScore = new List<Model_Team>();
                             listTeamsForScore.Add(NewModelGameValidation.team);
                             listTeamsForScore = await SF_GameValidation.GetScoreFromTeamsAsync(guidGameId, listTeamsForScore);
                             NewModelGameValidation.team.intScore = listTeamsForScore[0].intScore;
                             // Select a random question
-                            NewModelGameValidation.question = await SF_GameValidation.GetRandomQuestionAsync(guidGameId, IncomingModelGameValidation.question.intDifficulty);
+                            NewModelGameValidation.question = await SF_GameValidation.GetRandomQuestionAsync(guidGameId, NewModelGameValidation.question.intDifficulty);
                             // Check if there is a question
                             if (NewModelGameValidation.question.Id.ToString() == "00000000-0000-0000-0000-000000000000")
                             {

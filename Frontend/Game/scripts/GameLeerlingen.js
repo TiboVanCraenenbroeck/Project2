@@ -1,8 +1,7 @@
 // Vars
 const homaPage = "https://google.com",
   chars = ["A", "B", "C", "D"],
-  linkImg = "https://aikovanryssel.github.io/project2IMG/",
-  maxScore = 3000;
+  linkImg = "https://aikovanryssel.github.io/project2IMG/";
 let gameId,
   quizId,
   urlGetQuestion = "gamevalidation/",
@@ -15,7 +14,8 @@ let playingTeam,
   questionStart,
   questionStop,
   questionDuration,
-  btnIdAnswerSelected;
+  btnIdAnswerSelected,
+  maxScore = 3000;
 // Vars from dom
 let domTeamnamePlayingTeam,
   domQuestion,
