@@ -1,0 +1,295 @@
+.c-bg{
+    align-items: center;
+}
+
+body{
+    background-color: #203959;
+    background-image: url("../fotos/background2.png");
+}
+
+.c-bg-oil{
+    margin: 0 auto;
+    text-align: center;
+    width: 80%;
+    height: 100%;
+    background-color: #BF6663;
+}
+
+.c-homeknop-bg{
+    display: grid;
+    grid-template-columns: repeat(8,1fr);
+    grid-auto-columns: minmax(10px, auto);
+    grid-template-rows: repeat(8,1fr);
+    grid-auto-rows: minmax(10px, auto);
+    grid-gap:2px;
+    margin: 0 auto;
+    padding: 3px;  
+    height: 80px;
+    width: 80%;
+}
+
+.c-homebtn{
+    display: inline-block;
+    margin-top: 10px;
+    padding: 3px;  
+    border: 1px solid #474242;
+    border-radius: 4px;
+    width: 110px;
+    height: 20px;
+    background-color: #F6D9CF;
+    grid-column: 8;
+}
+
+.c-onderwerp-form{
+    display: grid;
+    grid-template-columns: auto auto auto;
+    border-radius: 4px;
+    padding: 10px;
+    margin: 0 auto;
+    padding: 3px;  
+    height: 80px;
+    width: 80%;
+    background-color: #fffbf98c;
+    box-shadow: 0px 3px 6px 0px rgba(0,0,0,0.16);
+}
+
+.c-btn-send-subject{
+    background-image: url("../fotos/plus.png");
+    background-size: 100% 100%;
+    margin-right: 28px;
+    width: 40px;
+    height: 40px;
+    grid-row: 2;
+    grid-column: 2;
+}
+
+.c-input-onderwerp{
+    border: 1px solid #474242;
+    margin-left: 16px;
+    border-radius:4px;
+    width: 800px;
+    height: 40px;
+    grid-row: 2;
+    grid-column: 1/2;
+}
+
+.c-form{
+    display: grid;
+    grid-template-columns: repeat(8,1fr);
+    grid-auto-columns: minmax(10px, auto);
+    grid-template-rows: repeat(8,1fr);
+    grid-auto-rows: minmax(10px, auto);
+    grid-gap:2px;
+    margin-bottom: 8px;
+    border-radius: 4px;
+    margin: 0 auto;
+    margin-top: 24px;
+    padding: 3px;  
+    height: 430px;
+    width: 80%;
+    background-color: #fffbf98c;
+    box-shadow: 0px 3px 6px 0px rgba(0,0,0,0.16);
+    
+}
+
+.c-form-delete{
+    display: grid;
+    grid-template-columns: repeat(8,1fr);
+    grid-auto-columns: minmax(10px, auto);
+    grid-template-rows: repeat(8,1fr);
+    grid-auto-rows: minmax(10px, auto);
+    grid-gap:2px;
+    margin-bottom: 8px;
+    border-radius: 4px;
+    margin: 0 auto;
+    margin-top: 24px;
+    padding: 3px;  
+    height: 430px;
+    width: 80%;
+    background-color: #fffbf98c;
+    box-shadow: 0px 3px 6px 0px rgba(0,0,0,0.16);
+}
+.c-btn-delete{
+    width: 40px;
+    height:40px;
+    margin-left: 120px;
+    background-image: url("../fotos/delete.png");
+    background-size: 100% 100%;
+    grid-column: 8;
+    grid-row: 8;
+}
+
+.c-subject-vragen{
+    margin-right: 80px;
+    margin-top: 6px;
+    width: 160px;
+    height: 40px;
+    grid-column: 8;
+    grid-row: 1;
+}
+
+.c-input-style{
+    border: 1px solid #474242;
+    background-color:#FFFBF9;
+}
+
+.c-input-vragen{
+    width: 80%;
+    border: 1px solid #474242;
+    border-radius: 4px;
+    background-color: #FFFBF9;
+    font-family: inherit;
+    outline: none;
+    margin-top: 12px;
+    width: 600px;
+    height: 40px;
+    margin-left: 16px;
+    grid-column: 1;
+    grid-row: 1;
+}
+
+.c-lbl-antwoorden{
+    margin-top: 16px;
+    grid-column: 1;
+    margin-right: 360px;
+    grid-row: 2;
+}
+
+.c-radio-a{
+    grid-column: 1;
+    grid-row: 3;
+    margin-left: 32px;
+    margin-top: 8px;
+}
+.c-radio-b{
+    grid-column: 1;
+    grid-row: 4;
+    margin-left: 32px;
+    margin-top: 8px;
+}
+.c-radio-c{
+    grid-column: 1;
+    grid-row: 5;
+    margin-left: 32px;
+    margin-top: 8px;
+}
+.c-radio-d{
+    grid-column: 1;
+    grid-row: 6;
+    margin-left: 32px;
+    margin-top: 8px;
+}
+
+.c-input-style{
+    border: 1px solid #474242;
+    background-color:#FFFBF9;
+    height: 24px;
+}
+
+
+.c-input-a{
+    
+    border-radius: 4px;
+    margin-left: 80px;
+    grid-column: 1/8;
+    width: 800px;
+    grid-row: 3;
+}
+.c-input-b{
+    border-radius: 4px;
+    margin-left: 80px;
+    grid-column: 1/8;
+    width: 800px;
+    grid-row: 4;
+}
+.c-input-c{
+    border-radius: 4px;
+    margin-left: 80px;
+    grid-column: 1/8;
+    width: 800px;
+    grid-row: 5;
+}
+.c-input-d{
+    border-radius: 4px;
+    margin-left: 80px;
+    grid-column: 1/8;
+    width: 800px;
+    grid-row: 6;
+}
+
+.c-div-level{
+    grid-column: 1;
+    margin-left: 16px;
+    width: 200px;
+    height: 32px;
+    grid-row: 8;
+    display: grid;
+    align-items: center;
+    grid-template-columns: repeat(3,1px);
+    grid-auto-rows: minmax(1px,auto);
+    background-color: #fffbf9c9;
+    border: 1px solid #474242;
+} 
+
+.c-lbl-level{
+    grid-row: 1;
+    margin-top: 16px;
+    grid-column: 4;
+}
+
+.c-lbl-1{
+    grid-column: 5;
+    padding-bottom: 16px;
+    grid-row: 2;
+}
+
+.c-lbl-2{
+    grid-column: 6;
+    padding-bottom: 16px;
+    grid-row: 2;
+}
+.c-lbl-3{
+    grid-column: 7;
+    padding-bottom: 16px;
+    grid-row: 2;
+}
+.c-btn-add{
+    background-image: url("../fotos/plus.png"); 
+    background-size: 100% 100%;
+    width: 40px;
+    height:40px;
+    margin-left: 120px;
+    grid-column: 8;
+    grid-row: 8;
+}
+
+.c-ingegevenvragen-space{
+    display: grid;
+    grid-template-columns: repeat(8,1fr);
+    grid-auto-columns: minmax(10px, auto);
+    grid-template-rows: repeat(8,1fr);
+    grid-auto-rows: minmax(10px, auto);
+    grid-gap:2px;
+    height: 80px;
+    width: 80%;
+}
+.c-lbl-ingegevenvragen{
+    grid-row: 8;
+    grid-column:1/4;
+    margin-left: 40px;
+}
+
+.c-form-2{
+    display: grid;
+    grid-template-columns: repeat(8,1fr);
+    grid-auto-columns: minmax(10px, auto);
+    grid-gap:2px;
+    margin-bottom: 8px;
+    margin: 0 auto;
+    margin-top: 80px;
+    padding: 3px;  
+    height: 430px;
+    width: 80%;
+    background-color: #fffbf98c;
+    box-shadow: 0px 3px 6px 0px rgba(0,0,0,0.16);
+}
