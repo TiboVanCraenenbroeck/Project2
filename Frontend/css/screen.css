@@ -624,7 +624,11 @@ input::placeholder {
 grid
 
 */
-
+.c-leerkrachtenbtn{
+    position: absolute; 
+    top:2rem; 
+    right:4rem;
+}
 .c-raket{
     position: fixed;
     z-index: 0;
