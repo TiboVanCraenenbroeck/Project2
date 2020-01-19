@@ -30,7 +30,7 @@ namespace Backend.HTTPTriggers
                 newUser.Id = Guid.NewGuid();
                 string test = newUser.Id.ToString();
                 // Check if the user is logged in
-                if (await SF_IsUserLoggedIn.CheckIfUserIsLoggedInAsync(cookies_ID, req.HttpContext.Connection.RemoteIpAddress.ToString()))
+                if (await SF_User.CheckIfUserIsLoggedInAsync(cookies_ID, req.HttpContext.Connection.RemoteIpAddress.ToString()))
                 {
                     // Check if all fields are filled in
                     if (newUser.strMail.Length > 3 && newUser.strName.Length > 3 && newUser.strSurname.Length > 3)

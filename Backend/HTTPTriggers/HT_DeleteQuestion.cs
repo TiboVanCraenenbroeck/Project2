@@ -26,7 +26,7 @@ namespace Backend.HTTPTriggers
                 Guid guidQuestionId = Guid.Parse(QuestionId);
                 Model_ObjectResultReturn ObjectResultReturn = new Model_ObjectResultReturn();
                 // Check if the user is logged in
-                if (await SF_IsUserLoggedIn.CheckIfUserIsLoggedInAsync(cookies_ID, req.HttpContext.Connection.RemoteIpAddress.ToString()))
+                if (await SF_User.CheckIfUserIsLoggedInAsync(cookies_ID, req.HttpContext.Connection.RemoteIpAddress.ToString()))
                 {
                     // Check if the Quiz exists
                     if (await SF_QuizExists.CheckIfQuizExistsAsync(guidQuizId))

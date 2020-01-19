@@ -26,7 +26,7 @@ namespace Backend.HTTPTriggers
                 Model_ObjectResultReturn objectResultReturn = new Model_ObjectResultReturn();
                 Guid guidQuizId = Guid.Parse(QuizId);
                 // Check if the user is logged in
-                if (await SF_IsUserLoggedIn.CheckIfUserIsLoggedInAsync(cookies_ID, req.HttpContext.Connection.RemoteIpAddress.ToString()))
+                if (await SF_User.CheckIfUserIsLoggedInAsync(cookies_ID, req.HttpContext.Connection.RemoteIpAddress.ToString()))
                 {
                     //Ophalen van de data
                     string strJson = await new StreamReader(req.Body).ReadToEndAsync();
