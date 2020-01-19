@@ -208,7 +208,7 @@ h1{
     width: 100%;
   }
 
-  .form-inline a {
+  .form-inline button {
     padding: 10px 20px;
     background-color:#F6D9CF ;
     border: 1px solid #474242;
@@ -220,7 +220,7 @@ h1{
     font-size: 24px;
     text-decoration: none;
   } 
-  .form-inline a:hover {
+  .form-inline button:hover {
     padding: 10px 20px;
     background-color:  #F6C0AD;
     border: 1px solid #474242;
@@ -232,7 +232,15 @@ h1{
     font-size: 24px;
     text-decoration: none;
   } 
+  .gallery__item[data-avatarSelected="1"] {
+    border-radius: 4px;
+    background-color: #F6D9CF;
+}
 
+.gallery__item[data-avatarSelected="2"] {
+    border-radius: 4px;
+    background-color: #F6C0AD;
+}
 
 /*------------------------------------*\
 #GENERIC
