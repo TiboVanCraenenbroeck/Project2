@@ -3,8 +3,11 @@ let decid;
 let decid2;
 let uri = "https://mctproject2.azurewebsites.net/api/v1/subject?cookie_id=";
 let domonderwerpen;
+let domvragen;
 let quiz_ids = [];
+let datavragen = [];
 let moeilijkheidsgraad = 0;
+let selectedsubject;
 
 const getDomElements = function(){
   console.log("dom geladen");
@@ -21,7 +24,7 @@ function postdata(url = '', data= {})
   .then((response) => response.json())
   .then((data)=> {
     console.log('success:', data);
-    /* location.reload(); */
+
   })
   .catch((error)=>{
     console.error('error: ', error);
@@ -40,24 +43,7 @@ const buttonclick = function(){
     id = getCookie('id');
     decid = encodeURIComponent(id);
     postdata(uri+decid, data)
-    document.getElementById("js-input-onderwerp").value = "";
-
-
-   /*  console.log(valuesubject); */
-    /* console.log(quiz_ids); */
-   /*  for (var quiz_id in quiz_ids)
-    {
-      if(!quiz_ids.hasOwnProperty(quiz_id)) continue;
-      const everything = quiz_ids[quiz_id];
-      const qid = everything.quiz_id;
-      const title = everything.title;
-      if (title == valuesubject)
-      {
-        console.log(qid);
-        localStorage.setItem('quizid', qid);
-      }
-    } */
-   
+    document.getElementById("js-input-onderwerp").value = "";  
   })
 }
 
@@ -138,7 +124,7 @@ const buttonclickvragen = function(){
         }
       ]  
     }
-    console.log(data);
+    /* console.log(data); */
     var subjectinput = document.getElementById("js-input-onderwerp-vragen");
     let valuesubject = subjectinput.value
     for (var quiz_id in quiz_ids)
@@ -161,8 +147,6 @@ const buttonclickvragen = function(){
     decid = encodeURIComponent(id);
     
     postdata(apio+decid,data)
-
-    
 
   })
 }
@@ -220,8 +204,9 @@ const fetchData = async function(url, method = "GET", body = null) {
 let getAPI = async function(url, method = "GET", body = null) {
     try {
       const data = await fetchData(url, method, body);
-      getrandomnr(0, data.length);
+ /*      getrandomnr(0, data.length); */
      /*  console.log(data.error_message) */
+      console.log(data);
       for (let i = 0; i < data.length; i++)
       {
           let vragen = {};
@@ -230,13 +215,11 @@ let getAPI = async function(url, method = "GET", body = null) {
           {
               vragen['question'] = quizvragen.question;
               vragen['answers'] = quizvragen.answers;
+              vragen['difficult'] = quizvragen.difficulty;
           } 
           datavragen.push(vragen);
        
       }
-
-      vragenophalen();
-
 
       
     } catch (error) {
@@ -245,14 +228,76 @@ let getAPI = async function(url, method = "GET", body = null) {
   };
 
 
+const buttonclickallevragen = function(){
+  let btn = document.querySelector('.js-btn-vragen');
+  btn.addEventListener('click', function()
+    {
+      selectedsubject=document.querySelector('.js-show_subject');
+      console.log(selectedsubject.value);
+      let valuesubject = selectedsubject.value
+      for (var quiz_id in quiz_ids)
+      {
+        if(!quiz_ids.hasOwnProperty(quiz_id)) continue;
+        const everything = quiz_ids[quiz_id];
+        const qid = everything.quiz_id;
+        const title = everything.title;
+        if (title == valuesubject)
+        {
+          console.log(qid);
+          localStorage.setItem('quizopgevraagdeid', qid);
+        }
+      }
+      const quizid = localStorage.getItem('quizopgevraagdeid');
+      getAPI(quizid);
+
+
+      domvragen = document.querySelector('.c-form-extra');
+      let arrvragen = datavragen
+      let vragenHTML = ``;
+      for (let i = 0; i < datavragen.length; i++)
+      {
+        const quizdata = datavragen[i];
+    
+        vragenHTML += `<div class="c-form-delete js-form-delete">
+        <input class="c-input-vragen" placeholder="${quizdata.question}" id="js-vraag"></input>
+        
+        <label class="c-lbl-antwoorden c-margin">Antwoorden:</label>
+        <input class="c-radio-a c-radiobtn-option" id="js-rbtn-a" type="radio" name="vragen" value="a"><br>
+                
+        <input class="c-radio-b c-radiobtn-option" id="js-rbtn-b" type="radio" name="vragen" value="b"><br>
+            
+        <input class="c-radio-c c-radiobtn-option" id="js-rbtn-c" type="radio" name="vragen" value="c"><br>
+        
+        <input class="c-radio-d c-radiobtn-option" id="js-rbtn-d" type="radio" name="vragen" value="d">  
+        <input class="c-input-a c-input-style" placeholder="${quizdata.answers[0].answer}" id="js-antwoorda"></input>
+        <input class="c-input-b c-input-style" placeholder="${quizdata.answers[1].answer}" id="js-antwoordb"></input>
+        <input class="c-input-c c-input-style" placeholder="${quizdata.answers[2].answer}" id="js-antwoordc"></input>
+        <input class="c-input-d c-input-style" placeholder="${quizdata.answers[3].answer}" id="js-antwoordd"></input>
+        <div class="c-div-level c-margin">
+            <label class="c-lbl-level ">Moeilijkheid: </label>
+            <label class="c-lbl-1 js-moeilijkheid1">${quizdata.difficult}</label>
+        </div>
+        <div class="c-btn-delete js-btn-verzenden"></div>
+    </div> `;
+      }
+
+      domvragen.innerHTML = vragenHTML;
+        })
+
+
+
+}
+
+
 document.addEventListener('DOMContentLoaded', function()
 {
     getDomElements();
     buttonclick();
     buttonclickvragen();
+    buttonclickallevragen();
     moeilijkheid1();
     moeilijkheid2();
     moeilijkheid3();
     getonderwerpen();
-    getAPI("bef11ca2-3fb0-4bdf-90d2-2ad0be4787e6");
+    /* getAPI("bef11ca2-3fb0-4bdf-90d2-2ad0be4787e6"); */
 });
