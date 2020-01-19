@@ -9,6 +9,7 @@ using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using Backend.Models;
 using System.Data.SqlClient;
+using System.Collections.Generic;
 
 namespace Backend.HTTPTriggers
 {
@@ -22,6 +23,7 @@ namespace Backend.HTTPTriggers
             try
             {
                 Model_GetScoreFromQuiz getScoreFromQuiz = new Model_GetScoreFromQuiz();
+                List<int> listScores = new List<int>();
                 // Get the total questions from this quiz
                 using (SqlConnection connection = new SqlConnection(Environment.GetEnvironmentVariable("SQL_ConnectionsString")))
                 {
@@ -29,20 +31,20 @@ namespace Backend.HTTPTriggers
                     using (SqlCommand command = new SqlCommand())
                     {
                         command.Connection = connection;
-                        string sql = "SELECT COUNT(ID) as countQuestions FROM TB_Questions WHERE TB_Quizzes_ID =@quizId";
+                        string sql = "SELECT (SELECT COUNT(ID) FROM TB_Questions WHERE Difficulty=0 AND IsDeleted=0 AND TB_Quizzes_ID=@quizId) as countQuestionsEasy, (SELECT COUNT(ID) FROM TB_Questions WHERE Difficulty=1 AND IsDeleted=0 AND TB_Quizzes_ID=@quizId) as countQuestionsMedium, (SELECT COUNT(ID) FROM TB_Questions WHERE Difficulty=2 AND IsDeleted=0 AND TB_Quizzes_ID=@quizId) as countQuestionsHard";
                         command.CommandText = sql;
                         command.Parameters.AddWithValue("@quizId", Guid.Parse(quizId));
                         SqlDataReader reader = await command.ExecuteReaderAsync();
                         if (reader.Read())
                         {
-                            getScoreFromQuiz.intMaxScore = Convert.ToInt32(reader["countQuestions"]);
+                            listScores.Add(Convert.ToInt32(reader["countQuestionsEasy"]));
+                            listScores.Add(Convert.ToInt32(reader["countQuestionsMedium"]));
+                            listScores.Add(Convert.ToInt32(reader["countQuestionsHard"]));
                         }
                     }
                 }
                 // Calculate the max total score from this subject
-                int intScoreForEachTeam = getScoreFromQuiz.intMaxScore / 2;
-                int CountTotalQuestionsForEachQuestion = Convert.ToInt32(intScoreForEachTeam * 0.2);
-                int intMaxTotalScoreForEachTeam = Convert.ToInt32((1 * 50 * CountTotalQuestionsForEachQuestion) + (2 * 50 * CountTotalQuestionsForEachQuestion) + (2 * 50 * CountTotalQuestionsForEachQuestion));
+                int intMaxTotalScoreForEachTeam = Convert.ToInt32((1 * 50 * listScores[0]) + (2 * 50 * listScores[1]) + (2 * 50 * listScores[2]));
                 getScoreFromQuiz.intMaxScore = intMaxTotalScoreForEachTeam;
                 return new OkObjectResult(getScoreFromQuiz);
             }
