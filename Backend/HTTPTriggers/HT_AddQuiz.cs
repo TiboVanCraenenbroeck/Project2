@@ -33,7 +33,7 @@ namespace Backend.HTTPTriggers
                 newQuizSubject.dtDateTime = DateTime.Now;
 
                 // Check if the user is logged in
-                if (await SF_IsUserLoggedIn.CheckIfUserIsLoggedInAsync(cookies_ID, req.HttpContext.Connection.RemoteIpAddress.ToString()))
+                if (await SF_User.CheckIfUserIsLoggedInAsync(cookies_ID, req.HttpContext.Connection.RemoteIpAddress.ToString()))
                 {
                     // Insert the subject onto the database
                     using (SqlConnection connection = new SqlConnection(Environment.GetEnvironmentVariable("SQL_ConnectionsString")))

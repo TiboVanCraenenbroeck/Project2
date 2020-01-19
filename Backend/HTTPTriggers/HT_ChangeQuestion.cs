@@ -30,7 +30,7 @@ namespace Backend.HTTPTriggers
 
 
                 // Check if the user is logged in
-                if (await SF_IsUserLoggedIn.CheckIfUserIsLoggedInAsync(cookies_ID, req.HttpContext.Connection.RemoteIpAddress.ToString()))
+                if (await SF_User.CheckIfUserIsLoggedInAsync(cookies_ID, req.HttpContext.Connection.RemoteIpAddress.ToString()))
                 {
                     //Check if the quizz exist
                     if (await SF_QuizExists.CheckIfQuizExistsAsync(guidQuizId))
