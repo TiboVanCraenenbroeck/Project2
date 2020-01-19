@@ -293,3 +293,79 @@ body{
     background-color: #fffbf98c;
     box-shadow: 0px 3px 6px 0px rgba(0,0,0,0.16);
 }
+
+@media (max-width: 1200px) {
+    .c-input-onderwerp{
+        border: 1px solid #474242;
+        margin-left: 16px;
+        border-radius:4px;
+        width: 500px;
+        height: 40px;
+        grid-row: 2;
+        grid-column: 1/2;
+    }
+
+    .c-input-vragen{
+        border: 1px solid #474242;
+        border-radius: 4px;
+        background-color: #FFFBF9;
+        font-family: inherit;
+        outline: none;
+        margin-top: 12px;
+        width: 400px;
+        height: 40px;
+        margin-left: 16px;
+        grid-column: 1;
+        grid-row: 1;
+    }
+
+    .c-subject-vragen{
+        margin-right: 80px;
+        margin-top: 6px;
+        width: 110px;
+        height: 40px;
+        grid-column: 8;
+        grid-row: 1;
+    }
+
+    
+    .c-input-a{
+        
+        border-radius: 4px;
+        margin-left: 80px;
+        grid-column: 1/8;
+        width: 490px;
+        grid-row: 3;
+    }
+
+    .c-input-b{
+        border-radius: 4px;
+        margin-left: 80px;
+        grid-column: 1/8;
+        width: 490px;
+        grid-row: 4;
+    }
+    .c-input-c{
+        border-radius: 4px;
+        margin-left: 80px;
+        grid-column: 1/8;
+        width: 490px;
+        grid-row: 5;
+    }
+    .c-input-d{
+        border-radius: 4px;
+        margin-left: 80px;
+        grid-column: 1/8;
+        width: 490px;
+        grid-row: 6;
+    }
+
+    .c-lbl-antwoorden{
+        margin-top: 16px;
+        grid-column: 1;
+        margin-right: 160px;
+        grid-row: 2;
+    }
+   
+ 
+}
