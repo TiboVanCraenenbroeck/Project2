@@ -38,7 +38,6 @@ const buttonclick = function(){
     let valuesubject = subjectinput.value
     let data = {title: valuesubject, description: ''}
 
-    console.log(subjectinput.value);
     id = getCookie('id');
     decid = encodeURIComponent(id);
     postdata(uri+decid, data)
@@ -124,7 +123,6 @@ const buttonclickvragen = function(){
         }
       ]  
     }
-    console.log(data);
     /* console.log(data); */
     var subjectinput = document.getElementById("js-input-onderwerp-vragen");
     let valuesubject = subjectinput.value
@@ -136,7 +134,6 @@ const buttonclickvragen = function(){
       const title = everything.title;
       if (title == valuesubject)
       {
-        console.log(qid);
         localStorage.setItem('quizid', qid);
       }
     }
@@ -208,13 +205,14 @@ let getAPI = async function(url, method = "GET", body = null) {
       const data = await fetchData(url, method, body);
  /*      getrandomnr(0, data.length); */
      /*  console.log(data.error_message) */
-      console.log(data);
+
       for (let i = 0; i < data.length; i++)
       {
           let vragen = {};
           const quizvragen = data[i];
           if (quizvragen)
           {
+              vragen['questionid'] = quizvragen.question_id;
               vragen['question'] = quizvragen.question;
               vragen['answers'] = quizvragen.answers;
               vragen['difficult'] = quizvragen.difficulty;
@@ -229,13 +227,47 @@ let getAPI = async function(url, method = "GET", body = null) {
     }
   };
 
+//delete data
+
+function deletedata(url = '', data= {})
+  {
+    fetch(url, {
+      method: 'delete', 
+      body: JSON.stringify(data),
+    })
+    .then((response) => response.json())
+    .then((data)=> {
+      console.log('success:', data);
+    })
+    .catch((error)=>{
+      console.error('error: ', error);
+    })
+  }
+
+const buttondeletequestion = function(){
+  let btn = document.querySelector('.js-btn-delete');
+  btn.addEventListener('click', async function()
+  {
+    selectedquestion = document.querySelector('.js-btn-delete');
+    console.log(selectedquestion.id);
+    let questionid = selectedquestion.id;
+    let onderwerpid = localStorage.getItem(quizopgevraagdeid)
+    id = getCookie('id');
+    decid = encodeURIComponent(id);
+
+    let api = "https://mctproject2.azurewebsites.net/api/v1/question/"
+    let preparedapi = api + onderwerpid + "/" + questionid + "?cookie_id=" + decid;
+    console.log(preparedapi)
+  })
+}
+
 
 const buttonclickallevragen = function(){
   let btn = document.querySelector('.js-btn-vragen');
   btn.addEventListener('click', async function()
     {
       selectedsubject=document.querySelector('.js-show_subject');
-      console.log(selectedsubject.value);
+
       let valuesubject = selectedsubject.value
       for (var quiz_id in quiz_ids)
       {
@@ -245,7 +277,7 @@ const buttonclickallevragen = function(){
         const title = everything.title;
         if (title == valuesubject)
         {
-          console.log(qid);
+        
           localStorage.setItem('quizopgevraagdeid', qid);
         }
       }
@@ -259,7 +291,7 @@ const buttonclickallevragen = function(){
       for (let i = 0; i < datavragen.length; i++)
       {
         const quizdata = datavragen[i];
-      
+        
         vragenHTML += `<div class="c-form-delete js-form-delete">
         <input class="c-input-vragen" placeholder="${quizdata.question}" id="js-vraag"></input>
         
@@ -280,7 +312,7 @@ const buttonclickallevragen = function(){
             <label class="c-lbl-level ">Moeilijkheid: </label>
             <label class="c-lbl-1 js-moeilijkheid1">${quizdata.difficult}</label>
         </div>
-        <div class="c-btn-delete js-btn-verzenden"></div>
+        <div class="c-btn-delete js-btn-delete" id="${quizdata.questionid}"></div>
     </div> `;
       }
     
@@ -300,5 +332,6 @@ document.addEventListener('DOMContentLoaded', function()
     moeilijkheid2();
     moeilijkheid3();
     getonderwerpen();
+    buttondeletequestion();
     /* getAPI("bef11ca2-3fb0-4bdf-90d2-2ad0be4787e6"); */
 });
