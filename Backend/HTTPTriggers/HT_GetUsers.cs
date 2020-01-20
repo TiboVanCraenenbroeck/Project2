@@ -23,11 +23,10 @@ namespace Backend.HTTPTriggers
         {
             try
             {
-                // Check if the 
                 string cookies_ID = req.Query["cookie_id"];
                 List<Model_User> listUsers = new List<Model_User>();
                 // Check if the user is logged in
-                if (await SF_IsUserLoggedIn.CheckIfUserIsLoggedInAsync(cookies_ID, req.HttpContext.Connection.RemoteIpAddress.ToString()))
+                if (await SF_User.CheckIfUserIsLoggedInAsync(cookies_ID, req.HttpContext.Connection.RemoteIpAddress.ToString()))
                 {
                     // Open encryption
                     SF_Aes aes = new SF_Aes();
