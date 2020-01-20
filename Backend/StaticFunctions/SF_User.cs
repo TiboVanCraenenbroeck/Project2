@@ -195,7 +195,7 @@ namespace Backend.StaticFunctions
                     client.Connect("smtp.sendgrid.net", 587, false);
 
                     // Note: only needed if the SMTP server requires authentication
-                    client.Authenticate("azure_f821da223c329a6e7deb33cf53076647@azure.com", "admin.123");
+                    client.Authenticate(Environment.GetEnvironmentVariable("sendGridAuthentication"), Environment.GetEnvironmentVariable("sendGridPassword"));
 
                     client.Send(message);
                     client.Disconnect(true);
