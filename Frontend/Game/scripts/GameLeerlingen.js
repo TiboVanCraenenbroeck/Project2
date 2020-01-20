@@ -282,9 +282,6 @@ const loadDomElements = function() {
 // Load the DOM
 document.addEventListener("DOMContentLoaded", function() {
   console.log("Spelen maar😎😎😎");
-  // TIJDELIJK ZET GAMEID IN LOCALSTORAGE
-  localStorage.setItem("quizid", "BEF11CA2-3FB0-4BDF-90D2-2AD0BE4787E6");
-  localStorage.setItem("gameid", "51826506-3c57-4e8e-adec-43c2c78a995b");
   // Load DOM-elements
   loadDomElements();
   // Load the first game (data)

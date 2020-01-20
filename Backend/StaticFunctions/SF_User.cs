@@ -5,6 +5,10 @@ using System.Data.SqlClient;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using MimeKit;
+using MailKit.Net.Smtp;
+using MailKit;
+using SendGrid.Helpers.Mail;
 
 namespace Backend.StaticFunctions
 {
@@ -167,6 +171,99 @@ namespace Backend.StaticFunctions
             user.strName = aes.DecryptFromBase64String(user.strName);
             user.strMail = aes.DecryptFromBase64String(user.strMail);
             return user;
+        }
+        public static void SendMail(Model_User user, string strMessage)
+        {
+            try
+            {
+                // https://github.com/jstedfast/MailKit
+                var message = new MimeMessage();
+                message.From.Add(new MailboxAddress(Environment.GetEnvironmentVariable("FromMail")));
+                message.To.Add(new MailboxAddress(user.strMail));
+                message.Subject = "Nieuwe registratie";
+
+                message.Body = new TextPart("plain")
+                {
+                    Text = strMessage
+                };
+
+                using (var client = new SmtpClient())
+                {
+                    // For demo-purposes, accept all SSL certificates (in case the server supports STARTTLS)
+                    client.ServerCertificateValidationCallback = (s, c, h, e) => true;
+
+                    client.Connect("smtp.sendgrid.net", 587, false);
+
+                    // Note: only needed if the SMTP server requires authentication
+                    client.Authenticate(Environment.GetEnvironmentVariable("sendGridAuthentication"), Environment.GetEnvironmentVariable("sendGridPassword"));
+
+                    client.Send(message);
+                    client.Disconnect(true);
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        public static async Task<bool> CheckIfUserExistWithMailAsync(string strMail)
+        {
+            try
+            {
+                bool blReturnValue = false;
+                using (SqlConnection connection = new SqlConnection(Environment.GetEnvironmentVariable("SQL_ConnectionsString")))
+                {
+                    await connection.OpenAsync();
+                    using (SqlCommand command = new SqlCommand())
+                    {
+                        command.Connection = connection;
+                        string sql = "SELECT COUNT(ID) AS countUsers FROM TB_Users WHERE Mail=@mail";
+                        command.CommandText = sql;
+                        command.Parameters.AddWithValue("@mail", strMail);
+                        SqlDataReader reader = await command.ExecuteReaderAsync();
+                        if (reader.Read())
+                        {
+                            if (Convert.ToInt32(reader["countUsers"]) == 1)
+                            {
+                                blReturnValue = true;
+                            }
+                        }
+                    }
+                }
+                return blReturnValue;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        public static string GetRandomPassword()
+        {
+            // BRON: https://madskristensen.net/blog/generate-random-password-in-c/
+            string strChars = "abcdefghijkmnopqrstuvwxyzABCDEFGHJKLMNOPQRSTUVWXYZ0123456789!@$?_-";
+            string strPassword = "";
+            Random random = new Random();
+            for (int i = 0; i < 8; i++)
+            {
+                strPassword += strChars[random.Next(0, strChars.Length)];
+            }
+            return strPassword;
+        }
+        public static async Task ChangePasswordAsync(Model_User user)
+        {
+            using (SqlConnection connection = new SqlConnection(Environment.GetEnvironmentVariable("SQL_ConnectionsString")))
+            {
+                await connection.OpenAsync();
+                using (SqlCommand command = new SqlCommand())
+                {
+                    command.Connection = connection;
+                    string sql = "UPDATE TB_Users SET Password=@password WHERE Mail=@mail";
+                    command.CommandText = sql;
+                    command.Parameters.AddWithValue("@password", user.strPassword);
+                    command.Parameters.AddWithValue("@mail", user.strMail);
+                    await command.ExecuteReaderAsync();
+                }
+            }
         }
     }
 }

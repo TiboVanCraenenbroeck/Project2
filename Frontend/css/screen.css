@@ -736,7 +736,7 @@ grid
     .c-dashboard_loading {
         display: grid;
         grid-template-columns: repeat(2, 1fr);
-		justify-content: center;
+		/*justify-content: center*/;
 		align-items: center;
     }
     .c-dashboard_onderwerpen{
