@@ -32,12 +32,8 @@ const ontvangenOnderwerpen = data => {
 
 //veranderen van de namen in de cards
 const changeName = () => {
-	let teamNameAHTML = '';
-	let teamNameBHTML = '';
-	teamNameAHTML = `<h1 class="c-teamname js-teamA">${teamAName}</h1>`;
-	teamNameBHTML = `<h1 class="c-teamname js-teamB">${teamBName}</h1>`;
-	domTeamNameACard.innerHTML = teamNameAHTML;
-	domTeamNameBCard.innerHTML = teamNameBHTML;
+	domTeamNameACard.innerHTML = teamAName;
+	domTeamNameBCard.innerHTML = teamBName;
 };
 
 //addEventListener voor button hierbij worsd er een Post naar de database gedaan
