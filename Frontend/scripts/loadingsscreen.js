@@ -58,7 +58,9 @@ const buttonEvent = () => {
     //post naar database   
     localStorage.setItem("quizid", onderwerpId);
     PostAPI(onderwerpId, dataName);
-    
+    if(onderwerpId){
+      window.location.href = "Game/vragen.html";
+    }
 	});
 };
 const laadGekozenAvatars = () => {
