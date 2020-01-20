@@ -50,7 +50,7 @@ const buttonEvent = () => {
 					avatar: { avatar_id: `${teamAAvatarId}` }
 				},
 				{
-					name: `${teamBName}`,
+					name: teamBName,
 					avatar: { avatar_id: `${teamBAvatarId}` }
 				}
 			]
