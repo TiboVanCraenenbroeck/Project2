@@ -16,6 +16,7 @@ let domonderwerpen,
 	teamNameBCard,
 	onderwerpId,
 	teamAAvatarName,
+	gameIdData,
 	teamBAvatarName;
 const url = 'https://mctproject2.azurewebsites.net/api/v1/subjects';
 
@@ -38,7 +39,7 @@ const changeName = () => {
 
 //addEventListener voor button hierbij worsd er een Post naar de database gedaan
 const buttonEvent = () => {
-	domStartGame.addEventListener('click', function() {
+	domStartGame.addEventListener('click', async function() {
 		console.log(domOptions.value);
 		console.log(teamAAvatarId, teamBAvatarId);
 		//datastrucuur doorsturen
@@ -55,12 +56,12 @@ const buttonEvent = () => {
 			]
 		};
 		onderwerpId = domOptions.value;
-    //post naar database   
-    localStorage.setItem("quizid", onderwerpId);
-    PostAPI(onderwerpId, dataName);
-    if(onderwerpId){
-      window.location.href = "Game/vragen.html";
-    }
+		//post naar database
+		localStorage.setItem('quizid', onderwerpId);
+		const gameIdData = await PostAPI(onderwerpId, dataName);
+		if (gameIdData) {
+			window.location.href = 'Game/vragen.html';
+		}
 	});
 };
 const laadGekozenAvatars = () => {
@@ -104,9 +105,12 @@ const PostAPI = async function(
 ) {
 	try {
 		const dataURL = await fetchData2(onderwerpId, dataName, method, body);
-    //console.log(dataURL);
-    localStorage.setItem("gameid", dataURL.id);
-
+		//console.log(dataURL);
+		gameIdData = dataURL.id;
+		await gameIdData;
+		localStorage.setItem('gameid', gameIdData);
+		console.log(gameIdData);
+		return gameIdData;
 	} catch (error) {
 		console.log(error);
 	}
