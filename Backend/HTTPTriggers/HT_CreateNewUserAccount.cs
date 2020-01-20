@@ -36,14 +36,10 @@ namespace Backend.HTTPTriggers
                     if (newUser.strMail.Length > 3 && newUser.strName.Length > 3 && newUser.strSurname.Length > 3)
                     {
                         // Check if the password is strong
-                        if (newUser.strPassword.Length >= 9)
+                        if (SF_User.CheckIfPasswordIsStrongEnough(newUser.strPassword))
                         {
                             // Encrypt everything
-                            SF_Aes aes = new SF_Aes();
-                            newUser.strSurname = aes.EncryptToBase64String(newUser.strSurname);
-                            newUser.strName = aes.EncryptToBase64String(newUser.strName);
-                            newUser.strMail = aes.EncryptToBase64String(newUser.strMail);
-                            newUser.strPassword = SF_Hash.GenerateSHA512String(newUser.strPassword);
+                            newUser = SF_User.Encrypt(newUser);
                             // Put the new user into the database
                             using (SqlConnection connection = new SqlConnection(Environment.GetEnvironmentVariable("SQL_ConnectionsString")))
                             {
@@ -65,7 +61,7 @@ namespace Backend.HTTPTriggers
                                             using (SqlCommand commandA = new SqlCommand())
                                             {
                                                 commandA.Connection = connection;
-                                                string sqlA = "INSERT INTO TB_Users VALUES(@id,@surname,@lastname,@mail,@password, null)";
+                                                string sqlA = "INSERT INTO TB_Users VALUES(@id,@surname,@lastname,@mail,@password, null, null)";
                                                 commandA.CommandText = sqlA;
                                                 commandA.Parameters.AddWithValue("@id", newUser.Id);
                                                 commandA.Parameters.AddWithValue("@surname", newUser.strName);
@@ -88,7 +84,7 @@ namespace Backend.HTTPTriggers
                         else
                         {
                             createNewUserAccountReturn.blSucceeded = false;
-                            createNewUserAccountReturn.strMessage = "Het wachtwoord moet minstens 9 karakters lang zijn";
+                            createNewUserAccountReturn.strMessage = "Je wachtwoord moet minstens 8 karakters, 1 nummer, 1 hoofdletter, 1 gewone letter en een speciaal teken (.?) bevatten";
                         }
                     }
                     else
