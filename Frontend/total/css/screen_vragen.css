@@ -109,13 +109,17 @@ body{
     background-color: #fffbf98c;
     box-shadow: 0px 3px 6px 0px rgba(0,0,0,0.16);
 }
+
+.c-form-extra{
+    width: 100%;
+}
 .c-btn-delete{
     width: 40px;
     height:40px;
-    margin-left: 120px;
     background-image: url("../fotos/delete.png");
     background-size: 100% 100%;
-    grid-column: 8;
+    margin-right: 38px;
+    grid-column: 7;
     grid-row: 8;
 }
 
@@ -271,12 +275,30 @@ body{
     grid-auto-rows: minmax(10px, auto);
     grid-gap:2px;
     height: 80px;
-    width: 80%;
+    width: 100%;
 }
 .c-lbl-ingegevenvragen{
     grid-row: 8;
     grid-column:1/4;
+    margin-top: 60px;
+    margin-left: 70px;
+}
+.c-subject-vragen-show{
+    grid-row: 8;
+    grid-column:5;
+    margin-top: 30px;
+}
+
+.c-toonallevragen{
+    border: 1px solid #474242;
+    border-radius: 4px;
+    width: 140px;
+    height: 20px;
+    margin-top: 60px;
     margin-left: 40px;
+    background-color: #F6D9CF;
+    grid-row: 8;
+    grid-column: 7;
 }
 
 .c-form-2{
