@@ -158,6 +158,8 @@ const firstGame = function() {
   try {
     quizId = localStorage.getItem("quizid");
     gameId = localStorage.getItem("gameid");
+    console.log(quizId);
+    console.log(gameId);
   } catch (error) {
     console.log(error);
     quizId = null;
@@ -175,7 +177,7 @@ const firstGame = function() {
   } else {
     console.log("Geen localstorage gevonden");
     // Send the user to the homepage
-    window.location.href = homaPage;
+    //window.location.href = homaPage;
   }
 };
 // Function that returns ethe correct answer
@@ -282,6 +284,9 @@ const loadDomElements = function() {
 // Load the DOM
 document.addEventListener("DOMContentLoaded", function() {
   console.log("Spelen maar😎😎😎");
+  /* // TIJDELIJK ZET GAMEID IN LOCALSTORAGE
+  localStorage.setItem("quizid", "BEF11CA2-3FB0-4BDF-90D2-2AD0BE4787E6");
+  localStorage.setItem("gameid", "51826506-3c57-4e8e-adec-43c2c78a995b"); */
   // Load DOM-elements
   loadDomElements();
   // Load the first game (data)
