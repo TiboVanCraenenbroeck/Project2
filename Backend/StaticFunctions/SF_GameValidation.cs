@@ -182,6 +182,7 @@ namespace Backend.StaticFunctions
                         {
                             question.Id = Guid.Parse(reader["questionId"].ToString());
                             question.strQuestion = reader["question"].ToString();
+                            question.intDifficulty = intDifficulty;
                             guidCorrectAnswer = Guid.Parse(reader["answerId"].ToString());
                             reader.Close();
                         }
