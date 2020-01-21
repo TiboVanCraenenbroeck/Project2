@@ -24,7 +24,6 @@ function postdata(url = '', data= {})
   .then((response) => response.json())
   .then((data)=> {
     console.log('success:', data);
-
   })
   .catch((error)=>{
     console.error('error: ', error);
@@ -39,7 +38,6 @@ const buttonclick = function(){
     let valuesubject = subjectinput.value
     let data = {title: valuesubject, description: ''}
 
-    console.log(subjectinput.value);
     id = getCookie('id');
     decid = encodeURIComponent(id);
     postdata(uri+decid, data)
@@ -101,10 +99,11 @@ const buttonclickvragen = function(){
     var radiobtnd = document.getElementById('js-rbtn-d').checked; 
     /* var level = document.getElementById('js-level').value;
     var levelnr = Number(level); */
+    var levelnr = Number(moeilijkheidsgraad);
 
     let data = {
       question: vraag, 
-      difficult: moeilijkheidsgraad,
+      difficulty: levelnr,
       answers: [
         {
         answer: antwoorda,
@@ -135,7 +134,6 @@ const buttonclickvragen = function(){
       const title = everything.title;
       if (title == valuesubject)
       {
-        console.log(qid);
         localStorage.setItem('quizid', qid);
       }
     }
@@ -202,17 +200,19 @@ const fetchData = async function(url, method = "GET", body = null) {
 };
 
 let getAPI = async function(url, method = "GET", body = null) {
+  datavragen = [];
     try {
       const data = await fetchData(url, method, body);
  /*      getrandomnr(0, data.length); */
      /*  console.log(data.error_message) */
-      console.log(data);
+
       for (let i = 0; i < data.length; i++)
       {
           let vragen = {};
           const quizvragen = data[i];
           if (quizvragen)
           {
+              vragen['questionid'] = quizvragen.question_id;
               vragen['question'] = quizvragen.question;
               vragen['answers'] = quizvragen.answers;
               vragen['difficult'] = quizvragen.difficulty;
@@ -227,13 +227,47 @@ let getAPI = async function(url, method = "GET", body = null) {
     }
   };
 
+//delete data
+
+function deletedata(url = '', data= {})
+  {
+    fetch(url, {
+      method: 'delete', 
+      body: JSON.stringify(data),
+    })
+    .then((response) => response.json())
+    .then((data)=> {
+      console.log('success:', data);
+    })
+    .catch((error)=>{
+      console.error('error: ', error);
+    })
+  }
+
+const buttondeletequestion = function(){
+  let btn = document.querySelector('.js-btn-delete');
+  btn.addEventListener('click', async function()
+  {
+    selectedquestion = document.querySelector('.js-btn-delete');
+    console.log(selectedquestion.id);
+    let questionid = selectedquestion.id;
+    let onderwerpid = localStorage.getItem(quizopgevraagdeid)
+    id = getCookie('id');
+    decid = encodeURIComponent(id);
+
+    let api = "https://mctproject2.azurewebsites.net/api/v1/question/"
+    let preparedapi = api + onderwerpid + "/" + questionid + "?cookie_id=" + decid;
+    console.log(preparedapi)
+  })
+}
+
 
 const buttonclickallevragen = function(){
   let btn = document.querySelector('.js-btn-vragen');
-  btn.addEventListener('click', function()
+  btn.addEventListener('click', async function()
     {
       selectedsubject=document.querySelector('.js-show_subject');
-      console.log(selectedsubject.value);
+
       let valuesubject = selectedsubject.value
       for (var quiz_id in quiz_ids)
       {
@@ -243,32 +277,33 @@ const buttonclickallevragen = function(){
         const title = everything.title;
         if (title == valuesubject)
         {
-          console.log(qid);
+        
           localStorage.setItem('quizopgevraagdeid', qid);
         }
       }
       const quizid = localStorage.getItem('quizopgevraagdeid');
-      getAPI(quizid);
+      await getAPI(quizid);
 
 
       domvragen = document.querySelector('.c-form-extra');
-      let arrvragen = datavragen
+      // let arrvragen = datavragen
       let vragenHTML = ``;
       for (let i = 0; i < datavragen.length; i++)
       {
         const quizdata = datavragen[i];
-    
+        
         vragenHTML += `<div class="c-form-delete js-form-delete">
         <input class="c-input-vragen" placeholder="${quizdata.question}" id="js-vraag"></input>
         
         <label class="c-lbl-antwoorden c-margin">Antwoorden:</label>
-        <input class="c-radio-a c-radiobtn-option" id="js-rbtn-a" type="radio" name="vragen" value="a"><br>
+    
+        <input class="c-radio-a c-radiobtn-option" ${quizdata.answers[0].correct ? 'checked' : '' } id="js-rbtn-a" type="radio" name="vragen-${i}" value="a"><br>
                 
-        <input class="c-radio-b c-radiobtn-option" id="js-rbtn-b" type="radio" name="vragen" value="b"><br>
+        <input class="c-radio-b c-radiobtn-option" ${quizdata.answers[1].correct ? 'checked' : '' } id="js-rbtn-b" type="radio" name="vragen-${i}" value="b"><br>
             
-        <input class="c-radio-c c-radiobtn-option" id="js-rbtn-c" type="radio" name="vragen" value="c"><br>
+        <input class="c-radio-c c-radiobtn-option" ${quizdata.answers[2].correct ? 'checked' : '' } id="js-rbtn-c" type="radio" name="vragen-${i}" value="c"><br>
         
-        <input class="c-radio-d c-radiobtn-option" id="js-rbtn-d" type="radio" name="vragen" value="d">  
+        <input class="c-radio-d c-radiobtn-option" ${quizdata.answers[3].correct ? 'checked' : '' } id="js-rbtn-d" type="radio" name="vragen-${i}" value="d">  
         <input class="c-input-a c-input-style" placeholder="${quizdata.answers[0].answer}" id="js-antwoorda"></input>
         <input class="c-input-b c-input-style" placeholder="${quizdata.answers[1].answer}" id="js-antwoordb"></input>
         <input class="c-input-c c-input-style" placeholder="${quizdata.answers[2].answer}" id="js-antwoordc"></input>
@@ -277,14 +312,12 @@ const buttonclickallevragen = function(){
             <label class="c-lbl-level ">Moeilijkheid: </label>
             <label class="c-lbl-1 js-moeilijkheid1">${quizdata.difficult}</label>
         </div>
-        <div class="c-btn-delete js-btn-verzenden"></div>
+        <div class="c-btn-delete js-btn-delete" id="${quizdata.questionid}"></div>
     </div> `;
       }
-
+    
       domvragen.innerHTML = vragenHTML;
-        })
-
-
+        })  
 
 }
 
@@ -299,5 +332,6 @@ document.addEventListener('DOMContentLoaded', function()
     moeilijkheid2();
     moeilijkheid3();
     getonderwerpen();
+    buttondeletequestion();
     /* getAPI("bef11ca2-3fb0-4bdf-90d2-2ad0be4787e6"); */
 });

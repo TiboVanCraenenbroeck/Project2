@@ -1,6 +1,14 @@
-
-
+let dataGet;
 const highscoreFilter=(data)=>{
+  dataGet=data;
+  console.log(dataGet)
+  if(dataGet){
+
+    console.log(dataGet[0])
+    console.log(dataGet[1])
+    console.log(dataGet[2])
+  }
+
     let highScoreHTML='',teamHTML='';
     let scores=document.querySelector('.js-punten');
     let teams=document.querySelector('.js-team')

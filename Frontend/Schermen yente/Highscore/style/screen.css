@@ -198,7 +198,7 @@ div{display: block;}
 .gallery {
     display: grid;
     grid-template-columns: repeat(3, 192px);
-    grid-template-rows: repeat(7, 96px);
+    grid-template-rows: repeat(6, 96px);
   
     padding-right: 18.9%;
     padding-left: 18.9%;
@@ -267,8 +267,8 @@ h1{
 .img3 {
     grid-column-start: 3;
     grid-column-end: 3;
-    grid-row-start: 4;
-    grid-row-end: 5;
+    grid-row-start: 3;
+    grid-row-end: 4;
 }
 
 
@@ -309,8 +309,8 @@ h1{
 .h03 {
     grid-column-start: 3;
     grid-column-end: 3;
-    grid-row-start: 3;
-    grid-row-end: 3;
+    grid-row-start: 2;
+    grid-row-end: 2;
     
 }
 
@@ -319,8 +319,8 @@ h1{
     padding-top: 25%;
     grid-column-start: 3;
     grid-column-end: 3;
-    grid-row-start: 3;
-    grid-row-end: 3;
+    grid-row-start: 2;
+    grid-row-end: 2;
     
 }
 
