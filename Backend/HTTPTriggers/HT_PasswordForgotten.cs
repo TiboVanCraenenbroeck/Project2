@@ -36,7 +36,7 @@ namespace Backend.HTTPTriggers
                     // Create a random password
                     string strPassword = SF_User.GetRandomPassword();
                     // Hash the password
-                    user.strPassword = SF_Hash.GenerateSHA512String(user.strPassword);
+                    user.strPassword = SF_Hash.GenerateSHA512String(strPassword);
                     // Change the password in the database
                     await SF_User.ChangePasswordAsync(user);
                     // Send a mail to the user with a new password

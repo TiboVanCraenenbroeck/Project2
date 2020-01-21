@@ -39,7 +39,6 @@ namespace Backend.HTTPTriggers
                             command.Connection = connection;
                             string sql = "SELECT ID, SurName, LastName, Mail FROM TB_Users";
                             command.CommandText = sql;
-                            //command.Parameters.AddWithValue("@day", day);
                             SqlDataReader reader = await command.ExecuteReaderAsync();
                             while (reader.Read())
                             {
