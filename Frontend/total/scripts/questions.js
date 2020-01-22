@@ -290,7 +290,8 @@ const getDataFromInputfields = function(vraagId){
     let antwoordd = document.querySelector(`.js-input-answerd--${vraagId}`).value 
     /* var level = document.getElementById('js-level').value;
     var levelnr = Number(level); */
-    var levelnr = Number(moeilijkheidsgraad);
+    // Moeilijkheidsgraad ophalen
+    const levelnr = getMoeilijkheidsgraad(vraagId);
 
     let data = {
       question_id:vraagId,
@@ -337,7 +338,7 @@ function putdata(url = '', data= {})
 
 
 const btnChangeQuestion = function(){
-  // Haal alle chang-btns op
+  // Haal alle change-btns op
   const domChangeBtns= document.querySelectorAll(".js-btn--change");
   for (const domChangeBtn of domChangeBtns) {
     domChangeBtn.addEventListener("click", function(){
@@ -350,6 +351,36 @@ const btnChangeQuestion = function(){
       console.log(jsonInputFields);
       const api = "https://mctproject2.azurewebsites.net/api/v1/question/"+onderwerpid+"?cookie_id="+decid
       putdata(api,jsonInputFields);
+    });
+  }
+};
+const getMoeilijkheidsgraad = function(vraagId){
+  const domBtnMoeilijkheidsgraden = document.querySelectorAll(`.js-moeilijkheidsgraad--${vraagId}`);
+  for (const [index, domBtn] of domBtnMoeilijkheidsgraden.entries()) {
+    console.log(domBtn)
+    console.log(domBtn.getAttribute("data-moeiljkheidsgraad"))
+    console.log(index)
+    // Controleer of deze knop aangeduid is
+    if(domBtn.getAttribute("data-moeiljkheidsgraad")){
+      console.log(index);
+      return index;
+    }
+  }
+};
+const resetMoeilijkheidsgraadBtn = function(domBtnsMoeilijkheidsgraden){
+  for (const domBtn of domBtnsMoeilijkheidsgraden) {
+    domBtn.setAttribute("data-moeiljkheidsgraad", "false");
+  }
+};
+const btnMoeilijkheidsgraad = function(){
+  // Alle moeilijkheidsgraden-knoppen opvragen
+  const domBtnMoeilijkheidsgraden = document.querySelectorAll(".js-moeilijkheidsgraad");
+  for (const domBtn of domBtnMoeilijkheidsgraden) {
+    domBtn.addEventListener("click", function(){
+      // Reset
+      resetMoeilijkheidsgraadBtn(domBtnMoeilijkheidsgraden);
+      // Zet de attribute op true
+      domBtn.setAttribute("data-moeiljkheidsgraad", "true");
     });
   }
 };
@@ -381,18 +412,33 @@ const alleVragen = async function(){
         <input class="c-input-b c-input-style js-input-answerb--${quizdata.questionid}" value="${quizdata.answers[1].answer}" id="js-antwoordb"></input>
         <input class="c-input-c c-input-style js-input-answerc--${quizdata.questionid}" value="${quizdata.answers[2].answer}" id="js-antwoordc"></input>
         <input class="c-input-d c-input-style js-input-answerd--${quizdata.questionid}" value="${quizdata.answers[3].answer}" id="js-antwoordd"></input>
-        <div class="c-div-level c-margin">
-            <label class="c-lbl-level ">Moeilijkheid: </label>
-            <label class="c-lbl-1 js-moeilijkheid1">${quizdata.difficult}</label>
-        </div>
+        <div class="c-div-level c-margin">`;
+        if(quizdata.difficult==0){
+vragenHTML += `<label class="c-lbl-level ">Moeilijkheid: </label>
+<label class="c-lbl-1 c-moeilijkheidsgraad js-moeilijkheidsgraad js-moeilijkheid1 js-moeilijkheidsgraad--${quizdata.questionid}" data-moeiljkheidsgraad="true">0</label>
+<label class="c-lbl-2 c-moeilijkheidsgraad js-moeilijkheidsgraad js-moeilijkheid2 js-moeilijkheidsgraad--${quizdata.questionid}">1</label>
+<label class="c-lbl-3 c-moeilijkheidsgraad js-moeilijkheidsgraad js-moeilijkheid3 js-moeilijkheidsgraad--${quizdata.questionid}">2</label>`;
+        }else if(quizdata.difficult==1){
+          vragenHTML += `<label class="c-lbl-level ">Moeilijkheid: </label>
+<label class="c-lbl-1 c-moeilijkheidsgraad js-moeilijkheidsgraad js-moeilijkheid1 js-moeilijkheidsgraad--${quizdata.questionid}">0</label>
+<label class="c-lbl-2 c-moeilijkheidsgraad js-moeilijkheidsgraad js-moeilijkheid2 js-moeilijkheidsgraad--${quizdata.questionid}" data-moeiljkheidsgraad="true">1</label>
+<label class="c-lbl-3 c-moeilijkheidsgraad js-moeilijkheidsgraad js-moeilijkheid3 js-moeilijkheidsgraad--${quizdata.questionid}">2</label>`;
+        }else{
+          vragenHTML += `<label class="c-lbl-level ">Moeilijkheid: </label>
+<label class="c-lbl-1 c-moeilijkheidsgraad js-moeilijkheidsgraad js-moeilijkheid1 js-moeilijkheidsgraad--${quizdata.questionid}">0</label>
+<label class="c-lbl-2 c-moeilijkheidsgraad js-moeilijkheidsgraad js-moeilijkheid2 js-moeilijkheidsgraad--${quizdata.questionid}">1</label>
+<label class="c-lbl-3 c-moeilijkheidsgraad js-moeilijkheidsgraad js-moeilijkheid3 js-moeilijkheidsgraad--${quizdata.questionid}" data-moeiljkheidsgraad="true">2</label>`;
+        }
+            vragenHTML+=`</div>
         <div class="c-btn-delete js-btn-delete" data-questionId="${quizdata.questionid}" id="${quizdata.questionid}"></div>
         <div class="c-btn-change js-btn--change" data-questionId="${quizdata.questionid}">changes</div>
     </div> `;
       }
-    
+
       domvragen.innerHTML = vragenHTML;
       buttondeletequestion();
       btnChangeQuestion();
+      btnMoeilijkheidsgraad();
 };
 
 

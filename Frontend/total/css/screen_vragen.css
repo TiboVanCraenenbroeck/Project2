@@ -1,3 +1,14 @@
+@font-face {
+	font-family: 'Raleway';
+	font-weight: 400;
+	src: url('../fonts/Raleway-Medium.ttf');
+}
+
+html {
+    font-family: 'Raleway', Helvetica, arial, sans-serif;
+}
+
+
 .c-bg{
     align-items: center;
 }
@@ -35,10 +46,19 @@ body{
     border: 1px solid #474242;
     border-radius: 4px;
     width: 110px;
-    height: 20px;
+    height: 40px;
     background-color: #F6D9CF;
     grid-column: 8;
+    
+       
 }
+.lbl-home{
+    font-size: 24px;
+    text-align:center;
+    vertical-align:middle;
+    line-height: 36px;
+}
+
 
 .c-onderwerp-form{
     display: grid;
@@ -119,7 +139,8 @@ body{
     background-image: url("../fotos/delete.png");
     background-size: 100% 100%;
     margin-right: 38px;
-    grid-column: 7;
+    grid-column: 8;
+    margin-left:380px;
     grid-row: 8;
 }
 
@@ -127,22 +148,48 @@ body{
     border: 1px solid #474242;
     border-radius: 4px;
     width: 140px;
-    height: 20px;
+    height: 40px;
     background-color: #F6D9CF;
-    grid-column: 2;
+    grid-column: 8;
     grid-row: 1;
-    margin-left: 40px;
+    margin-left: 284px;
     margin-top: 12px;
    
 }
+.c-moeilijkheidsgraad[data-moeiljkheidsgraad= "true"]{
+    background-color: red;
+}
 
-.c-subject-vragen{
-    margin-right: 80px;
+.c-subject-vragen-2
+{
     margin-top: 6px;
+    margin-right: 20px;
     width: 160px;
     height: 40px;
     grid-column: 8;
     grid-row: 1;
+
+}
+
+.c-subject-vragen{
+    margin-top: 6px;
+    margin-right: 20px;
+    width: 160px;
+    height: 40px;
+    grid-column: 8;
+    grid-row: 1;
+    border-radius: 4px;
+    background-color: #F6D9CF;
+}
+
+:placeholder-shown
+{
+    padding-left: 8px;
+}
+
+::placeholder{
+    color: #585151;
+    font-size: 20px;
 }
 
 .c-input-style{
@@ -242,6 +289,7 @@ body{
     grid-row: 8;
     display: grid;
     align-items: center;
+    border-radius: 4px;
     grid-template-columns: repeat(3,1px);
     grid-auto-rows: minmax(1px,auto);
     background-color: #fffbf9c9;
@@ -294,24 +342,29 @@ body{
     grid-row: 8;
     grid-column:1/4;
     margin-top: 60px;
-    margin-left: 70px;
+    margin-left: 20px;
 }
 .c-subject-vragen-show{
     grid-row: 8;
     grid-column:5;
     margin-top: 30px;
+    margin-right: 110px;
 }
 
 .c-toonallevragen{
     border: 1px solid #474242;
     border-radius: 4px;
     width: 140px;
-    height: 20px;
-    margin-top: 60px;
-    margin-left: 40px;
+    height: 40px;
+    margin-top: 40px;
+    margin-left: 20px;
     background-color: #F6D9CF;
     grid-row: 8;
     grid-column: 7;
+}
+
+.lbl-middle{
+    line-height: 38px;
 }
 
 .c-form-2{
