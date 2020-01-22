@@ -22,11 +22,16 @@ namespace Backend.HTTPTriggers
         {
             try
             {
-                string cookies_ID = req.Query["cookie_id"];
+                string strCookies_ID = req.Query["cookie_id"];
                 Model_User userinfo = new Model_User();
                 // Check if the user is logged in
-                if (await SF_User.CheckIfUserIsLoggedInAsync(cookies_ID, req.HttpContext.Connection.RemoteIpAddress.ToString()))
+                if (await SF_User.CheckIfUserIsLoggedInAsync(strCookies_ID, req.HttpContext.Connection.RemoteIpAddress.ToString()))
                 {
+                    // Get the userId from the cookie
+                    SF_Aes aesCookies = new SF_Aes(1);
+                    string strDecryptedCookie = aesCookies.DecryptFromBase64String(strCookies_ID);
+                    string[] strCookieSplit = strDecryptedCookie.Split("!!!");
+                    Guid guidUserId = Guid.Parse(strCookieSplit[0]);
                     using (SqlConnection connection = new SqlConnection(Environment.GetEnvironmentVariable("SQL_ConnectionsString")))
                     {
                         await connection.OpenAsync();
@@ -35,7 +40,7 @@ namespace Backend.HTTPTriggers
                             command.Connection = connection;
                             string sql = "SELECT ID, SurName, LastName, Mail FROM TB_Users WHERE ID=@userId";
                             command.CommandText = sql;
-                            command.Parameters.AddWithValue("@userId", day);
+                            command.Parameters.AddWithValue("@userId", guidUserId);
                             SqlDataReader reader = await command.ExecuteReaderAsync();
                             if (reader.Read())
                             {
@@ -54,6 +59,7 @@ namespace Backend.HTTPTriggers
             catch (Exception ex)
             {
                 log.LogError("HT_GetUserInfo" + ex.ToString());
+                return new StatusCodeResult(500);
             }
         }
     }

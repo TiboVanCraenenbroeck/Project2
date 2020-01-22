@@ -1,5 +1,6 @@
 let domUserInputs = {},
   domBtn;
+let cookieId;
 // Functions
 // Function that gets the userinfo of the current user
 const showInfoOfTheCurrentUser = function(data) {
@@ -12,9 +13,17 @@ const loadDom = function() {
   domUserInputs["mail"] = document.querySelector(".js-input--mail");
   domUserInputs["password"] = document.querySelector(".js-input--password");
   domBtn = document.querySelector(".js-btn--change-userinfo");
+  getAPI(`user?cookie_id=${cookieId}`, showInfoOfTheCurrentUser);
 };
 document.addEventListener("DOMContentLoaded", function() {
   console.log("Wijzigen maar!!!😀");
-  loadDom();
-  
+  // Check if the user is logged in
+  if (checkIfUserIsLoggedIn()) {
+    // Get the cookieId
+    cookieId = getCookie("id");
+    loadDom();
+  } else {
+    // Send the user to the main-page
+    window.location.href = "./";
+  }
 });

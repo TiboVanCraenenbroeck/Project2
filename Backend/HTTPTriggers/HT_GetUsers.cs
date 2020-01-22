@@ -45,7 +45,7 @@ namespace Backend.HTTPTriggers
                                 // Create an object
                                 Model_User user = new Model_User()
                                 {
-                                    Id = Guid.Parse(reader["SurName"].ToString()),
+                                    Id = Guid.Parse(reader["ID"].ToString()),
                                     strSurname = reader["SurName"].ToString(),
                                     strName = reader["LastName"].ToString(),
                                     strMail = reader["Mail"].ToString()
@@ -55,13 +55,6 @@ namespace Backend.HTTPTriggers
                                 user = SF_User.Decrypt(user);
                                 // Put the encrypted user into the list
                                 listUsers.Add(user);
-                                /*listUsers.Add(new Model_User()
-                                {
-                                    Id = Guid.Parse(reader["ID"].ToString()),
-                                    strSurname = aes.DecryptFromBase64String(reader["SurName"].ToString()),
-                                    strName = aes.DecryptFromBase64String(reader["LastName"].ToString()),
-                                    strMail = aes.DecryptFromBase64String(reader["Mail"].ToString())
-                                });*/
                             }
                         }
                     }

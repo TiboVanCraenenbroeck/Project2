@@ -16,10 +16,8 @@ const loadDom = function() {
 document.addEventListener("DOMContentLoaded", function() {
   console.log("Script leerkrachten geladen😛");
   // Check if the user is logged in
-  //cookieId = getCookie("id");
-  cookieId =
-    "mD8n3TZ6ib2ygIluJPpSBqfTMEap8pjds3kJfAGXGtzN6I2uiAAzO0ep0Xop3Erxi5wKjrntwvhOGe0hpTP6vfC/BL9F5Oxr9e8btDtzkpgkk3zg9yywlLpbmj82p/qDGIlYsMMOqsv7oz0hig06xw==";
-  if (cookieId != null) {
+  if (checkIfUserIsLoggedIn()) {
+    cookieId = getCookie("id");
     // Load the DOM
     loadDom();
   } else {
