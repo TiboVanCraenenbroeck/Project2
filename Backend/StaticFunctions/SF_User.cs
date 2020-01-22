@@ -142,12 +142,11 @@ namespace Backend.StaticFunctions
                 using (SqlCommand command = new SqlCommand())
                 {
                     command.Connection = connection;
-                    string sql = "UPDATE TB_Users SET SurName=@surName, LastName=@lastName, Mail=@mail, Password=@password WHERE ID=@userId";
+                    string sql = "UPDATE TB_Users SET SurName=@surName, LastName=@lastName, Mail=@mail WHERE ID=@userId";
                     command.CommandText = sql;
                     command.Parameters.AddWithValue("@surName", user.strSurname);
                     command.Parameters.AddWithValue("@lastName", user.strName);
                     command.Parameters.AddWithValue("@mail", user.strMail);
-                    command.Parameters.AddWithValue("@password", user.strPassword);
                     command.Parameters.AddWithValue("@userId", user.Id);
                     await command.ExecuteReaderAsync();
                 }
@@ -155,13 +154,19 @@ namespace Backend.StaticFunctions
         }
         public static Model_User Encrypt(Model_User user)
         {
+            Model_User encryptedUser = new Model_User();
             // Encrypt everything
             SF_Aes aes = new SF_Aes();
-            user.strSurname = aes.EncryptToBase64String(user.strSurname);
-            user.strName = aes.EncryptToBase64String(user.strName);
-            user.strMail = aes.EncryptToBase64String(user.strMail);
-            user.strPassword = SF_Hash.GenerateSHA512String(user.strPassword);
-            return user;
+            encryptedUser.strSurname = aes.EncryptToBase64String(user.strSurname);
+            encryptedUser.strName = aes.EncryptToBase64String(user.strName);
+            encryptedUser.strMail = aes.EncryptToBase64String(user.strMail);
+            // Check if the user has filled in a password
+            if (user.strPassword != null && user.strPassword != "")
+            {
+                encryptedUser.strPassword = SF_Hash.GenerateSHA512String(user.strPassword);
+
+            }
+            return encryptedUser;
         }
         public static Model_User Decrypt(Model_User user)
         {
@@ -172,7 +177,7 @@ namespace Backend.StaticFunctions
             user.strMail = aes.DecryptFromBase64String(user.strMail);
             return user;
         }
-        public static void SendMail(string strMail, string strSubject,string strMessage)
+        public static void SendMail(string strMail, string strSubject, string strMessage)
         {
             try
             {
