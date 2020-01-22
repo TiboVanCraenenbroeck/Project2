@@ -16,7 +16,7 @@ const highscoreFilter=(data)=>{
     nummer2HTML += `<h1 class="h01">${dataGet[1].name}</h1>
     <h1 class="h011">${dataGet[1].score}</h1>
     <figure class="img1">
-        <img src="https://aikovanryssel.github.io/project2IMG/img/raketrechtnieuw/svg/Component 27 – 1.svg" class="gallery__img " alt="Image 1">
+        <img src="https://aikovanryssel.github.io/project2IMG/img/raketrechtnieuw/svg/raketdonkerroodroze.svg" class="gallery__img " alt="Image 1">
     </figure> 
 
 
@@ -24,12 +24,12 @@ const highscoreFilter=(data)=>{
 <h1 class="h02">${dataGet[0].name}</h1>
 <h1 class="h022">${dataGet[0].score}</h1>
 <figure class="img2">
-        <img src="https://aikovanryssel.github.io/project2IMG/img/raketrechtnieuw/svg/Component 27 – 1.svg" class="gallery__img " alt="Image 1">
+        <img src="https://aikovanryssel.github.io/project2IMG/img/raketrechtnieuw/svg/raketdonkerroodroze.svg" class="gallery__img " alt="Image 1">
 </figure>
 <h1 class="h03">${dataGet[2].name}</h1>
 <h1 class="h033">${dataGet[2].score}</h1>
 <figure class="img3">
-        <img src="https://aikovanryssel.github.io/project2IMG/img/raketrechtnieuw/svg/Component 27 – 1.svg" class="gallery__img" alt="Image 1">
+        <img src="https://aikovanryssel.github.io/project2IMG/img/raketrechtnieuw/svg/raketdonkerroodroze.svg" class="gallery__img" alt="Image 1">
 </figure>`;
 
 
@@ -66,7 +66,7 @@ const highscoreFilter=(data)=>{
                                                 <div class="divTableRow">
                                                         <div class="divTableCell1">
                                                                 <figure class="imageHighscore">
-                                                                        <img src="https://aikovanryssel.github.io/project2IMG/img/raketrechtnieuw/svg/Component 27 – 1.svg" class="" alt="Image 1">
+                                                                        <img src="https://aikovanryssel.github.io/project2IMG/img/raketrechtnieuw/svg/raketdonkerroodroze.svg" class="" alt="Image 1">
                                                                 </figure>
                                                         </div>
                                                         <div class="divTableCell">${naam}</div>

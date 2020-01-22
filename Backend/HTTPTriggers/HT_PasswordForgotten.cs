@@ -25,6 +25,9 @@ namespace Backend.HTTPTriggers
                 objectResultReturn.Id = "ERROR";
                 Model_User user = new Model_User();
                 user.strMail = mail;
+                user.strName = "";
+                user.strSurname = "";
+                user.strPassword = "";
                 user = SF_User.Encrypt(user);
                 // Check if the user exists
 
@@ -33,10 +36,13 @@ namespace Backend.HTTPTriggers
                     // Create a random password
                     string strPassword = SF_User.GetRandomPassword();
                     // Hash the password
-                    user.strPassword = SF_Hash.GenerateSHA512String(user.strPassword);
+                    user.strPassword = SF_Hash.GenerateSHA512String(strPassword);
                     // Change the password in the database
                     await SF_User.ChangePasswordAsync(user);
                     // Send a mail to the user with a new password
+                    string strMailBody = $"Beste\n\n Je nieuwe wachtwoord is: {strPassword}\nGelieve dit wachtwoord zo snel mogelijk te wijzigen.\n\nSportieve groeten\nMove For Fortune Groep 3";
+                    SF_User.SendMail(mail, "Wachtwoord vergeten - Move For Fortune Groep 3", strMailBody);
+                    objectResultReturn.Id = "true";
                 }
                 else
                 {
@@ -47,6 +53,7 @@ namespace Backend.HTTPTriggers
             catch (Exception ex)
             {
                 log.LogError("HT_PasswordForgotten" + ex.ToString());
+                return new StatusCodeResult(500);
             }
         }
     }

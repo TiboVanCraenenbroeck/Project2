@@ -172,15 +172,15 @@ namespace Backend.StaticFunctions
             user.strMail = aes.DecryptFromBase64String(user.strMail);
             return user;
         }
-        public static void SendMail(Model_User user, string strMessage)
+        public static void SendMail(string strMail, string strSubject,string strMessage)
         {
             try
             {
                 // https://github.com/jstedfast/MailKit
                 var message = new MimeMessage();
                 message.From.Add(new MailboxAddress(Environment.GetEnvironmentVariable("FromMail")));
-                message.To.Add(new MailboxAddress(user.strMail));
-                message.Subject = "Nieuwe registratie";
+                message.To.Add(new MailboxAddress(strMail));
+                message.Subject = strSubject;
 
                 message.Body = new TextPart("plain")
                 {

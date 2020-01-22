@@ -16,6 +16,9 @@ namespace Backend.Models
         [JsonProperty(PropertyName = "score")]
         public int score { get; set; }
 
+        [JsonProperty(PropertyName = "image")]
+        public string image { get; set; }
+
 
     }
 }
