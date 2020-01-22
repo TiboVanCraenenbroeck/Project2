@@ -31,7 +31,7 @@ namespace Backend.HTTPTriggers
                     using (SqlCommand command = new SqlCommand())
                     {
                         command.Connection = connection;
-                        string sql = "SELECT top(10) TB_Teams.ID AS teamID, TB_Teams.Name as NameTeam, TB_Games_Teams.Score AS score  FROM TB_Teams INNER JOIN TB_Games_Teams ON TB_Teams.ID = TB_Games_Teams.TB_Teams_ID INNER JOIN TB_Games ON TB_Games.ID = TB_Games_Teams.TB_Games_ID WHERE TB_Games.IsDeleted=0 order by score Desc";
+                        string sql = "SELECT top(10) TB_Teams.ID AS teamID, TB_Teams.Name as NameTeam, TB_Games_Teams.Score AS score , TB_Avatars.Name FROM TB_Teams INNER JOIN TB_Games_Teams ON TB_Teams.ID = TB_Games_Teams.TB_Teams_ID INNER JOIN TB_Games ON TB_Games.ID = TB_Games_Teams.TB_Games_ID inner join TB_Avatars ON TB_Teams.TB_Avatars_ID = TB_Avatars.ID WHERE TB_Games.IsDeleted = 0 order by score Desc";
                         command.CommandText = sql;
                         SqlDataReader reader = await command.ExecuteReaderAsync();
                         while (reader.Read())
@@ -40,7 +40,8 @@ namespace Backend.HTTPTriggers
                             {
                                 Id = Guid.Parse(reader["teamID"].ToString()),
                                 TeamName = reader["NameTeam"].ToString(),
-                                score = int.Parse(reader["score"].ToString())
+                                score = int.Parse(reader["score"].ToString()),
+                                image = reader["Name"].ToString()
                             });
                         }
                     }
