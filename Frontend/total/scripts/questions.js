@@ -12,7 +12,8 @@ let selectedsubject;
 const getDomElements = function(){
   console.log("dom geladen");
   id = getCookie('id');
-  decid = id.replace("+", "%2B");
+  decid = encodeURIComponent(id);
+  console.log(decid);
 };
 
 function postdata(url = '', data= {})
@@ -29,7 +30,6 @@ function postdata(url = '', data= {})
     console.error('error: ', error);
   })
 }
-
 const buttonclick = function(){
   let btn = document.querySelector('.js-btn-onderwerp-verzenden');
   btn.addEventListener('click', function()
@@ -245,8 +245,24 @@ function deletedata(url = '', data= {})
   }
 
 const buttondeletequestion = function(){
-  let btn = document.querySelector('.js-btn-delete');
-  btn.addEventListener('click', async function()
+  let btn = document.querySelectorAll('.js-btn-delete');
+  for (const dombtn of btn) {
+    dombtn.addEventListener("click", function(){
+      const questionId = dombtn.getAttribute("data-questionId");
+      console.log(questionId);
+      let onderwerpid = localStorage.getItem('quizopgevraagdeid');
+      id = getCookie('id');
+      decid = encodeURIComponent(id);
+
+      let api = "https://mctproject2.azurewebsites.net/api/v1/question/"
+      let preparedapi = api + onderwerpid + "/" + questionId + "?cookie_id=" + decid;
+      console.log(preparedapi)
+      deletedata(preparedapi);
+      alleVragen();
+      alert('Vraag is verwijderd');
+    });
+  }
+  /* btn.addEventListener('click', async function()
   {
     selectedquestion = document.querySelector('.js-btn-delete');
     console.log(selectedquestion.id);
@@ -258,8 +274,127 @@ const buttondeletequestion = function(){
     let api = "https://mctproject2.azurewebsites.net/api/v1/question/"
     let preparedapi = api + onderwerpid + "/" + questionid + "?cookie_id=" + decid;
     console.log(preparedapi)
+  }) */
+}
+// Functie om de vragen te wijzigen
+const getDataFromInputfields = function(vraagId){
+  // Alle vragen ophalen
+  const vraag = document.querySelector(`.js-input-question--${vraagId}`).value;
+    let radiobtna = document.querySelector(`.js-radioa-question--${vraagId}`).checked;
+    let radiobtnb = document.querySelector(`.js-radiob-question--${vraagId}`).checked;
+    let radiobtnc = document.querySelector(`.js-radioc-question--${vraagId}`).checked;
+    let radiobtnd = document.querySelector(`.js-radiod-question--${vraagId}`).checked;
+    let antwoorda = document.querySelector(`.js-input-answera--${vraagId}`).value;
+    let antwoordb = document.querySelector(`.js-input-answerb--${vraagId}`).value
+    let antwoordc = document.querySelector(`.js-input-answerc--${vraagId}`).value
+    let antwoordd = document.querySelector(`.js-input-answerd--${vraagId}`).value 
+    /* var level = document.getElementById('js-level').value;
+    var levelnr = Number(level); */
+    var levelnr = Number(moeilijkheidsgraad);
+
+    let data = {
+      question_id:vraagId,
+      question: vraag, 
+      difficulty: levelnr,
+      answers: [
+        {
+        answer: antwoorda,
+        correct: radiobtna
+        },
+        {
+        answer: antwoordb,
+        correct: radiobtnb
+        },
+        {
+        answer: antwoordc,
+        correct: radiobtnc
+        },
+        {
+        answer: antwoordd,
+        correct: radiobtnd
+        }
+      ]  
+    }
+    return data;
+};
+
+//put data
+function putdata(url = '', data= {})
+{
+  fetch(url, {
+    method: 'Put', 
+    body: JSON.stringify(data),
+  })
+  .then((response) => response.json())
+  .then((data)=> {
+    console.log('success:', data);
+    alert("vraag is gewijzigd");
+  })
+  .catch((error)=>{
+    console.error('error: ', error);
   })
 }
+
+
+const btnChangeQuestion = function(){
+  // Haal alle chang-btns op
+  const domChangeBtns= document.querySelectorAll(".js-btn--change");
+  for (const domChangeBtn of domChangeBtns) {
+    domChangeBtn.addEventListener("click", function(){
+      const questionId = domChangeBtn.getAttribute("data-questionId");
+      console.log(questionId);
+      let onderwerpid = localStorage.getItem('quizopgevraagdeid');
+      id = getCookie('id');
+      decid = encodeURIComponent(id);
+      const jsonInputFields =  getDataFromInputfields(questionId);
+      console.log(jsonInputFields);
+      const api = "https://mctproject2.azurewebsites.net/api/v1/question/"+onderwerpid+"?cookie_id="+decid
+      putdata(api,jsonInputFields);
+    });
+  }
+};
+const alleVragen = async function(){
+  const quizid = localStorage.getItem('quizopgevraagdeid');
+      await getAPI(quizid);
+
+
+      domvragen = document.querySelector('.c-form-extra');
+      // let arrvragen = datavragen
+      let vragenHTML = ``;
+      for (let i = 0; i < datavragen.length; i++)
+      {
+        const quizdata = datavragen[i];
+        
+        vragenHTML += `<div class="c-form-delete js-form-delete">
+        <input class="c-input-vragen js-input-question--${quizdata.questionid}" value="${quizdata.question}" id="js-vraag"></input>
+        
+        <label class="c-lbl-antwoorden c-margin">Antwoorden:</label>
+    
+        <input class="c-radio-a c-radiobtn-option js-radioa-question--${quizdata.questionid}" ${quizdata.answers[0].correct ? 'checked' : '' } id="js-rbtn-a${i}" type="radio" name="vragen-${i}" value="a"><br>
+                
+        <input class="c-radio-b c-radiobtn-option js-radiob-question--${quizdata.questionid}" ${quizdata.answers[1].correct ? 'checked' : '' } id="js-rbtn-b${i}" type="radio" name="vragen-${i}" value="b"><br>
+            
+        <input class="c-radio-c c-radiobtn-option js-radioc-question--${quizdata.questionid}" ${quizdata.answers[2].correct ? 'checked' : '' } id="js-rbtn-c${i}" type="radio" name="vragen-${i}" value="c"><br>
+        
+        <input class="c-radio-d c-radiobtn-option js-radiod-question--${quizdata.questionid}" ${quizdata.answers[3].correct ? 'checked' : '' } id="js-rbtn-d${i}" type="radio" name="vragen-${i}" value="d">  
+        <input class="c-input-a c-input-style js-input-answera--${quizdata.questionid}" value="${quizdata.answers[0].answer}" id="js-antwoorda"></input>
+        <input class="c-input-b c-input-style js-input-answerb--${quizdata.questionid}" value="${quizdata.answers[1].answer}" id="js-antwoordb"></input>
+        <input class="c-input-c c-input-style js-input-answerc--${quizdata.questionid}" value="${quizdata.answers[2].answer}" id="js-antwoordc"></input>
+        <input class="c-input-d c-input-style js-input-answerd--${quizdata.questionid}" value="${quizdata.answers[3].answer}" id="js-antwoordd"></input>
+        <div class="c-div-level c-margin">
+            <label class="c-lbl-level ">Moeilijkheid: </label>
+            <label class="c-lbl-1 js-moeilijkheid1">${quizdata.difficult}</label>
+        </div>
+        <div class="c-btn-delete js-btn-delete" data-questionId="${quizdata.questionid}" id="${quizdata.questionid}"></div>
+        <div class="c-btn-change js-btn--change" data-questionId="${quizdata.questionid}">changes</div>
+    </div> `;
+      }
+    
+      domvragen.innerHTML = vragenHTML;
+      buttondeletequestion();
+      btnChangeQuestion();
+};
+
 
 
 const buttonclickallevragen = function(){
@@ -277,46 +412,10 @@ const buttonclickallevragen = function(){
         const title = everything.title;
         if (title == valuesubject)
         {
-        
           localStorage.setItem('quizopgevraagdeid', qid);
         }
       }
-      const quizid = localStorage.getItem('quizopgevraagdeid');
-      await getAPI(quizid);
-
-
-      domvragen = document.querySelector('.c-form-extra');
-      // let arrvragen = datavragen
-      let vragenHTML = ``;
-      for (let i = 0; i < datavragen.length; i++)
-      {
-        const quizdata = datavragen[i];
-        
-        vragenHTML += `<div class="c-form-delete js-form-delete">
-        <input class="c-input-vragen" placeholder="${quizdata.question}" id="js-vraag"></input>
-        
-        <label class="c-lbl-antwoorden c-margin">Antwoorden:</label>
-    
-        <input class="c-radio-a c-radiobtn-option" ${quizdata.answers[0].correct ? 'checked' : '' } id="js-rbtn-a" type="radio" name="vragen-${i}" value="a"><br>
-                
-        <input class="c-radio-b c-radiobtn-option" ${quizdata.answers[1].correct ? 'checked' : '' } id="js-rbtn-b" type="radio" name="vragen-${i}" value="b"><br>
-            
-        <input class="c-radio-c c-radiobtn-option" ${quizdata.answers[2].correct ? 'checked' : '' } id="js-rbtn-c" type="radio" name="vragen-${i}" value="c"><br>
-        
-        <input class="c-radio-d c-radiobtn-option" ${quizdata.answers[3].correct ? 'checked' : '' } id="js-rbtn-d" type="radio" name="vragen-${i}" value="d">  
-        <input class="c-input-a c-input-style" placeholder="${quizdata.answers[0].answer}" id="js-antwoorda"></input>
-        <input class="c-input-b c-input-style" placeholder="${quizdata.answers[1].answer}" id="js-antwoordb"></input>
-        <input class="c-input-c c-input-style" placeholder="${quizdata.answers[2].answer}" id="js-antwoordc"></input>
-        <input class="c-input-d c-input-style" placeholder="${quizdata.answers[3].answer}" id="js-antwoordd"></input>
-        <div class="c-div-level c-margin">
-            <label class="c-lbl-level ">Moeilijkheid: </label>
-            <label class="c-lbl-1 js-moeilijkheid1">${quizdata.difficult}</label>
-        </div>
-        <div class="c-btn-delete js-btn-delete" id="${quizdata.questionid}"></div>
-    </div> `;
-      }
-    
-      domvragen.innerHTML = vragenHTML;
+      alleVragen();
         })  
 
 }
@@ -332,6 +431,5 @@ document.addEventListener('DOMContentLoaded', function()
     moeilijkheid2();
     moeilijkheid3();
     getonderwerpen();
-    buttondeletequestion();
     /* getAPI("bef11ca2-3fb0-4bdf-90d2-2ad0be4787e6"); */
 });

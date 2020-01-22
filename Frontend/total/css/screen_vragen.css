@@ -123,6 +123,19 @@ body{
     grid-row: 8;
 }
 
+.c-btn-change{
+    border: 1px solid #474242;
+    border-radius: 4px;
+    width: 140px;
+    height: 20px;
+    background-color: #F6D9CF;
+    grid-column: 2;
+    grid-row: 1;
+    margin-left: 40px;
+    margin-top: 12px;
+   
+}
+
 .c-subject-vragen{
     margin-right: 80px;
     margin-top: 6px;
