@@ -50,9 +50,10 @@ namespace Backend.HTTPTriggers
                                     // Check if the password is strong enenough
                                     if (SF_User.CheckIfPasswordIsStrongEnough(newModel_User.strPassword))
                                     {
-                                        await SF_User.ChangePasswordAsync(encryptedUser);
                                         // Change the data into the database + encrypt the data
                                         await SF_User.ChangeUserInfoAsync(newModel_User);
+                                        // Change the password
+                                        await SF_User.ChangePasswordAsync(encryptedUser);
                                         objectResultReturn.Id = "true";
                                     }
                                     else

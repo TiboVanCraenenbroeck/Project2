@@ -154,16 +154,23 @@ namespace Backend.StaticFunctions
         }
         public static Model_User Encrypt(Model_User user)
         {
-            Model_User encryptedUser = new Model_User();
+            Model_User encryptedUser = new Model_User()
+            {
+                Id = user.Id,
+                strSurname = user.strSurname,
+                strName = user.strName,
+                strMail = user.strMail,
+                strPassword = user.strPassword
+            };
             // Encrypt everything
             SF_Aes aes = new SF_Aes();
-            encryptedUser.strSurname = aes.EncryptToBase64String(user.strSurname);
-            encryptedUser.strName = aes.EncryptToBase64String(user.strName);
-            encryptedUser.strMail = aes.EncryptToBase64String(user.strMail);
+            encryptedUser.strSurname = aes.EncryptToBase64String(encryptedUser.strSurname);
+            encryptedUser.strName = aes.EncryptToBase64String(encryptedUser.strName);
+            encryptedUser.strMail = aes.EncryptToBase64String(encryptedUser.strMail);
             // Check if the user has filled in a password
-            if (user.strPassword != null && user.strPassword != "")
+            if (encryptedUser.strPassword != null && encryptedUser.strPassword != "")
             {
-                encryptedUser.strPassword = SF_Hash.GenerateSHA512String(user.strPassword);
+                encryptedUser.strPassword = SF_Hash.GenerateSHA512String(encryptedUser.strPassword);
 
             }
             return encryptedUser;
