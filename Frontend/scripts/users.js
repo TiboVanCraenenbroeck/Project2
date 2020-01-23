@@ -8,6 +8,8 @@ const showResponseFromServer = function(data) {
   } else {
     alert(data["error_message"]);
   }
+  // Load the users from the API
+  getAPI(`users?cookie_id=${encodeURIComponent(cookieId)}`, loadUsers);
 };
 const loadUsers = function(data) {
   let outputHTML = "";

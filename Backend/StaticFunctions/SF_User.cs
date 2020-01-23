@@ -55,7 +55,7 @@ namespace Backend.StaticFunctions
                 return false;
             }
         }
-        public static async Task<bool> CheckIfUserExistAsync(Guid guidUserId)
+        public static async Task<bool> CheckIfUserExistAsync(Guid guidUserId) 
         {
             try
             {
@@ -65,7 +65,7 @@ namespace Backend.StaticFunctions
                     using (SqlCommand command = new SqlCommand())
                     {
                         command.Connection = connection;
-                        string sql = "SELECT COUNT(ID) as countUser FROM TB_Users WHERE ID=@userId";
+                        string sql = "SELECT COUNT(ID) as countUser FROM TB_Users WHERE ID=@userId AND IsDeleted=0";
                         command.CommandText = sql;
                         command.Parameters.AddWithValue("@userId", guidUserId);
                         SqlDataReader reader = await command.ExecuteReaderAsync();
@@ -229,7 +229,7 @@ namespace Backend.StaticFunctions
                     using (SqlCommand command = new SqlCommand())
                     {
                         command.Connection = connection;
-                        string sql = "SELECT COUNT(ID) AS countUsers FROM TB_Users WHERE Mail=@mail";
+                        string sql = "SELECT COUNT(ID) AS countUsers FROM TB_Users WHERE Mail=@mail AND IsDeleted=0";
                         command.CommandText = sql;
                         command.Parameters.AddWithValue("@mail", strMail);
                         SqlDataReader reader = await command.ExecuteReaderAsync();

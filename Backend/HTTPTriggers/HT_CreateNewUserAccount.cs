@@ -48,7 +48,7 @@ namespace Backend.HTTPTriggers
                                 using (SqlCommand command = new SqlCommand())
                                 {
                                     command.Connection = connection;
-                                    string sql = "SELECT count(ID) as userCount FROM TB_Users WHERE Mail=@mail";
+                                    string sql = "SELECT count(ID) as userCount FROM TB_Users WHERE Mail=@mail AND IsDeleted=1";
                                     command.CommandText = sql;
                                     command.Parameters.AddWithValue("@mail", newUser.strMail);
                                     SqlDataReader reader = await command.ExecuteReaderAsync();
@@ -61,7 +61,7 @@ namespace Backend.HTTPTriggers
                                             using (SqlCommand commandA = new SqlCommand())
                                             {
                                                 commandA.Connection = connection;
-                                                string sqlA = "INSERT INTO TB_Users VALUES(@id,@surname,@lastname,@mail,@password, null, null)";
+                                                string sqlA = "INSERT INTO TB_Users(ID, SurName, LastName, Mail, Password) VALUES(@id,@surname,@lastname,@mail,@password)";
                                                 commandA.CommandText = sqlA;
                                                 commandA.Parameters.AddWithValue("@id", newUser.Id);
                                                 commandA.Parameters.AddWithValue("@surname", newUser.strName);

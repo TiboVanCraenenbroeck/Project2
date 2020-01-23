@@ -37,7 +37,7 @@ namespace Backend.HTTPTriggers
                         using (SqlCommand command = new SqlCommand())
                         {
                             command.Connection = connection;
-                            string sql = "SELECT ID, SurName, LastName, Mail FROM TB_Users";
+                            string sql = "SELECT ID, SurName, LastName, Mail FROM TB_Users WHERE IsDeleted=0";
                             command.CommandText = sql;
                             SqlDataReader reader = await command.ExecuteReaderAsync();
                             while (reader.Read())
