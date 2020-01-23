@@ -55,7 +55,7 @@ namespace Backend.StaticFunctions
                 return false;
             }
         }
-        public static async Task<bool> CheckIfUserExistAsync(Guid guidUserId)
+        public static async Task<bool> CheckIfUserExistAsync(Guid guidUserId) 
         {
             try
             {
@@ -65,7 +65,7 @@ namespace Backend.StaticFunctions
                     using (SqlCommand command = new SqlCommand())
                     {
                         command.Connection = connection;
-                        string sql = "SELECT COUNT(ID) as countUser FROM TB_Users WHERE ID=@userId";
+                        string sql = "SELECT COUNT(ID) as countUser FROM TB_Users WHERE ID=@userId AND IsDeleted=0";
                         command.CommandText = sql;
                         command.Parameters.AddWithValue("@userId", guidUserId);
                         SqlDataReader reader = await command.ExecuteReaderAsync();
@@ -142,12 +142,11 @@ namespace Backend.StaticFunctions
                 using (SqlCommand command = new SqlCommand())
                 {
                     command.Connection = connection;
-                    string sql = "UPDATE TB_Users SET SurName=@surName, LastName=@lastName, Mail=@mail, Password=@password WHERE ID=@userId";
+                    string sql = "UPDATE TB_Users SET SurName=@surName, LastName=@lastName, Mail=@mail WHERE ID=@userId";
                     command.CommandText = sql;
                     command.Parameters.AddWithValue("@surName", user.strSurname);
                     command.Parameters.AddWithValue("@lastName", user.strName);
                     command.Parameters.AddWithValue("@mail", user.strMail);
-                    command.Parameters.AddWithValue("@password", user.strPassword);
                     command.Parameters.AddWithValue("@userId", user.Id);
                     await command.ExecuteReaderAsync();
                 }
@@ -155,13 +154,26 @@ namespace Backend.StaticFunctions
         }
         public static Model_User Encrypt(Model_User user)
         {
+            Model_User encryptedUser = new Model_User()
+            {
+                Id = user.Id,
+                strSurname = user.strSurname,
+                strName = user.strName,
+                strMail = user.strMail,
+                strPassword = user.strPassword
+            };
             // Encrypt everything
             SF_Aes aes = new SF_Aes();
-            user.strSurname = aes.EncryptToBase64String(user.strSurname);
-            user.strName = aes.EncryptToBase64String(user.strName);
-            user.strMail = aes.EncryptToBase64String(user.strMail);
-            user.strPassword = SF_Hash.GenerateSHA512String(user.strPassword);
-            return user;
+            encryptedUser.strSurname = aes.EncryptToBase64String(encryptedUser.strSurname);
+            encryptedUser.strName = aes.EncryptToBase64String(encryptedUser.strName);
+            encryptedUser.strMail = aes.EncryptToBase64String(encryptedUser.strMail);
+            // Check if the user has filled in a password
+            if (encryptedUser.strPassword != null && encryptedUser.strPassword != "")
+            {
+                encryptedUser.strPassword = SF_Hash.GenerateSHA512String(encryptedUser.strPassword);
+
+            }
+            return encryptedUser;
         }
         public static Model_User Decrypt(Model_User user)
         {
@@ -172,7 +184,7 @@ namespace Backend.StaticFunctions
             user.strMail = aes.DecryptFromBase64String(user.strMail);
             return user;
         }
-        public static void SendMail(string strMail, string strSubject,string strMessage)
+        public static void SendMail(string strMail, string strSubject, string strMessage)
         {
             try
             {
@@ -217,7 +229,7 @@ namespace Backend.StaticFunctions
                     using (SqlCommand command = new SqlCommand())
                     {
                         command.Connection = connection;
-                        string sql = "SELECT COUNT(ID) AS countUsers FROM TB_Users WHERE Mail=@mail";
+                        string sql = "SELECT COUNT(ID) AS countUsers FROM TB_Users WHERE Mail=@mail AND IsDeleted=0";
                         command.CommandText = sql;
                         command.Parameters.AddWithValue("@mail", strMail);
                         SqlDataReader reader = await command.ExecuteReaderAsync();
@@ -263,6 +275,28 @@ namespace Backend.StaticFunctions
                     command.Parameters.AddWithValue("@mail", user.strMail);
                     await command.ExecuteReaderAsync();
                 }
+            }
+        }
+        public static async Task DeleteUserAsync(Guid guidUserid)
+        {
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(Environment.GetEnvironmentVariable("SQL_ConnectionsString")))
+                {
+                    await connection.OpenAsync();
+                    using (SqlCommand command = new SqlCommand())
+                    {
+                        command.Connection = connection;
+                        string sql = "UPDATE TB_Users SET IsDeleted=1 WHERE ID=@userId";
+                        command.CommandText = sql;
+                        command.Parameters.AddWithValue("@userId", guidUserid);
+                        await command.ExecuteReaderAsync();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
             }
         }
     }

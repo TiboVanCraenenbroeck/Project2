@@ -41,7 +41,7 @@ namespace Backend.Functions
                         using (SqlCommand command = new SqlCommand())
                         {
                             command.Connection = connection;
-                            string sql = "SELECT ID, COUNT(*) as usersCount FROM TB_Users WHERE Mail=@mail AND Password=@password  GROUP BY ID";
+                            string sql = "SELECT ID, COUNT(*) as usersCount FROM TB_Users WHERE Mail=@mail AND Password=@password AND IsDeleted=0 GROUP BY ID";
                             command.CommandText = sql;
                             command.Parameters.AddWithValue("@mail", user.strMail);
                             command.Parameters.AddWithValue("@password", user.strPassword);

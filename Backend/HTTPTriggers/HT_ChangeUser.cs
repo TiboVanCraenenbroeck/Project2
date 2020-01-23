@@ -35,30 +35,44 @@ namespace Backend.HTTPTriggers
                         // Check if all the input-fields are filled in
                         if (SF_User.CheckFieldsAreFilledIn(newModel_User))
                         {
-                            // Check if the password is strong enenough
-                            if (SF_User.CheckIfPasswordIsStrongEnough(newModel_User.strPassword))
+                            // Check if the current user of this account is
+                            SF_Aes aesCookies = new SF_Aes(1);
+                            string strDecryptedCookie = aesCookies.DecryptFromBase64String(cookies_ID);
+                            string[] strCookieSplit = strDecryptedCookie.Split("!!!");
+                            Guid guidUserId = Guid.Parse(strCookieSplit[0]);
+                            if (guidUserId == newModel_User.Id)
                             {
-                                // Check if the current user of this account is
-                                SF_Aes aesCookies = new SF_Aes(1);
-                                string strDecryptedCookie = aesCookies.DecryptFromBase64String(cookies_ID);
-                                string[] strCookieSplit = strDecryptedCookie.Split("!!!");
-                                Guid guidUserId = Guid.Parse(strCookieSplit[0]);
-                                if (guidUserId == newModel_User.Id)
+                                // Encrypt the data
+                                Model_User encryptedUser = SF_User.Encrypt(newModel_User);
+                                // Check if the user has filled in a password
+                                if (newModel_User.strPassword != null && newModel_User.strPassword != "")
                                 {
-                                    // Change the data into the database
-                                    await SF_User.ChangeUserInfoAsync(newModel_User);
-                                    objectResultReturn.Id = "true";
+                                    // Check if the password is strong enenough
+                                    if (SF_User.CheckIfPasswordIsStrongEnough(newModel_User.strPassword))
+                                    {
+                                        // Change the data into the database + encrypt the data
+                                        await SF_User.ChangeUserInfoAsync(newModel_User);
+                                        // Change the password
+                                        await SF_User.ChangePasswordAsync(encryptedUser);
+                                        objectResultReturn.Id = "true";
+                                    }
+                                    else
+                                    {
+                                        objectResultReturn.Id = "ERROR";
+                                        objectResultReturn.strErrorMessage = "Je wachtwoord moet minstens 8 karakters, 1 nummer, 1 hoofdletter, 1 gewone letter en een speciaal teken (.?) bevatten";
+                                    }
                                 }
                                 else
                                 {
-                                    objectResultReturn.Id = "ERROR";
-                                    objectResultReturn.strErrorMessage = "Je kan enkel gegevens van je eigen account wijzigen";
+                                    // Change the data into the database + encrypt the data
+                                    await SF_User.ChangeUserInfoAsync(newModel_User);
+                                    objectResultReturn.Id = "true";
                                 }
                             }
                             else
                             {
                                 objectResultReturn.Id = "ERROR";
-                                objectResultReturn.strErrorMessage = "Je wachtwoord moet minstens 8 karakters, 1 nummer, 1 hoofdletter, 1 gewone letter en een speciaal teken (.?) bevatten";
+                                objectResultReturn.strErrorMessage = "Je kan enkel gegevens van je eigen account wijzigen";
                             }
                         }
                         else
