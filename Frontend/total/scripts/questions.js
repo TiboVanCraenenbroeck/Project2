@@ -25,11 +25,42 @@ function postdata(url = '', data= {})
   .then((response) => response.json())
   .then((data)=> {
     console.log('success:', data);
+    if (data.error_message)
+    {
+      alert(data.error_message);
+    }
+    else{
+      alert('vraag werd toegevoegd');
+    }
   })
   .catch((error)=>{
     console.error('error: ', error);
   })
 }
+
+function postonderwerpdata(url = '', data= {})
+{
+  fetch(url, {
+    method: 'POST', 
+    body: JSON.stringify(data),
+  })
+  .then((response) => response.json())
+  .then((data)=> {
+    console.log('success:', data);
+    if (data.error_message)
+    {
+      alert(data.error_message);
+    }
+    else{
+      alert('onderwerp werd toegevoegd');
+    }
+  })
+  .catch((error)=>{
+    console.error('error: ', error);
+  })
+}
+
+
 const buttonclick = function(){
   let btn = document.querySelector('.js-btn-onderwerp-verzenden');
   btn.addEventListener('click', function()
@@ -40,21 +71,29 @@ const buttonclick = function(){
 
     id = getCookie('id');
     decid = encodeURIComponent(id);
-    postdata(uri+decid, data)
+    postonderwerpdata(uri+decid, data)
     document.getElementById("js-input-onderwerp").value = "";  
+  })
+}
+
+// home knop
+const buttonhomeclick = function(){
+  let btnhome = document.querySelector('.c-homebtn');
+  btnhome.addEventListener('click', function(){
+    document.location.href = ('../index.html');
   })
 }
 
 const moeilijkheid1 = function(){
   let makkelijk = document.querySelector('.js-moeilijkheid1')
   makkelijk.addEventListener('click', function(){
-    makkelijk.style.backgroundColor="red";
+    makkelijk.style.color="red";
     moeilijkheidsgraad = 0;
     // terug normaal zetten andere variabelen
     let normaal = document.querySelector('.js-moeilijkheid2');
     let moeilijk = document.querySelector('.js-moeilijkheid3');
-    normaal.style.backgroundColor="";
-    moeilijk.style.backgroundColor="";
+    normaal.style.color="";
+    moeilijk.style.color="";
 
   })
 }
@@ -62,26 +101,26 @@ const moeilijkheid1 = function(){
 const moeilijkheid2 = function(){
   let normaal = document.querySelector('.js-moeilijkheid2');
   normaal.addEventListener('click', function(){
-    normaal.style.backgroundColor="red";
+    normaal.style.color="red";
     moeilijkheidsgraad = 1;
     // terug normaal zetten andere variabelen
     let makkelijk = document.querySelector('.js-moeilijkheid1');
     let moeilijk = document.querySelector('.js-moeilijkheid3');
-    makkelijk.style.backgroundColor="";
-    moeilijk.style.backgroundColor="";
+    makkelijk.style.color="";
+    moeilijk.style.color="";
   })
 }
 
 const moeilijkheid3 = function(){
   let moeilijk = document.querySelector('.js-moeilijkheid3');
   moeilijk.addEventListener('click', function(){
-    moeilijk.style.backgroundColor="red";
+    moeilijk.style.color="red";
     moeilijkheidsgraad = 2;
     // terug normaal zetten andere variabelen
     let makkelijk = document.querySelector('.js-moeilijkheid1');
     let normaal = document.querySelector('.js-moeilijkheid2');
-    makkelijk.style.backgroundColor="";
-    normaal.style.backgroundColor="";
+    makkelijk.style.color="";
+    normaal.style.color="";
   })
 }
 
@@ -145,8 +184,28 @@ const buttonclickvragen = function(){
     decid = encodeURIComponent(id);
     
     postdata(apio+decid,data)
+    /* alert("vraag werd toegevoegd in onderwerp " + valuesubject); */
+    cleanform();
 
   })
+}
+
+const cleanform = function(){
+  let vraag = document.getElementById('js-vraag').value = '';
+  var antwoorda = document.getElementById('js-antwoorda').value = '';
+  var antwoordb = document.getElementById('js-antwoordb').value= '';
+  var antwoordd = document.getElementById('js-antwoordd').value= '';
+  var antwoordc = document.getElementById('js-antwoordc').value= '';
+  var radiobtna = document.getElementById('js-rbtn-a').checked= false;
+  var radiobtnb = document.getElementById('js-rbtn-b').checked= false;
+  var radiobtnc = document.getElementById('js-rbtn-c').checked = false;
+  var radiobtnd = document.getElementById('js-rbtn-d').checked= false; 
+  let makkelijk = document.querySelector('.js-moeilijkheid1').style.color = 'black';
+  let normaal = document.querySelector('.js-moeilijkheid2').style.color = 'black';
+  let moeilijk = document.querySelector('.js-moeilijkheid3').style.color = 'black';
+  var subjectinput = document.getElementById("js-input-onderwerp-vragen").value = '';
+   
+  
 }
 
 //get onderwerpen
@@ -259,7 +318,7 @@ const buttondeletequestion = function(){
       console.log(preparedapi)
       deletedata(preparedapi);
       alleVragen();
-      alert('Vraag is verwijderd');
+      
     });
   }
   /* btn.addEventListener('click', async function()
@@ -357,9 +416,8 @@ const btnChangeQuestion = function(){
 const getMoeilijkheidsgraad = function(vraagId){
   const domBtnMoeilijkheidsgraden = document.querySelectorAll(`.js-moeilijkheidsgraad--${vraagId}`);
   for (const [index, domBtn] of domBtnMoeilijkheidsgraden.entries()) {
-    console.log(domBtn)
     console.log(domBtn.getAttribute("data-moeiljkheidsgraad"))
-    console.log(index)
+    console.log(domBtn)
     // Controleer of deze knop aangeduid is
     if(domBtn.getAttribute("data-moeiljkheidsgraad")){
       console.log(index);
@@ -382,7 +440,7 @@ const btnMoeilijkheidsgraad = function(){
       // Zet de attribute op true
       domBtn.setAttribute("data-moeiljkheidsgraad", "true");
     });
-  }
+  }  
 };
 const alleVragen = async function(){
   const quizid = localStorage.getItem('quizopgevraagdeid');
@@ -431,7 +489,7 @@ vragenHTML += `<label class="c-lbl-level ">Moeilijkheid: </label>
         }
             vragenHTML+=`</div>
         <div class="c-btn-delete js-btn-delete" data-questionId="${quizdata.questionid}" id="${quizdata.questionid}"></div>
-        <div class="c-btn-change js-btn--change" data-questionId="${quizdata.questionid}">changes</div>
+        <div class="c-btn-change js-btn--change" data-questionId="${quizdata.questionid}">wijzigen</div>
     </div> `;
       }
 
@@ -477,5 +535,6 @@ document.addEventListener('DOMContentLoaded', function()
     moeilijkheid2();
     moeilijkheid3();
     getonderwerpen();
+    buttonhomeclick();
     /* getAPI("bef11ca2-3fb0-4bdf-90d2-2ad0be4787e6"); */
 });
