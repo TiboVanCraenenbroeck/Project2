@@ -4,7 +4,40 @@ let cookieId, userId;
 // Functions
 // Function that shows the response from the api tot the user
 const showResponse = function(data) {
-  console.log(data);
+  // Check if the changes were successful
+  if (data["id"]) {
+    alert("Je gegevens zijn succesvolg gewijzigd");
+  } else {
+    alert(data["error_message"]);
+  }
+  // Reset the password-field
+  domUserInputs["password"].value = "";
+  domUserInputs["password2"].value = "";
+};
+// Function that checks of the password is filled in + of both passwords are the same
+const checkIfPasswordIsValid = function() {
+  if (domUserInputs["password"].value.length > 0) {
+    if (domUserInputs["password"].value == domUserInputs["password2"].value) {
+      // Check if the password math with the regex
+      if (
+        domUserInputs["password"].value.match(
+          "^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#.?!@$%^&*-]).{8,}$"
+        )
+      ) {
+        return true;
+      } else {
+        alert(
+          "Je wachtwoord moet minstens 8 karakters, 1 nummer, 1 hoofdletter, 1 gewone letter en een speciaal teken (bijvoorbeeld: .?) bevatten"
+        );
+        return false;
+      }
+    } else {
+      alert("Beide wachtwoorden komen niet overeen");
+      return false;
+    }
+  } else {
+    return true;
+  }
 };
 // Function that gets the data from the userinput
 const getUserinfoFromInputfields = function() {
@@ -22,14 +55,19 @@ const getUserinfoFromInputfields = function() {
     userInfo["name"].length > 0 &&
     userInfo["mail"].length > 0
   ) {
-    // Send the userinfo to the database
-    getAPI(
-      `user?cookie_id=${encodeURIComponent(cookieId)}`,
-      showResponse,
-      "PUT",
-      JSON.stringify(userInfo)
-    );
-    // IN BACKEND --> ERVOOR ZORGEN DAT HET WACHTWOORD NIET ELKE KEER INGEVULD MOET WORDEN!!!
+    // Check if the password is filled in
+    if (checkIfPasswordIsValid()) {
+      // Send the userinfo to the database
+      getAPI(
+        `user?cookie_id=${encodeURIComponent(cookieId)}`,
+        showResponse,
+        "PUT",
+        JSON.stringify(userInfo)
+      );
+    } else {
+      domUserInputs["password"].value = "";
+      domUserInputs["password2"].value = "";
+    }
   } else {
     alert("Je moet alle velden invullen");
   }
@@ -52,6 +90,7 @@ const loadDom = function() {
   domUserInputs["name"] = document.querySelector(".js-input--name");
   domUserInputs["mail"] = document.querySelector(".js-input--mail");
   domUserInputs["password"] = document.querySelector(".js-input--password");
+  domUserInputs["password2"] = document.querySelector(".js-input--password2");
   domBtn = document.querySelector(".js-btn--change-userinfo");
   getAPI(`user?cookie_id=${cookieId}`, showInfoOfTheCurrentUser);
 };
