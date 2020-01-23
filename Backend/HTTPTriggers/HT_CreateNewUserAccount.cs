@@ -33,7 +33,7 @@ namespace Backend.HTTPTriggers
                 if (await SF_User.CheckIfUserIsLoggedInAsync(cookies_ID, req.HttpContext.Connection.RemoteIpAddress.ToString()))
                 {
                     // Check if all fields are filled in
-                    if (newUser.strMail.Length > 3 && newUser.strName.Length > 3 && newUser.strSurname.Length > 3)
+                    if (newUser.strMail.Length > 0 && newUser.strName.Length > 0 && newUser.strSurname.Length > 0)
                     {
                         // Check if the password is strong
                         if (SF_User.CheckIfPasswordIsStrongEnough(newUser.strPassword))
