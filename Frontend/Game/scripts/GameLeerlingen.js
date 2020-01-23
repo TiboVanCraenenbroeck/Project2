@@ -5,7 +5,8 @@ const homaPage = "https://google.com",
 let gameId,
   quizId,
   urlGetQuestion = "gamevalidation/",
-  countGames = 0;
+  countGames = 0,
+  root;
 // vars from the game
 let playingTeam,
   playingQuestion,
@@ -33,16 +34,21 @@ const getMaxScore = function(data) {
 };
 // Set the winning rocket
 const winningRocket = function(winningRocketId) {
-  console.log("hier");
   domRockets[1].style.right = "111%";
   domRockets[1].src = `${linkImg}img/raket/svg/${winningRocketId}.svg`;
   setTimeout(() => {
     domRockets[1].style.bottom = "-11%";
+    domRockets[1].style.width = "calc(160px*1.5)";
+    // Reset the size of the planets
+    /* root.style.setProperty(
+      "--score--rocket-size",
+      "calc(var(--score--planet-size)*1.5)"
+    ); */
   }, 500);
   setTimeout(() => {
     domRockets[1].classList.add("c-winning-rocket__fly");
     domRockets[1].style.bottom = "43%";
-    domRockets[1].style.right = "0%";
+    domRockets[1].style.right = "0.5%";
     domRockets[1].style.transform = "scale(0.3)";
   }, 1000);
 };
@@ -104,7 +110,7 @@ const changeHeightOfRocket = function(teamId, score) {
 const getAvatarsFromTeam = function(data) {
   for (const [index, domRocket] of domRockets.entries()) {
     try {
-      domRocket.src = `${linkImg}img/raketrecht/svg/${data[index]["avatar"]["name"]}.svg`;
+      domRocket.src = `${linkImg}img/raketrechtnieuw/svg/${data[index]["avatar"]["name"]}.svg`;
       domRocket.setAttribute("data-teamId", data[index]["team_id"]);
     } catch (error) {}
   }
@@ -258,6 +264,7 @@ const answerSelected = function(btnAnswer) {
 };
 // Function that loads the DOM elements into a var
 const loadDomElements = function() {
+  root = document.documentElement;
   domTeamnamePlayingTeam = document.querySelector(".js-teamName--playing");
   domQuestion = document.querySelector(".js-question");
   domAnswers = document.querySelectorAll(".js-answer");

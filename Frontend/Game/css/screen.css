@@ -676,6 +676,7 @@ grid
   --score--planet-size: 10rem;
   --score-bottom-team-a: 0%;
   --score-bottom-team-b: 0%;
+  --score--rocket-size: 81px;
   position: fixed;
   z-index: 999;
   transition: bottom 500ms ease-in-out;
@@ -687,8 +688,8 @@ grid
 }
 .c-score__raket-team-a {
   bottom: var(--score-bottom-team-a);
-  left: 0%;
-  width: calc(var(--score--planet-size) * 1.5);
+  left: 3%;
+  width: var(--score--rocket-size);
 }
 .c-score__planet-team-b {
   bottom: 71%;
@@ -697,8 +698,8 @@ grid
 }
 .c-score__raket-team-b {
   bottom: var(--score-bottom-team-b);
-  right: 0%;
-  width: calc(var(--score--planet-size) * 1.5);
+  right: 3%;
+  width: var(--score--rocket-size);
   transition: all 500ms ease-in-out, transform 1.3s ease-in-out;
 }
 .c-winning-rocket__fly {
