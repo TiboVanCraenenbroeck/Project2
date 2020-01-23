@@ -41,7 +41,7 @@ let getAPI = async function(url, method = "GET", body = null) {
     console.log(data.error_message)
     if (data.error_message == null)
     {
-      window.open("../index_vragen.html");
+      document.location.href=("../total/index_vragen.html");
       setCookie('id', data.id,1);
     }
     else{

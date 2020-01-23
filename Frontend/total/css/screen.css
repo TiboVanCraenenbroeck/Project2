@@ -1120,15 +1120,7 @@ more padding on the right to avoid overlap
 */
 
 .c-button {    
-   /*  --button-borderColor: var(--global-howest-color);
-    --button-hover-borderColor: var(--global-color-alpha-dark);
-    --button-active-borderColor: var(--global-color-alpha-dark);
-    --button-focus-borderColor:var(--global-color-alpha-dark);
-    --button-backgroundColor: var(--global-howest-color);
-    --button-hover-backgroundColor: var(--global-color-alpha-light);
-    --button-active-backgroundColor: var(--global-color-alpha-dark);
-    --button-focus-backgroundColor: var(--global-color-alpha);    
-    --button-focus-boxShadow: var(--global-input-focus-boxShadow); */
+
     font-size: 16px;
     font-weight: 600;
     border-radius: 4px;
@@ -1144,16 +1136,6 @@ more padding on the right to avoid overlap
     transition: all var(--global-transitionTiming-alpha) var(--global-transitionEasing-out);
 }
 
-/* .c-button:hover {
-    border-color: var(--button-hover-borderColor);
-    background-color: var(--button-hover-backgroundColor);
-}
-
-.c-button:focus {
-    background-color: var(--button-focus-backgroundColor);
-    border-color: var(--button-focus-borderColor);
-    box-shadow: var(--button-focus-boxShadow);
-} */
 
 .c-button:active {
     background-color: var(--button-active-backgroundColor);
