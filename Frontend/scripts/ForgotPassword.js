@@ -14,7 +14,11 @@ const checkInputField = function() {
   const mail = domInputField.value;
   if (mail.length > 0) {
     // Send the mail to the API
-    getAPI(`user/password/${mail}`, showResultFromApi, "PUT");
+    getAPI(
+      `user/password/${encodeURIComponent(mail)}`,
+      showResultFromApi,
+      "PUT"
+    );
   } else {
     alert("Je moet een mailadres invullen");
   }

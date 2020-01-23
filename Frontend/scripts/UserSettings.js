@@ -92,7 +92,10 @@ const loadDom = function() {
   domUserInputs["password"] = document.querySelector(".js-input--password");
   domUserInputs["password2"] = document.querySelector(".js-input--password2");
   domBtn = document.querySelector(".js-btn--change-userinfo");
-  getAPI(`user?cookie_id=${cookieId}`, showInfoOfTheCurrentUser);
+  getAPI(
+    `user?cookie_id=${encodeURIComponent(cookieId)}`,
+    showInfoOfTheCurrentUser
+  );
 };
 document.addEventListener("DOMContentLoaded", function() {
   console.log("Wijzigen maar!!!😀");
