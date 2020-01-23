@@ -277,5 +277,27 @@ namespace Backend.StaticFunctions
                 }
             }
         }
+        public static async Task DeleteUserAsync(Guid guidUserid)
+        {
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(Environment.GetEnvironmentVariable("SQL_ConnectionsString")))
+                {
+                    await connection.OpenAsync();
+                    using (SqlCommand command = new SqlCommand())
+                    {
+                        command.Connection = connection;
+                        string sql = "UPDATE TB_Users SET IsDeleted=1 WHERE ID=@userId";
+                        command.CommandText = sql;
+                        command.Parameters.AddWithValue("@userId", guidUserid);
+                        await command.ExecuteReaderAsync();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
     }
 }
