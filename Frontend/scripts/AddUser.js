@@ -3,9 +3,28 @@ let domUserInputs = {},
   domBtn;
 let cookieId, userId;
 // Fucntions
+// Function that clear the inputfields
+const clearInputFields = function() {
+  domUserInputs["surname"].value = "";
+  domUserInputs["name"].value = "";
+  domUserInputs["mail"].value = "";
+  domUserInputs["password"].value = "";
+  domUserInputs["password2"].value = "";
+};
 // Show the response from the server
 const showResponse = function(data) {
   console.log(data);
+  // Check if the changes were successful
+  if (data["succeeded"]) {
+    alert("Dit account is succesvol toegevoegd");
+    // Clear the input-fields
+    clearInputFields();
+  } else {
+    alert(data["message"]);
+  }
+  // Reset the password-field
+  domUserInputs["password"].value = "";
+  domUserInputs["password2"].value = "";
 };
 // Function that checks of the password is filled in + of both passwords are the same
 const checkIfPasswordIsValid = function() {
