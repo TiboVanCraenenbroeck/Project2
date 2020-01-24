@@ -37,18 +37,24 @@ namespace Backend.HTTPTriggers
                         using (SqlCommand command = new SqlCommand())
                         {
                             command.Connection = connection;
-                            string sql = "SELECT ID, SurName, LastName, Mail FROM TB_Users";
+                            string sql = "SELECT ID, SurName, LastName, Mail FROM TB_Users WHERE IsDeleted=0";
                             command.CommandText = sql;
                             SqlDataReader reader = await command.ExecuteReaderAsync();
                             while (reader.Read())
                             {
-                                listUsers.Add(new Model_User()
+                                // Create an object
+                                Model_User user = new Model_User()
                                 {
                                     Id = Guid.Parse(reader["ID"].ToString()),
-                                    strSurname = aes.DecryptFromBase64String(reader["SurName"].ToString()),
-                                    strName = aes.DecryptFromBase64String(reader["LastName"].ToString()),
-                                    strMail = aes.DecryptFromBase64String(reader["Mail"].ToString())
-                                });
+                                    strSurname = reader["SurName"].ToString(),
+                                    strName = reader["LastName"].ToString(),
+                                    strMail = reader["Mail"].ToString()
+
+                                };
+                                // Decrypt the object
+                                user = SF_User.Decrypt(user);
+                                // Put the encrypted user into the list
+                                listUsers.Add(user);
                             }
                         }
                     }

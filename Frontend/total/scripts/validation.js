@@ -1,10 +1,9 @@
-
-const getDomElements = function(){
+const getDomElements = function() {
   console.log("dom geladen");
 };
 
 const uitlezendata = () => {
-	handleData('.json', processdata);
+  handleData(".json", processdata);
 };
 
 const fetchData = async function(url, method = "GET", body = null) {
@@ -17,17 +16,16 @@ const fetchData = async function(url, method = "GET", body = null) {
     .then(data => data);
 };
 
-const buttonclick = function(){
-  let btn = document.querySelector('.js-sign-in-button');
-  btn.addEventListener('click', function()
-  {
-    let mailvalue = document.getElementById('username').value;
-    let ww = document.getElementById('password').value;
-   
-   
-    getAPI(`login/${mailvalue}/${ww}`)
-  })
-}
+const buttonclick = function() {
+  let btn = document.querySelector(".js-sign-in-button");
+  btn.addEventListener("click", function() {
+    event.preventDefault();
+    let mailvalue = document.getElementById("username").value;
+    let ww = document.getElementById("password").value;
+
+    getAPI(`login/${mailvalue}/${ww}`);
+  });
+};
 
 /* async function btnclicked(){
    
@@ -38,26 +36,19 @@ let getAPI = async function(url, method = "GET", body = null) {
   try {
     const data = await fetchData(url, method, body);
     console.log(data);
-    console.log(data.error_message)
-    if (data.error_message == null)
-    {
-      document.location.href=("../total/index_vragen.html");
-      setCookie('id', data.id,1);
+    console.log(data.error_message);
+    if (data.error_message == null) {
+      document.location.href = "../total/index_vragen.html";
+      setCookie("id", data.id, 1);
+    } else {
+      alert(data.error_message);
     }
-    else{
-      alert(data.error_message)
-    }
-  
   } catch (error) {
     console.log(error);
   }
 };
 
-
-
-
-document.addEventListener('DOMContentLoaded', function()
-{
-    getDomElements();
-    buttonclick();
+document.addEventListener("DOMContentLoaded", function() {
+  getDomElements();
+  buttonclick();
 });
