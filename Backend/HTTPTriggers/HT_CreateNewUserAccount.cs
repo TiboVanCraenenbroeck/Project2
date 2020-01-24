@@ -48,7 +48,7 @@ namespace Backend.HTTPTriggers
                                 using (SqlCommand command = new SqlCommand())
                                 {
                                     command.Connection = connection;
-                                    string sql = "SELECT count(ID) as userCount FROM TB_Users WHERE Mail=@mail AND IsDeleted=1";
+                                    string sql = "SELECT count(ID) as userCount FROM TB_Users WHERE Mail=@mail AND IsDeleted=0";
                                     command.CommandText = sql;
                                     command.Parameters.AddWithValue("@mail", newUser.strMail);
                                     SqlDataReader reader = await command.ExecuteReaderAsync();

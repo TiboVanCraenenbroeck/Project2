@@ -45,6 +45,7 @@
   --color-background: #bf6663;
   --color-background-m: #fffbf98c;
   --color-text: #474242;
+  --color-white: #fffbf9;
 
   --global-color-button-hover: #f6c0ad;
   --global-color-border-button: #474242;
@@ -599,19 +600,29 @@ input::placeholder {
 /*------------------------------------*\
 #COMPONENTS
 \*------------------------------------*/
-.c-box--users {
+.c-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   margin-left: auto;
   margin-right: auto;
-  width: 100%;
   margin-top: 3rem;
   background-color: var(--color-background);
   padding: 1rem;
   border-radius: 4px;
+  width: 100%;
 }
 @media (min-width: 768px) {
-  .c-box--users {
-    width: 81%;
+  .c-box {
+    width: 51%;
   }
+}
+.c-box__settings {
+  margin-left: auto;
+  margin-right: auto;
+  padding: 1rem;
+  background-color: #fffbf98c;
+  border-radius: calc(1rem / 4);
 }
 .c-users {
   background-color: var(--color-background);
@@ -640,10 +651,12 @@ input::placeholder {
   border-radius: calc(1rem / 4);
   cursor: pointer;
   transition: all 200ms ease-in-out;
+  width: 100%;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
 }
 .c-btn:hover {
   background-color: var(--global-color-button-hover);
-  border: 1.9px solid var(--color-text);
 }
 .c-white {
   color: white;
@@ -661,9 +674,23 @@ input::placeholder {
 .c-btn__delete-user:hover {
   --user-color--btn: black;
 }
+.c-input {
+  font-size: 1rem;
+  line-height: 1.5rem;
+  color: var(--user-color--text);
+  background-color: var(--color-white);
+  border: 3px solid var(--user-color--text);
+  border-radius: calc(1rem / 4);
+  padding-left: calc(1rem / 2);
+}
 .c-title-bar {
   display: grid;
   grid-template-columns: auto auto;
+}
+.c-field {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  margin-bottom: 1rem;
 }
 /*------------------------------------*\
 #States
