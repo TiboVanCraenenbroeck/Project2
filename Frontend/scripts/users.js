@@ -14,7 +14,7 @@ const showResponseFromServer = function(data) {
 const loadUsers = function(data) {
   let outputHTML = "";
   for (const user of data) {
-    outputHTML += `<div><span>${user["surname"]}</span><span>${user["name"]}</span><span>${user["mail"]}</span><button class="js-btn-deleteUser" data-userId="${user["id"]}">X</button></div>`;
+    outputHTML += `<div class="c-user"><span>${user["surname"]}</span><span>${user["name"]}</span><span>${user["mail"]}</span><button class="c-btn c-btn__delete-user js-btn-deleteUser" data-userId="${user["id"]}">X</button></div>`;
   }
   domUsers.innerHTML = outputHTML;
   // Get all btns
