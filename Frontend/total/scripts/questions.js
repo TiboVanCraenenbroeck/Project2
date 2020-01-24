@@ -223,6 +223,7 @@ const showonderwerpen = function(data)
   
   for (let i = 0; i < data.length; i++)
   {
+    console.log(data[i]);
     let ids = {};
     const quizdata = data[i];
     if(quizdata.quiz_id){
@@ -306,34 +307,21 @@ function deletedata(url = '', data= {})
 const buttondeletequestion = function(){
   let btn = document.querySelectorAll('.js-btn-delete');
   for (const dombtn of btn) {
-    dombtn.addEventListener("click", function(){
+    dombtn.addEventListener("click", async function(){
       const questionId = dombtn.getAttribute("data-questionId");
       console.log(questionId);
       let onderwerpid = localStorage.getItem('quizopgevraagdeid');
       id = getCookie('id');
       decid = encodeURIComponent(id);
-
+      console.log('hier')
       let api = "https://mctproject2.azurewebsites.net/api/v1/question/"
       let preparedapi = api + onderwerpid + "/" + questionId + "?cookie_id=" + decid;
       console.log(preparedapi)
       deletedata(preparedapi);
-      alleVragen();
+      await alleVragen();
       
     });
   }
-  /* btn.addEventListener('click', async function()
-  {
-    selectedquestion = document.querySelector('.js-btn-delete');
-    console.log(selectedquestion.id);
-    let questionid = selectedquestion.id;
-    let onderwerpid = localStorage.getItem(quizopgevraagdeid)
-    id = getCookie('id');
-    decid = encodeURIComponent(id);
-
-    let api = "https://mctproject2.azurewebsites.net/api/v1/question/"
-    let preparedapi = api + onderwerpid + "/" + questionid + "?cookie_id=" + decid;
-    console.log(preparedapi)
-  }) */
 }
 // Functie om de vragen te wijzigen
 const getDataFromInputfields = function(vraagId){
