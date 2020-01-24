@@ -11,9 +11,15 @@ let selectedsubject;
 
 const getDomElements = function(){
   console.log("dom geladen");
-  id = getCookie('id');
-  decid = encodeURIComponent(id);
-  console.log(decid);
+   // Check if the user is logged in
+   if (checkIfUserIsLoggedIn()) {
+    id = getCookie('id');
+    decid = encodeURIComponent(id);
+  } else {
+    // Send the user to the main-page
+    window.location.href = "./";
+  }
+
 };
 
 function postdata(url = '', data= {})
@@ -80,6 +86,7 @@ const buttonclick = function(){
 const buttonhomeclick = function(){
   let btnhome = document.querySelector('.c-homebtn');
   btnhome.addEventListener('click', function(){
+    setCookie('id', '');
     document.location.href = ('../index.html');
   })
 }
@@ -223,7 +230,6 @@ const showonderwerpen = function(data)
   
   for (let i = 0; i < data.length; i++)
   {
-    console.log(data[i]);
     let ids = {};
     const quizdata = data[i];
     if(quizdata.quiz_id){
