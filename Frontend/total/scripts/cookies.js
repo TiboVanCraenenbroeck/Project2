@@ -18,3 +18,20 @@ const getCookie = function(cname) {
 	}
 	return '';
 };
+const checkIfUserIsLoggedIn = function() {
+	cookieId = getCookie("id");
+	if (cookieId != null) {
+	  // Check if the cookie isn't empty
+	  if (cookieId != "") {
+		return true;
+	  } else {
+		// Send the user to the main-page
+		window.location.href = "./";
+		return false;
+	  }
+	} else {
+	  // Send the user to the main-page
+	  window.location.href = "./";
+	  return false;
+	}
+  };

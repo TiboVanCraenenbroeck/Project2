@@ -48,12 +48,10 @@ body{
     width: 110px;
     height: 40px;
     background-color: #F6D9CF;
-    grid-column: 8;
-    
-       
+    grid-column: 8;  
 }
 .lbl-home{
-    font-size: 24px;
+    font-size: 20px;
     text-align:center;
     vertical-align:middle;
     line-height: 36px;
@@ -185,13 +183,16 @@ body{
     grid-column: 8;
     grid-row: 1;
     border-radius: 4px;
-    background-color: #F6D9CF;
+    background-color: white;
+    font-size:24px;
+    font: raleway;
+    border: 1px solid #474242;
 }
 
 :placeholder-shown
 {
     padding-left: 8px;
-    padding-top: 6px;
+
 }
 
 ::placeholder{
