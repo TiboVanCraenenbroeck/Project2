@@ -29,7 +29,6 @@ let domTeamnamePlayingTeam,
 // Functions
 // Function that gets the max-score for each team
 const getMaxScore = function(data) {
-  console.log(data);
   maxScore = data["max_score"];
 };
 // Set the winning rocket
@@ -85,14 +84,25 @@ const teamWins = function(data) {
       winningTeamName = team["name"];
       winningTeamAvatar = team["avatar"]["name"];
     }
+    // Check if their is a winning team
+    if (teamScore == 0) {
+      winningTeamName = data[0]["name"];
+      winningTeamAvatar = data[0]["avatar"]["name"];
+    }
   }
   clearscreen();
   setTimeout(() => {
     winningRocket(winningTeamAvatar);
   }, 300);
-  // Set the score and the name of the winning team in the DOM
-  domWinnarScreen.innerHTML = `<h1>Bedankt ${winningTeamName} jij Bent de winnaar!</h1>
-  <h1>Punten: ${teamScore}</h1>`;
+  // Check if their is a winning team
+  if (teamScore == 0) {
+    // Set the score and the name of the winning team in the DOM
+    domWinnarScreen.innerHTML = `<h1>De missie is niet geslaagd!</h1`;
+  } else {
+    // Set the score and the name of the winning team in the DOM
+    domWinnarScreen.innerHTML = `<h1>${winningTeamName}, dankzij jou is de missie geslaagd!</h1>
+<h1>Punten: ${teamScore}</h1>`;
+  }
 };
 // Change the distance of the bottom of the rocket
 const changeHeightOfRocket = function(teamId, score) {
