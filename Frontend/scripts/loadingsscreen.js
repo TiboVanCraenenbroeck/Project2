@@ -60,7 +60,7 @@ const buttonEvent = () => {
 		localStorage.setItem('quizid', onderwerpId);
 		const gameIdData = await PostAPI(onderwerpId, dataName);
 		if (gameIdData) {
-			window.location.href = 'Game/vragen.html';
+			window.location.href = 'vragen.html';
 		}
 	});
 };
