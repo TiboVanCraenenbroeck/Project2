@@ -260,7 +260,7 @@ namespace Backend.StaticFunctions
                 throw ex;
             }
         }
-        public static async Task DeleteHighScoresAsync(Guid guidQuizId)
+        public static async Task DeleteHighScoresAsync()
         {
             try
             {
@@ -270,9 +270,8 @@ namespace Backend.StaticFunctions
                     using (SqlCommand command = new SqlCommand())
                     {
                         command.Connection = connection;
-                        string sql = "UPDATE TB_Games SET IsDeleted=1 WHERE TB_Quizzes_ID=@quizId";
+                        string sql = "UPDATE TB_Games SET IsDeleted=1";
                         command.CommandText = sql;
-                        command.Parameters.AddWithValue("@quizId", guidQuizId);
                         await command.ExecuteReaderAsync();
                     }
                 }
