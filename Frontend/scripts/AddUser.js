@@ -1,6 +1,7 @@
 // Vars
 let domUserInputs = {},
-  domBtn;
+  domBtn,
+  domSVGHome;
 let cookieId, userId;
 // Fucntions
 // Function that clear the inputfields
@@ -90,9 +91,15 @@ const loadDom = function() {
   domUserInputs["password"] = document.querySelector(".js-input--password");
   domUserInputs["password2"] = document.querySelector(".js-input--password2");
   domBtn = document.querySelector(".js-btn--change-userinfo");
+  domSVGHome = document.querySelector(".js-svg--home");
   // Check if the user has clicked on the button
   domBtn.addEventListener("click", function() {
     getDataFromInputfields();
+  });
+  //Check if the user has clicked on the home-btn
+  domSVGHome.addEventListener('click', function(){
+    // Go to the main-page
+    window.location.href = "./leerkrachtenvragen.html";
   });
 };
 document.addEventListener("DOMContentLoaded", function() {

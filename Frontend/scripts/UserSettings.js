@@ -1,5 +1,6 @@
 let domUserInputs = {},
-  domBtn;
+  domBtn,
+  domSVGHome;
 let cookieId, userId;
 // Functions
 // Function that shows the response from the api tot the user
@@ -92,6 +93,12 @@ const loadDom = function() {
   domUserInputs["password"] = document.querySelector(".js-input--password");
   domUserInputs["password2"] = document.querySelector(".js-input--password2");
   domBtn = document.querySelector(".js-btn--change-userinfo");
+  domSVGHome = document.querySelector(".js-svg--home");
+  //Check if the user has clicked on the home-btn
+  domSVGHome.addEventListener("click", function() {
+    // Go to the main-page
+    window.location.href = "./leerkrachtenvragen.html";
+  });
   getAPI(
     `user?cookie_id=${encodeURIComponent(cookieId)}`,
     showInfoOfTheCurrentUser

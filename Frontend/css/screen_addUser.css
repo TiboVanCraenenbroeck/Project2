@@ -686,6 +686,9 @@ input::placeholder {
   border-radius: calc(1rem / 4);
   padding-left: calc(1rem / 2);
 }
+.c-input:hover {
+  border: 5px solid var(--user-color--text);
+}
 .c-title-bar {
   display: grid;
   align-items: center;
@@ -699,6 +702,10 @@ input::placeholder {
 .c-svg {
   margin: 0 0 var(--global-whitespace);
   fill: #474242;
+  cursor: pointer;
+}
+.c-svg:hover {
+  fill: var(--input-hover-borderColor);
 }
 /*------------------------------------*\
 #States
