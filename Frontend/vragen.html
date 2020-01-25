@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,56 +8,77 @@
     <title>vragen</title>
 
     <!-- script -->
-    <script src="./scripts/vragen.js"></script>
-    <script src="./scripts/dataHandler.js"></script>
+    <script src="./scripts/FetchDataAsync.js"></script>
+    <script src="./scripts/GameLeerlingen.js"></script>
     <!-- css -->
     <link rel="stylesheet" href="css/normalize.css">
-    <link rel="stylesheet" href="css/screen.css">
+    <link rel="stylesheet" href="css/screenvragenleerlingen.css">
 </head>
-<body class="testincolor">
-    <section class="o-row o-row--lg o-row--login" >
+
+<body>
+    <section class="o-row o-row--lg o-row--login">
         <div class=" o-container u-max-width-lg">
             <div class="u-grid-x-1 u-grid-y-1">
                 <div class="c-img__center">
-                    <figure class="c-figure "> 
-                        <img class=" c-img" src="./img/profileIconVoetbal.png" alt="leerkracht img">
-                    </figure>  
-                </div> 
+                    <div class="c-img__circle">
+                        <img class="js-img__playing-team-avatar"
+                            src="https://aikovanryssel.github.io/project2IMG/img/raket/svg/raketdonkerroodroze.svg"
+                            alt="Avatar (raket) Team">
+                    </div>
+                </div>
                 <div class="c-img__center">
-                    <h2 class="c-color_white">Team A</h2>
+                    <h2 class="js-teamName--playing">Team A</h2>
                 </div>
             </div>
             <div class="c-dashboard__vragen">
                 <div class=" u-grid-x-3 u-grid-y-1">
                     <div class="js-vragen c-img__center">
-                       <h3 class="c-zero_margin c-color_white">Wat is juf Ann haar favoriete kleur?</h3>
-                    </div>                    
+                        <h3 class="c-zero_margin js-question">Wat is juf Ann haar favoriete kleur?</h3>
+                    </div>
                 </div>
             </div>
             <div class="js-antwoord c-dashboard__antwoorden">
-                <div id="card-a" class="c-dashboard__item c-card__antwoorden  u-grid-x-1 u-grid-y-1">
+                <div class="c-dashboard__item c-card__antwoorden  u-grid-x-1 u-grid-y-1">
                     <div class="c-card__body">
-                        <h4 class="c-img__center">A: groen</h4>
+                        <h4 class="c-img__center c-answer js-answer">A: groen</h4>
                     </div>
                 </div>
-                <div id="card-b" class="c-dashboard__item c-card__antwoorden  u-grid-x-1 u-grid-y-1">
+                <div class="c-dashboard__item c-card__antwoorden  u-grid-x-1 u-grid-y-1">
                     <div class="c-card__body">
-                        <h4 class="c-img__center">B: blauw</h4>
+                        <h4 class="c-img__center c-answer js-answer">B: blauw</h4>
                     </div>
                 </div>
-                <div id="card-c" class="c-card-c c-dashboard__item c-card__antwoorden  u-grid-x-1 u-grid-y-1">
+                <div class="c-card-c c-dashboard__item c-card__antwoorden  u-grid-x-1 u-grid-y-1">
                     <div class="c-card__body">
-                        <h4 class="c-img__center">C: rood</h4>                    
+                        <h4 class="c-img__center c-answer js-answer">C: rood</h4>
                     </div>
                 </div>
-                <div id="card-d" class="c-card-d c-dashboard__item c-card__antwoorden  u-grid-x-1 u-grid-y-1">
+                <div class="c-dashboard__item c-card__antwoorden  u-grid-x-1 u-grid-y-1">
                     <div class="c-card__body">
-                        <h4 class="c-img__center">D: groen</h4>
+                        <h4 class="c-img__center c-answer js-answer">D: groen</h4>
                     </div>
                 </div>
             </div>
-            
+
         </div>
     </section>
+    <div class="c-winner">
+        <h1>Bedankt MoonRocket jij Bent de winnaar!</h1>
+        <h1>Punten: 400</h1>
+    </div>
+    <img class="js-img__winning-team"
+        src="https://aikovanryssel.github.io/project2IMG/img/raket/svg/raketdonkerroodroze.svg"
+        alt="Avatar (raket) Team winning team">
+    <img class="c-score c-score__planet-team-a js-planet"
+        src="https://aikovanryssel.github.io/project2IMG/img/planeet/svg/Component%2026%20%E2%80%93%201.svg"
+        alt="Planeet team A">
+    <img class="c-score c-score__raket-team-a js-rocket"
+        src="https://aikovanryssel.github.io/project2IMG/img/raketrecht/svg/raketdonkerroodroze.svg" alt="Raket team A">
+    <img class="c-score c-score__planet-team-b js-planet"
+        src="https://aikovanryssel.github.io/project2IMG/img/planeet/svg/Component%2026%20%E2%80%93%201.svg"
+        alt="Planeet team B">
+    <img class="c-score c-score__raket-team-b js-rocket"
+        src="https://aikovanryssel.github.io/project2IMG/img/raketrecht/svg/raketdonkerroodroze.svg" alt="Raket team B">
 </body>
+
 </html>
