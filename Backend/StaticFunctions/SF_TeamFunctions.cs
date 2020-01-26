@@ -72,7 +72,7 @@ namespace Backend.StaticFunctions
                     using (SqlCommand command = new SqlCommand())
                     {
                         command.Connection = connection;
-                        string sql = "INSERT INTO TB_Teams VALUES(@id, @avatarId, @name, null)";
+                        string sql = "INSERT INTO TB_Teams(ID, TB_Avatars_ID, Name) VALUES(@id, @avatarId, @name)";
                         command.CommandText = sql;
                         command.Parameters.AddWithValue("@id", guidTeamId);
                         command.Parameters.AddWithValue("@avatarId", team.avatar.Id);

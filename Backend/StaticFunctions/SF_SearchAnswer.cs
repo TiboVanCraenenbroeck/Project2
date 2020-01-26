@@ -39,7 +39,7 @@ namespace Backend.StaticFunctions
                 {
                     Guid guidAnswer = Guid.NewGuid();
                     command.Connection = connection;
-                    string sql = "INSERT INTO TB_Answers VALUES(@id, @answer, null)";
+                    string sql = "INSERT INTO TB_Answers(ID, Answer) VALUES(@id, @answer)";
                     command.CommandText = sql;
                     command.Parameters.AddWithValue("@id", guidAnswer);
                     command.Parameters.AddWithValue("@answer", strAnswer);
