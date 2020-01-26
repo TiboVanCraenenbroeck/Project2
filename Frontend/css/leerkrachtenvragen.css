@@ -21,6 +21,7 @@ body{
 .c-bg-oil{
     margin: 0 auto;
     text-align: center;
+    border-radius: 4px;
     width: 80%;
     height: 100%;
     background-color: #BF6663;
@@ -75,7 +76,7 @@ body{
 }
 
 .c-btn-send-subject{
-    background-image: url("/Frontend/img/plus.png");
+    background-image: url("../img/plus.png");
     background-size: 100% 100%;
     justify-self: end;
     margin-right: 20px;
@@ -138,7 +139,7 @@ body{
 .c-btn-delete{
     width: 40px;
     height:40px;
-    background-image: url("/Frontend/img/delete.png");
+    background-image: url("../img/delete.png");
     background-size: 100% 100%;
     grid-column: 8;
     justify-self: center;
@@ -327,7 +328,7 @@ body{
     grid-row: 2;
 }
 .c-btn-add{
-    background-image: url("/Frontend/img/plus.png"); 
+    background-image: url("../img/plus.png"); 
     background-size: 100% 100%;
     width: 40px;
     height:40px;
