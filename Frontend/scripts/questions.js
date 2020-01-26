@@ -240,12 +240,12 @@ const showonderwerpen = function(data)
     {
       ids['title'] = quizdata.title;
     }
-    
+        
     quiz_ids.push(ids);
 
     OnderwerpHTML += `
     <datalist class="js-selecteditem" id="onderwerpen">
-                  <option value=${data[i].title}>
+                  <option value="${data[i].title}">
     </datalist>
     `;
    
