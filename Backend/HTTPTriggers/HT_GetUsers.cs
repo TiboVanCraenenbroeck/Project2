@@ -11,6 +11,7 @@ using Backend.Models;
 using System.Collections.Generic;
 using Backend.StaticFunctions;
 using System.Data.SqlClient;
+using System.Linq;
 
 namespace Backend.HTTPTriggers
 {
@@ -55,6 +56,8 @@ namespace Backend.HTTPTriggers
                                 user = SF_User.Decrypt(user);
                                 // Put the encrypted user into the list
                                 listUsers.Add(user);
+                                // Oder the users by name
+                                listUsers.OrderBy(x => x.strSurname).ThenBy(y => y.strName);
                             }
                         }
                     }
