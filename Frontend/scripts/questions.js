@@ -462,47 +462,32 @@ const alleVragen = async function(){
         <input class="c-input-c c-input-style js-input-answerc--${quizdata.questionid}" value="${quizdata.answers[2].answer}" id="js-antwoordc"></input>
         <input class="c-input-d c-input-style js-input-answerd--${quizdata.questionid}" value="${quizdata.answers[3].answer}" id="js-antwoordd"></input>
         <div class="c-div-level c-margin">
-        <label class="c-lbl-level">Moeilijkheid: </label>
-        <input class="o-hide-accessible" type="radio" value="0" class="js-input-question--${quizdata.questionid}" name="DYNAMISCH NAME TODO" id="dif-1">
-        <label for="dif-1" class="c-lbl-1 js-moeilijkheid1 js-moeilijkheidsgraad--${quizdata.questionid}">0</label>
-        <input class="o-hide-accessible" type="radio" value="1" class="js-input-question--${quizdata.questionid}" id="dif-2">
-        <label for="dif-2" class="c-lbl-2 js-moeilijkheid2 js-moeilijkheidsgraad--${quizdata.questionid}">1</label>
-        <input class="o-hide-accessible" type="radio" value="2" class="js-input-question--${quizdata.questionid}" id="dif-3">
-        <label for="dif-3" class="c-lbl-3 js-moeilijkheid3 js-moeilijkheidsgraad--${quizdata.questionid}">2</label>
+        <label class="c-lbl-level js-level--${quizdata.questionid}" data-level="${quizdata.difficult}">Moeilijkheid: </label>`;
+        /* <label for="dif-1" class="c-lbl-1 js-moeilijkheid1 js-moeilijkheidsgraad--${quizdata.questionid}" data-level-selected="false">0</label>
+        <label for="dif-2" class="c-lbl-2 js-moeilijkheid2 js-moeilijkheidsgraad--${quizdata.questionid}" data-level-selected="false">1</label>
+        <label for="dif-3" class="c-lbl-3 js-moeilijkheid3 js-moeilijkheidsgraad--${quizdata.questionid}" data-level-selected="false">2</label>
         </div>
         <div class="c-btn-delete js-btn-delete" data-questionId="${quizdata.questionid}" id="${quizdata.questionid}"></div>
         <div class="c-btn-change js-btn--change" data-questionId="${quizdata.questionid}">wijzigen</div>
-        </div>
-        `;
-       /*  if(quizdata.difficult==0){
-vragenHTML += ` <label class="c-lbl-level">Moeilijkheid: </label>
-<input class="o-hide-accessible" type="radio" value="0" class="js-input-question--${quizdata.questionid}" name="DYNAMISCH NAME TODO" id="dif-1">
-<label for="dif-1" class="c-lbl-1 js-moeilijkheid1 js-moeilijkheidsgraad--${quizdata.questionid}">0</label>
-<input class="o-hide-accessible" type="radio" value="1" class="js-input-question--${quizdata.questionid}" id="dif-2">
-<label for="dif-2" class="c-lbl-2 js-moeilijkheid2 js-moeilijkheidsgraad--${quizdata.questionid}">1</label>
-<input class="o-hide-accessible" type="radio" value="2" class="js-input-question--${quizdata.questionid}" id="dif-3">
-<label for="dif-3" class="c-lbl-3 js-moeilijkheid3 js-moeilijkheidsgraad--${quizdata.questionid}">2</label>`;
+        </div> 
+        `; */
+        if(quizdata.difficult==0){
+vragenHTML += `<label for="dif-1" class="c-lbl-1 js-moeilijkheid1 js-moeilijkheidsgraad--${quizdata.questionid}" data-level-selected="true">0</label>
+<label for="dif-2" class="c-lbl-2 js-moeilijkheid2 js-moeilijkheidsgraad--${quizdata.questionid}" data-level-selected="false">1</label>
+<label for="dif-3" class="c-lbl-3 js-moeilijkheid3 js-moeilijkheidsgraad--${quizdata.questionid}" data-level-selected="false">2</label>`;
         }else if(quizdata.difficult==1){
-          vragenHTML += ` <label class="c-lbl-level">Moeilijkheid: </label>
-          <input class="o-hide-accessible" type="radio" value="0" name="DYNAMISCH NAME TODO" id="dif-1">
-          <label for="dif-1" class="c-lbl-1 js-moeilijkheid1 js-moeilijkheidsgraad--${quizdata.questionid}">0</label>
-          <input class="o-hide-accessible" type="radio" value="1" id="dif-2">
-          <label for="dif-2" class="c-lbl-2 js-moeilijkheid2 js-moeilijkheidsgraad--${quizdata.questionid}">1</label>
-          <input class="o-hide-accessible" type="radio" value="2" id="dif-3">
-          <label for="dif-3" class="c-lbl-3 js-moeilijkheid3 js-moeilijkheidsgraad--${quizdata.questionid}">2</label>`;
+          vragenHTML += `<label for="dif-1" class="c-lbl-1 js-moeilijkheid1 js-moeilijkheidsgraad--${quizdata.questionid}" data-level-selected="false">0</label>
+          <label for="dif-2" class="c-lbl-2 js-moeilijkheid2 js-moeilijkheidsgraad--${quizdata.questionid}" data-level-selected="true">1</label>
+          <label for="dif-3" class="c-lbl-3 js-moeilijkheid3 js-moeilijkheidsgraad--${quizdata.questionid}" data-level-selected="false">2</label>`;
         }else{
-          vragenHTML += ` <label class="c-lbl-level">Moeilijkheid: </label>
-          <input class="o-hide-accessible" type="radio" value="0" name="DYNAMISCH NAME TODO" id="dif-1">
-          <label for="dif-1" class="c-lbl-1 js-moeilijkheid1 js-moeilijkheidsgraad--${quizdata.questionid}">0</label>
-          <input class="o-hide-accessible" type="radio" value="1" id="dif-2">
-          <label for="dif-2" class="c-lbl-2 js-moeilijkheid2 js-moeilijkheidsgraad--${quizdata.questionid}">1</label>
-          <input class="o-hide-accessible" type="radio" value="2" id="dif-3">
-          <label for="dif-3" class="c-lbl-3 js-moeilijkheid3 js-moeilijkheidsgraad--${quizdata.questionid}">2</label>`;
+          vragenHTML += `<label for="dif-1" class="c-lbl-1 js-moeilijkheid1 js-moeilijkheidsgraad--${quizdata.questionid}" data-level-selected="false">0</label>
+          <label for="dif-2" class="c-lbl-2 js-moeilijkheid2 js-moeilijkheidsgraad--${quizdata.questionid}" data-level-selected="false">1</label>
+          <label for="dif-3" class="c-lbl-3 js-moeilijkheid3 js-moeilijkheidsgraad--${quizdata.questionid}" data-level-selected="true">2</label>`;
         }
             vragenHTML+=`</div>
         <div class="c-btn-delete js-btn-delete" data-questionId="${quizdata.questionid}" id="${quizdata.questionid}"></div>
         <div class="c-btn-change js-btn--change" data-questionId="${quizdata.questionid}">wijzigen</div>
-    </div> `; */
+    </div> `;
       }
 
       domvragen.innerHTML = vragenHTML;
