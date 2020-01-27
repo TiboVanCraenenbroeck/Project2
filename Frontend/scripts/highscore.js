@@ -86,6 +86,6 @@ const buttonhomeclick = function(){
   let btnhome = document.querySelector('.js-button')
   btnhome.addEventListener('click', function(){
     console.log("click")
-  /*   window.location.href = "index.html"; */
+    window.location.href = "index.html";
   })
 }

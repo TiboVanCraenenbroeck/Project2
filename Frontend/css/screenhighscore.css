@@ -371,8 +371,14 @@ h1{
     justify-content: space-between;
   }
 
-  .form-inline button {
-    padding: 10px 20px;
+  h1{
+
+    text-align: center;
+  }
+
+  .button {
+    /* padding: 10px 20px; */
+
     background-color: #F6D9CF;
     border: 1px solid #474242;
     color: #474242;
@@ -381,6 +387,7 @@ h1{
     height: 56px;
     border-radius: 4px;
     font-size: 24px;
+
   }
 
   .form-inline h1 {
