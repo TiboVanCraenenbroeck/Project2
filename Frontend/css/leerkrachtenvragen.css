@@ -536,3 +536,6 @@ body{
    
  
 }
+.c-moeilijkheidsgraad__selected[data-level-selected="true"]{
+    color: red;
+}

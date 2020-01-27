@@ -342,15 +342,24 @@ const getDataFromInputfields = function(vraagId){
     let antwoordb = document.querySelector(`.js-input-answerb--${vraagId}`).value
     let antwoordc = document.querySelector(`.js-input-answerc--${vraagId}`).value
     let antwoordd = document.querySelector(`.js-input-answerd--${vraagId}`).value 
+    // Moeilijkheidsgraad ophalen
+    let moeilijkheidsgraad = document.querySelector(`.js-level--${vraagId}`).getAttribute("data-level");
+    console.log(`.js-moeilijkheidsgraad--${vraagId}`);
+    console.log(document.querySelector(`.js-moeilijkheidsgraad--${vraagId}`));
+    // Controleer of het getal tussen 0 en 2 zit
+    if(moeilijkheidsgraad<0&&moeilijkheidsgraad>2){
+      moeilijkheidsgraad=0;
+    }
+    moeilijkheidsgraad = parseInt(moeilijkheidsgraad);
     /* var level = document.getElementById('js-level').value;
     var levelnr = Number(level); */
     // Moeilijkheidsgraad ophalen
-    const levelnr = getMoeilijkheidsgraad(vraagId);
+    //const levelnr = getMoeilijkheidsgraad(vraagId);
 
     let data = {
       question_id:vraagId,
       question: vraag, 
-      difficulty: levelnr,
+      difficulty: moeilijkheidsgraad,
       answers: [
         {
         answer: antwoorda,
@@ -370,6 +379,7 @@ const getDataFromInputfields = function(vraagId){
         }
       ]  
     }
+    console.log(data);
     return data;
 };
 
@@ -433,6 +443,21 @@ const btnMoeilijkheidsgraad = function(){
     });
   }  
 };
+const resetBtnsMoeilijkheidsgraad = function(questionId){
+  // Get all the btns with the same questionId
+  const domBtnMoeilijkheidsGraadAll = document.querySelectorAll(`.js-moeilijkheidsgraad--${questionId}`);
+  // Reset all the btns with the same questionId
+  for (const domBtn of domBtnMoeilijkheidsGraadAll) {
+    domBtn.setAttribute("data-level-selected", "false");
+  }
+};
+const checkUserClickedOnBtnLevel = function(domBtnMoeilijkheidsgraad){
+  const questionId = domBtnMoeilijkheidsgraad.getAttribute("data-question-id");
+  resetBtnsMoeilijkheidsgraad(questionId);
+  // Select the clicked btn
+  domBtnMoeilijkheidsgraad.setAttribute("data-level-selected", "true");
+  document.querySelector(`.js-level--${questionId}`).setAttribute("data-level", domBtnMoeilijkheidsgraad.innerText);
+};
 const alleVragen = async function(){
   const quizid = localStorage.getItem('quizopgevraagdeid');
       await getAPI(quizid);
@@ -472,17 +497,17 @@ const alleVragen = async function(){
         </div> 
         `; */
         if(quizdata.difficult==0){
-vragenHTML += `<label for="dif-1" class="c-lbl-1 js-moeilijkheid1 js-moeilijkheidsgraad--${quizdata.questionid}" data-level-selected="true">0</label>
-<label for="dif-2" class="c-lbl-2 js-moeilijkheid2 js-moeilijkheidsgraad--${quizdata.questionid}" data-level-selected="false">1</label>
-<label for="dif-3" class="c-lbl-3 js-moeilijkheid3 js-moeilijkheidsgraad--${quizdata.questionid}" data-level-selected="false">2</label>`;
+vragenHTML += `<label for="dif-1" class="c-lbl-1 c-moeilijkheidsgraad__selected js-moeilijkheid1 js-moeilijkheidsgraad-question--change js-moeilijkheidsgraad--${quizdata.questionid}" data-question-id="${quizdata.questionid}" data-level-selected="true">0</label>
+<label for="dif-2" class="c-lbl-2 js-moeilijkheid2 c-moeilijkheidsgraad__selected js-moeilijkheidsgraad-question--change js-moeilijkheidsgraad--${quizdata.questionid}" data-question-id="${quizdata.questionid}" data-level-selected="false">1</label>
+<label for="dif-3" class="c-lbl-3 js-moeilijkheid3 c-moeilijkheidsgraad__selected js-moeilijkheidsgraad-question--change js-moeilijkheidsgraad--${quizdata.questionid}" data-question-id="${quizdata.questionid}" data-level-selected="false">2</label>`;
         }else if(quizdata.difficult==1){
-          vragenHTML += `<label for="dif-1" class="c-lbl-1 js-moeilijkheid1 js-moeilijkheidsgraad--${quizdata.questionid}" data-level-selected="false">0</label>
-          <label for="dif-2" class="c-lbl-2 js-moeilijkheid2 js-moeilijkheidsgraad--${quizdata.questionid}" data-level-selected="true">1</label>
-          <label for="dif-3" class="c-lbl-3 js-moeilijkheid3 js-moeilijkheidsgraad--${quizdata.questionid}" data-level-selected="false">2</label>`;
+          vragenHTML += `<label for="dif-1" class="c-lbl-1 c-moeilijkheidsgraad__selected js-moeilijkheid1 js-moeilijkheidsgraad-question--change js-moeilijkheidsgraad--${quizdata.questionid}" data-question-id="${quizdata.questionid}" data-level-selected="false">0</label>
+          <label for="dif-2" class="c-lbl-2 c-moeilijkheidsgraad__selected js-moeilijkheid2 js-moeilijkheidsgraad-question--change js-moeilijkheidsgraad--${quizdata.questionid}" data-question-id="${quizdata.questionid}" data-level-selected="true">1</label>
+          <label for="dif-3" class="c-lbl-3 c-moeilijkheidsgraad__selected js-moeilijkheid3 js-moeilijkheidsgraad-question--change js-moeilijkheidsgraad--${quizdata.questionid}" data-question-id="${quizdata.questionid}" data-level-selected="false">2</label>`;
         }else{
-          vragenHTML += `<label for="dif-1" class="c-lbl-1 js-moeilijkheid1 js-moeilijkheidsgraad--${quizdata.questionid}" data-level-selected="false">0</label>
-          <label for="dif-2" class="c-lbl-2 js-moeilijkheid2 js-moeilijkheidsgraad--${quizdata.questionid}" data-level-selected="false">1</label>
-          <label for="dif-3" class="c-lbl-3 js-moeilijkheid3 js-moeilijkheidsgraad--${quizdata.questionid}" data-level-selected="true">2</label>`;
+          vragenHTML += `<label for="dif-1" class="c-lbl-1 c-moeilijkheidsgraad__selected js-moeilijkheid1 js-moeilijkheidsgraad-question--change js-moeilijkheidsgraad--${quizdata.questionid}" data-question-id="${quizdata.questionid}" data-level-selected="false">0</label>
+          <label for="dif-2" class="c-lbl-2 c-moeilijkheidsgraad__selected js-moeilijkheid2 js-moeilijkheidsgraad-question--change js-moeilijkheidsgraad--${quizdata.questionid}" data-question-id="${quizdata.questionid}" data-level-selected="false">1</label>
+          <label for="dif-3" class="c-lbl-3 c-moeilijkheidsgraad__selected js-moeilijkheid3 js-moeilijkheidsgraad-question--change js-moeilijkheidsgraad--${quizdata.questionid}" data-question-id="${quizdata.questionid}" data-level-selected="true">2</label>`;
         }
             vragenHTML+=`</div>
         <div class="c-btn-delete js-btn-delete" data-questionId="${quizdata.questionid}" id="${quizdata.questionid}"></div>
@@ -491,6 +516,14 @@ vragenHTML += `<label for="dif-1" class="c-lbl-1 js-moeilijkheid1 js-moeilijkhei
       }
 
       domvragen.innerHTML = vragenHTML;
+      // Haal alle moeilijkhiedsgraad-knoppen op
+      let domBtnsMoeilijkheidsgraden = document.querySelectorAll(".js-moeilijkheidsgraad-question--change");
+      // Controleer of iemand op de knop geklikt heeft
+      for (const domBtnMoeilijkheidsgraad of domBtnsMoeilijkheidsgraden) {
+        domBtnMoeilijkheidsgraad.addEventListener('click', function(){
+          checkUserClickedOnBtnLevel(domBtnMoeilijkheidsgraad)
+        });
+      }
       buttondeletequestion();
       btnChangeQuestion();
       btnMoeilijkheidsgraad();
