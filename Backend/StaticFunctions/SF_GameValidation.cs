@@ -123,7 +123,7 @@ namespace Backend.StaticFunctions
                     }
                 }
                 // Select the team
-                if (modelGameValidation.intNumberOfCorrectAttempts <= 5 && modelGameValidation.team.intScore > 0)
+                if (modelGameValidation.intNumberOfCorrectAttempts <= 4 && modelGameValidation.team.intScore > 0)
                 {
                     // Set a new level
                     if (modelGameValidation.intNumberOfCorrectAttempts == 1 || modelGameValidation.intNumberOfCorrectAttempts == 2)
@@ -152,6 +152,8 @@ namespace Backend.StaticFunctions
                         }
                     }
                     modelGameValidation.intNumberOfCorrectAttempts = 0;
+                    modelGameValidation.question.intDifficulty = 0;
+                    modelGameValidation.team.intScore = 0;
                 }
                 return modelGameValidation;
             }

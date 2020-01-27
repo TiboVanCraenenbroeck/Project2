@@ -44,7 +44,7 @@ namespace Backend.HTTPTriggers
                     }
                 }
                 // Calculate the max total score from this subject
-                int intMaxTotalScoreForEachTeam = Convert.ToInt32((1 * 50 * listScores[0]) + (2 * 50 * listScores[1]) + (2 * 50 * listScores[2]));
+                int intMaxTotalScoreForEachTeam = Convert.ToInt32((1 * 50 * listScores[0]) + (2 * 50 * listScores[1]) + (3 * 50 * listScores[2]));
                 getScoreFromQuiz.intMaxScore = intMaxTotalScoreForEachTeam;
                 return new OkObjectResult(getScoreFromQuiz);
             }
