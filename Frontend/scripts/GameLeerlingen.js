@@ -1,5 +1,5 @@
 // Vars
-const homaPage = "https://google.com",
+const homaPage = "./",
   chars = ["A", "B", "C", "D"],
   linkImg = "https://aikovanryssel.github.io/project2IMG/";
 let gameId,
@@ -50,9 +50,9 @@ const winningRocket = function(winningRocketId) {
     domRockets[1].style.right = "0.5%";
     domRockets[1].style.transform = "scale(0.3)";
   }, 1000);
-  setTimeout(()=>{
+  setTimeout(() => {
     window.location.href = "highscore.html";
-  },5000)
+  }, 5000);
 };
 // Function that clear the screen
 const clearscreen = function() {
@@ -177,15 +177,13 @@ const firstGame = function() {
   try {
     quizId = localStorage.getItem("quizid");
     gameId = localStorage.getItem("gameid");
-    console.log(quizId);
-    console.log(gameId);
   } catch (error) {
     console.log(error);
     quizId = null;
     gameId = null;
   }
   // Check if the quizId and the gameId aren't null
-  if (quizId != null && gameId != null) {
+  if (quizId != null && gameId != null && quizId != "" && gameId != "") {
     // Get the avatars
     getAPI(`game/teams/${gameId}`, getAvatarsFromTeam);
     // Load the max-score of the quiz (subject)
@@ -196,7 +194,7 @@ const firstGame = function() {
   } else {
     console.log("Geen localstorage gevonden");
     // Send the user to the homepage
-    //window.location.href = homaPage;
+    window.location.href = homaPage;
   }
 };
 // Function that returns ethe correct answer
