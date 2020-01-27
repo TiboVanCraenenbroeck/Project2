@@ -642,8 +642,10 @@ input::placeholder {
   transition: all 200ms ease-in-out;
 }
 .c-btn:hover {
-  background-color: var(--global-color-button-hover);
-  border: 1.9px solid var(--color-text);
+  /* background-color: var(--global-color-button-hover); */
+  background-color: var(--user-color--btn, var(--global-color-button-hover));
+
+  border: 2px solid var(--color-text);
 }
 .c-white {
   color: white;
@@ -656,7 +658,7 @@ input::placeholder {
 }
 .c-btn__delete-user {
   color: var(--user-color--text);
-  background-color: var(--user-color--btn);
+  background-color: var(--user-color--btn, red);
 }
 .c-btn__delete-user:hover {
   --user-color--btn: black;
