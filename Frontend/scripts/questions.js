@@ -37,6 +37,7 @@ function postdata(url = '', data= {})
     }
     else{
       alert('vraag werd toegevoegd');
+      cleanform();
     }
   })
   .catch((error)=>{
@@ -192,7 +193,7 @@ const buttonclickvragen = function(){
     
     postdata(apio+decid,data)
     /* alert("vraag werd toegevoegd in onderwerp " + valuesubject); */
-    cleanform();
+    
 
   })
 }
@@ -239,12 +240,12 @@ const showonderwerpen = function(data)
     {
       ids['title'] = quizdata.title;
     }
-    
+        
     quiz_ids.push(ids);
 
     OnderwerpHTML += `
     <datalist class="js-selecteditem" id="onderwerpen">
-                  <option value=${data[i].title}>
+                  <option value="${data[i].title}">
     </datalist>
     `;
    
