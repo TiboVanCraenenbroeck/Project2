@@ -14,20 +14,20 @@ const highscoreFilter=(data)=>{
     let nummer2=document.querySelector('.gallery');
     console.log("test")
     nummer2HTML += `
-      <h1 class="h01">${dataGet[1].name}</h1>
-      <h1 class="h011">${dataGet[1].score}</h1>
+      <h3 class="h01">${dataGet[1].name}</h3>
+      <h3 class="h011">${dataGet[1].score}</h3>
       <figure class="img1">
           <img src="https://aikovanryssel.github.io/project2IMG/img/raketrechtnieuw/svg/${dataGet[1].image}.svg" class="gallery__img " alt="Image 1">
       </figure> 
 
-      <h1 class="h02">${dataGet[0].name}</h1>
-      <h1 class="h022">${dataGet[0].score}</h1>
+      <h3 class="h02">${dataGet[0].name}</h3>
+      <h3 class="h022">${dataGet[0].score}</h3>
       <figure class="img2">
               <img src="https://aikovanryssel.github.io/project2IMG/img/raketrechtnieuw/svg/${dataGet[0].image}.svg" class="gallery__img " alt="Image 1">
       </figure>
       
-      <h1 class="h03">${dataGet[2].name}</h1>
-      <h1 class="h033">${dataGet[2].score}</h1>
+      <h3 class="h03">${dataGet[2].name}</h3>
+      <h3 class="h033">${dataGet[2].score}</h3>
       <figure class="img3">
               <img src="https://aikovanryssel.github.io/project2IMG/img/raketrechtnieuw/svg/${dataGet[2].image}.svg" class="gallery__img" alt="Image 1">
       </figure>`;
@@ -42,6 +42,7 @@ const highscoreFilter=(data)=>{
         console.log(score);
         highScoreHTML += `
         <div class="divTableRow">
+        <div class="divTableCell01">${i}</div>
                 <div class="divTableCell1">
                         <figure class="imageHighscore">
                                 <img src="https://aikovanryssel.github.io/project2IMG/img/raketrechtnieuw/svg/${image}.svg" class="" alt="Image 1">
@@ -73,7 +74,18 @@ const getApi = async function(SERVER_ENDPOINT) {
 
 document.addEventListener('DOMContentLoaded', function()
 {
+  buttonhomeclick();
   let test="https://mctproject2.azurewebsites.net/api/v1/highscores"
   getApi(test);
   domonderwerpen = document.querySelector('.js-select')
+
 });
+
+
+const buttonhomeclick = function(){
+  let btnhome = document.querySelector('.js-button')
+  btnhome.addEventListener('click', function(){
+    console.log("click")
+  /*   window.location.href = "index.html"; */
+  })
+}

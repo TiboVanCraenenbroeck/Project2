@@ -137,6 +137,10 @@ background: radial-gradient(circle, rgba(251,192,45,1) 0%, rgba(255,235,59,1) 70
     color: #F6D9CF;
 }
 
+h3{
+    color: white;
+}
+
 .divTableCell2, .divTableHead {
 	border-top: 1px solid #9B4646;
 	display: table-cell;
@@ -154,6 +158,18 @@ background: radial-gradient(circle, rgba(251,192,45,1) 0%, rgba(255,235,59,1) 70
     padding: 8px 0px;
     width: 24px;
     height: auto;
+}
+
+.divTableCell01, .divTableHead {
+	border-top: 1px solid #9B4646;
+	display: table-cell;
+    padding: 8px 0px;
+    width: 24px;
+    font-size: 24px;
+    vertical-align: middle;
+    color: #F6D9CF;
+    height: auto;
+    padding-right: 16px;
 }
 .divTableHeading {
 	background-color: #EEE;
@@ -280,12 +296,14 @@ h1{
     
 }
 .h011 {
+    z-index: 1;
     text-align: center;
     padding-top: 25%;
     grid-column-start: 1;
     grid-column-end: 1;
-    grid-row-start: 2;
-    grid-row-end: 2;
+    grid-row-start: 5;
+    grid-row-end: 5;
+    color: #9B4646;
     
 }
 
@@ -297,12 +315,14 @@ h1{
     
 }
 .h022 {
+    z-index: 1;
     text-align: center;
     padding-top: 25%;
     grid-column-start: 2;
     grid-column-end: 2;
-    grid-row-start: 1;
-    grid-row-end: 1;
+    grid-row-start: 4;
+    grid-row-end: 4;
+    color: #9B4646;
     
 }
 
@@ -315,12 +335,15 @@ h1{
 }
 
 .h033 {
+    z-index: 1;
     text-align: center;
     padding-top: 25%;
     grid-column-start: 3;
     grid-column-end: 3;
-    grid-row-start: 2;
-    grid-row-end: 2;
+    grid-row-start: 5;
+    grid-row-end: 5;
+    color: #9B4646;
+
     
 }
 
