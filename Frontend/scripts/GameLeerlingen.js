@@ -16,6 +16,7 @@ let playingTeam,
   questionStop,
   questionDuration,
   btnIdAnswerSelected,
+  userAnswerSelected = false,
   maxScore = 3000;
 // Vars from dom
 let domTeamnamePlayingTeam,
@@ -137,6 +138,7 @@ const displayPlayingTeam = function(dataPlayingTeam) {
 // Function for display the new question
 const displayQuestion = function(dataQuestion) {
   playingQuestion = dataQuestion;
+  userAnswerSelected = false;
   // Change the title
   domQuestion.innerHTML = dataQuestion["question"];
   // Change the answer-buttons
@@ -268,10 +270,14 @@ const answerValidation = function() {
 };
 // Function that gets the Id from the selected answer
 const answerSelected = function(btnAnswer) {
-  let answerIdSelected = btnAnswer.getAttribute("data-answerId");
-  btnAnswer.setAttribute("data-answerSelected", "true");
-  selectedAnswerId = answerIdSelected;
-  answerValidation();
+  // Check if the user has already selected an answer
+  if (!userAnswerSelected) {
+    userAnswerSelected = true;
+    let answerIdSelected = btnAnswer.getAttribute("data-answerId");
+    btnAnswer.setAttribute("data-answerSelected", "true");
+    selectedAnswerId = answerIdSelected;
+    answerValidation();
+  }
 };
 // Function that loads the DOM elements into a var
 const loadDomElements = function() {
