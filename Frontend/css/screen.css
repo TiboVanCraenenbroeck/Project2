@@ -640,6 +640,50 @@ grid
     width: auto;  
 
 }
+.c-logo-howest{
+    position: fixed;
+    z-index: 0;
+    left: 0rem;
+    bottom:0rem;
+    /* height: 656px; 
+    width: 672px; */  
+    height:100px; 
+    width: 100px;  
+
+}
+.c-logo-howest2{
+    position: fixed;
+    z-index: 0;
+    right: 8rem;
+    bottom:-0.5rem;
+    /* height: 656px; 
+    width: 672px; */  
+    height:80px; 
+    width: 160px;  
+
+}
+.c-logo-sport{
+    position: fixed;
+    z-index: 0;
+    left: 6rem;
+    bottom:-1rem;
+    /* height: 656px; 
+    width: 672px; */  
+    height:100px; 
+    width: 100px;  
+
+}
+.c-logo-sport2{
+    position: fixed;
+    z-index: 0;
+    right: 1rem;
+    bottom:1rem;
+    /* height: 656px; 
+    width: 672px; */  
+    height:35px; 
+    width: 120px;  
+
+}
 .c-olievlek{ 
     z-index: 1; 
     height: 100%;
