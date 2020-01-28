@@ -110,7 +110,7 @@ html {
   color: var(--color-text);
   font-size: 16px;
   line-height: 1.5;
-  font-family: "Inter Web", Helvetica, arial, sans-serif;
+  font-family: "Raleway", sans-serif;
   box-sizing: border-box;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -634,6 +634,7 @@ input::placeholder {
   --user-color--background: var(--global-color-button-hover);
 }
 .c-btn {
+  font-family: "Raleway", sans-serif;
   background-color: var(--user-color--btn);
   color: var(--color-text);
   border: 1px solid var(--color-text);

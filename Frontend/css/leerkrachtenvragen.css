@@ -1,541 +1,533 @@
 @font-face {
-	font-family: 'Raleway';
-	font-weight: 400;
-	src: url('../fonts/Raleway-Medium.ttf');
+  font-family: "Raleway";
+  font-weight: 400;
+  src: url("../fonts/Raleway-Medium.ttf");
 }
 
 html {
-    font-family: 'Raleway', Helvetica, arial, sans-serif;
+  font-family: "Raleway", Helvetica, arial, sans-serif;
 }
 
-
-.c-bg{
-    align-items: center;
+.c-bg {
+  align-items: center;
 }
 
-body{
-    background-color: #203959;
-    background-image: url(https://aikovanryssel.github.io/project2IMG/img/achtergrond/svg/backgroundsterren.svg);
+body {
+  background-color: #203959;
+  background-image: url(https://aikovanryssel.github.io/project2IMG/img/achtergrond/svg/backgroundsterren.svg);
 }
 
-.c-bg-oil{
-    margin: 0 auto;
-    text-align: center;
-    border-radius: 4px;
-    width: 80%;
-    height: 100%;
-    background-color: #BF6663;
+.c-bg-oil {
+  margin: 0 auto;
+  text-align: center;
+  border-radius: 4px;
+  width: 80%;
+  height: 100%;
+  background-color: #bf6663;
 }
 
-.c-homeknop-bg{
-    display: grid;
-    grid-template-columns: repeat(8,1fr);
-    grid-auto-columns: minmax(10px, auto);
-    grid-template-rows: repeat(8,1fr);
-    grid-auto-rows: minmax(10px, auto);
-    grid-gap:2px;
-    margin: 0 auto;
-    padding: 3px;  
-    height: 80px;
-    width: 80%;
+.c-homeknop-bg {
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  grid-auto-columns: minmax(10px, auto);
+  grid-template-rows: repeat(8, 1fr);
+  grid-auto-rows: minmax(10px, auto);
+  grid-gap: 2px;
+  margin: 0 auto;
+  padding: 3px;
+  height: 80px;
+  width: 80%;
 }
 
-.c-highscorebtn{
-    display: inline-block;
-    margin-top: 10px;
-    padding: 3px;  
-    border: 1px solid #474242;
-    border-radius: 4px;
-    width: 110px;
-    height: 40px;
-    background-color: #F6D9CF;
-    grid-row: 1;
-    grid-column: 1;  
-    cursor: pointer;
+.c-highscorebtn {
+  display: inline-block;
+  margin-top: 10px;
+  padding: 3px;
+  border: 1px solid #474242;
+  border-radius: 4px;
+  width: 110px;
+  height: 40px;
+  background-color: #f6d9cf;
+  grid-row: 1;
+  grid-column: 1;
+  cursor: pointer;
 }
-.lbl-titletekst{
-    grid-row: 1;
-    grid-column: 3/7;
-    color:#474242;
-}
-
-.c-homebtn{
-    display: inline-block;
-    margin-top: 10px;
-    padding: 3px;  
-    border: 1px solid #474242;
-    border-radius: 4px;
-    width: 110px;
-    height: 40px;
-    background-color: #F6D9CF;
-    grid-column: 8;  
-    cursor: pointer;
-}
-.lbl-home{
-    font-size: 20px;
-    text-align:center;
-    vertical-align:middle;
-    line-height: 36px;
+.lbl-titletekst {
+  grid-row: 1;
+  grid-column: 3/7;
+  color: #474242;
 }
 
-
-.c-onderwerp-form{
-    display: grid;
-    grid-template-columns: repeat(8,1fr);
-    grid-auto-columns: minmax(10px, auto);
-    grid-gap:2px;
-    margin-bottom: 8px;
-    border-radius: 4px;
-    padding: 10px;
-    margin: 0 auto;
-    padding: 3px;  
-    height: 80px;
-    width: 80%;
-    background-color: #fffbf98c;
-    box-shadow: 0px 3px 6px 0px rgba(0,0,0,0.16);
+.c-homebtn {
+  display: inline-block;
+  margin-top: 10px;
+  padding: 3px;
+  border: 1px solid #474242;
+  border-radius: 4px;
+  width: 110px;
+  height: 40px;
+  background-color: #f6d9cf;
+  grid-column: 8;
+  cursor: pointer;
+}
+.lbl-home {
+  font-size: 20px;
+  text-align: center;
+  vertical-align: middle;
+  line-height: 36px;
 }
 
-.c-btn-send-subject{
-    background-image: url("../img/plus.png");
-    background-size: 100% 100%;
-    justify-self: end;
-    margin-right: 24px;
-    width: 40px;
-    height: 40px;
-    grid-row: 2;
-    grid-column: 8;
-    cursor: pointer;
+.c-onderwerp-form {
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  grid-auto-columns: minmax(10px, auto);
+  grid-gap: 2px;
+  margin-bottom: 8px;
+  border-radius: 4px;
+  padding: 10px;
+  margin: 0 auto;
+  padding: 3px;
+  height: 80px;
+  width: 80%;
+  background-color: #fffbf98c;
+  box-shadow: 0px 3px 6px 0px rgba(0, 0, 0, 0.16);
 }
 
-.c-input-onderwerp{
-    border: 1px solid #474242;
-    margin-left: 16px;
-    border-radius:4px;
-    width: 750px;
-    height: 40px;
-    grid-row: 2;
-    grid-column: 1/2;
+.c-btn-send-subject {
+  background-image: url("../img/plus.png");
+  background-size: 100% 100%;
+  justify-self: end;
+  margin-right: 24px;
+  width: 40px;
+  height: 40px;
+  grid-row: 2;
+  grid-column: 8;
+  cursor: pointer;
+}
+
+.c-input-onderwerp {
+  font-family: "Raleway", sans-serif;
+  border: 1px solid #474242;
+  margin-left: 16px;
+  border-radius: 4px;
+  width: 750px;
+  height: 40px;
+  grid-row: 2;
+  grid-column: 1/2;
 }
 
 .o-hide-accessible {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    padding: 0;
-    margin: -1px;
-    overflow: hidden;
-    clip: rect(0, 0, 0, 0);
-    border: 0;
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
 }
 
-.c-form{
-    display: grid;
-    grid-template-columns: repeat(8,1fr);
-    grid-auto-columns: minmax(10px, auto);
-    grid-template-rows: repeat(8,1fr);
-    grid-auto-rows: minmax(10px, auto);
-    grid-gap:2px;
-    margin-bottom: 8px;
-    border-radius: 4px;
-    margin: 0 auto;
-    margin-top: 24px;
-    padding: 3px;  
-    height: 430px;
-    width: 80%;
-    background-color: #fffbf98c;
-    box-shadow: 0px 3px 6px 0px rgba(0,0,0,0.16);
-    
+.c-form {
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  grid-auto-columns: minmax(10px, auto);
+  grid-template-rows: repeat(8, 1fr);
+  grid-auto-rows: minmax(10px, auto);
+  grid-gap: 2px;
+  margin-bottom: 8px;
+  border-radius: 4px;
+  margin: 0 auto;
+  margin-top: 24px;
+  padding: 3px;
+  height: 430px;
+  width: 80%;
+  background-color: #fffbf98c;
+  box-shadow: 0px 3px 6px 0px rgba(0, 0, 0, 0.16);
 }
 
-.c-form-delete{
-    display: grid;
-    grid-template-columns: repeat(8,1fr);
-    grid-auto-columns: minmax(10px, auto);
-    grid-template-rows: repeat(8,1fr);
-    grid-auto-rows: minmax(10px, auto);
-    grid-gap:2px;
-    margin-bottom: 8px;
-    border-radius: 4px;
-    margin: 0 auto;
-    margin-top: 24px;
-    padding: 3px;  
-    height: 430px;
-    width: 80%;
-    background-color: #fffbf98c;
-    box-shadow: 0px 3px 6px 0px rgba(0,0,0,0.16);
+.c-form-delete {
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  grid-auto-columns: minmax(10px, auto);
+  grid-template-rows: repeat(8, 1fr);
+  grid-auto-rows: minmax(10px, auto);
+  grid-gap: 2px;
+  margin-bottom: 8px;
+  border-radius: 4px;
+  margin: 0 auto;
+  margin-top: 24px;
+  padding: 3px;
+  height: 430px;
+  width: 80%;
+  background-color: #fffbf98c;
+  box-shadow: 0px 3px 6px 0px rgba(0, 0, 0, 0.16);
 }
 
-.c-form-extra{
-    width: 100%;
+.c-form-extra {
+  width: 100%;
 }
-.c-btn-delete{
-    width: 40px;
-    height:40px;
-    background-image: url("../img/delete.png");
-    background-size: 100% 100%;
-    grid-column: 8;
-    justify-content: end;
-    justify-self: end;
-    margin-right: 24px;
-    grid-row: 8;
-    cursor: pointer;
-}
-
-.c-btn-change{
-    
-    border: 1px solid #474242;
-    border-radius: 4px;
-    width: 140px;
-    height: 40px;
-    line-height: 38px;
-    background-color: #F6D9CF;
-    grid-column: 8;
-    margin-right: 12px;
-    grid-row: 1;
-    justify-self: end;
-    margin-top: 12px;
-    cursor: pointer;
-   
-}
-.c-moeilijkheidsgraad[data-moeiljkheidsgraad= "true"]{
-    color: red;
+.c-btn-delete {
+  width: 40px;
+  height: 40px;
+  background-image: url("../img/delete.png");
+  background-size: 100% 100%;
+  grid-column: 8;
+  justify-content: end;
+  justify-self: end;
+  margin-right: 24px;
+  grid-row: 8;
+  cursor: pointer;
 }
 
-.c-subject-vragen-2
-{
-    margin-top: 6px;
-    margin-right: 32px;
-    width: 160px;
-    height: 40px;
-    grid-column: 8;
-    grid-row: 1;
-
+.c-btn-change {
+  border: 1px solid #474242;
+  border-radius: 4px;
+  width: 140px;
+  height: 40px;
+  line-height: 38px;
+  background-color: #f6d9cf;
+  grid-column: 8;
+  margin-right: 12px;
+  grid-row: 1;
+  justify-self: end;
+  margin-top: 12px;
+  cursor: pointer;
+}
+.c-moeilijkheidsgraad[data-moeiljkheidsgraad="true"] {
+  color: red;
 }
 
-.c-subject-vragen{
-    margin-top: 6px;
-    margin-right: 20px;
-    width: 160px;
-    height: 40px;
-    grid-column: 8;
-    grid-row: 1;
-    border-radius: 4px;
-    background-color: white;
-    font-size:24px;
-    font: raleway;
-    border: 1px solid #474242;
+.c-subject-vragen-2 {
+  margin-top: 6px;
+  margin-right: 32px;
+  width: 160px;
+  height: 40px;
+  grid-column: 8;
+  grid-row: 1;
 }
 
-:placeholder-shown
-{
-    padding-left: 8px;
-
+.c-subject-vragen {
+  margin-top: 6px;
+  margin-right: 20px;
+  width: 160px;
+  height: 40px;
+  grid-column: 8;
+  grid-row: 1;
+  border-radius: 4px;
+  background-color: white;
+  font-size: 24px;
+  font: raleway;
+  border: 1px solid #474242;
 }
 
-::placeholder{
-    color: #585151;
-    font-size: 20px;
+:placeholder-shown {
+  padding-left: 8px;
 }
 
-.c-input-style{
-    border: 1px solid #474242;
-    background-color:#FFFBF9;
+::placeholder {
+  color: #585151;
+  font-size: 20px;
 }
 
-.c-input-vragen{
-    width: 80%;
-    border: 1px solid #474242;
-    border-radius: 4px;
-    background-color: #FFFBF9;
-    font-family: inherit;
-    outline: none;
-    margin-top: 12px;
-    width: 600px;
-    height: 40px;
-    margin-left: 16px;
-    grid-column: 1;
-    grid-row: 1;
+.c-input-style {
+  font-family: "Raleway", sans-serif;
+  border: 1px solid #474242;
+  background-color: #fffbf9;
 }
 
-.c-lbl-antwoorden{
-    margin-top: 16px;
-    grid-column: 1;
-    margin-right: 360px;
-    grid-row: 2;
+.c-input-vragen {
+  width: 80%;
+  border: 1px solid #474242;
+  border-radius: 4px;
+  background-color: #fffbf9;
+  font-family: "Raleway", sans-serif;
+  outline: none;
+  margin-top: 12px;
+  width: 600px;
+  height: 40px;
+  margin-left: 16px;
+  grid-column: 1;
+  grid-row: 1;
 }
 
-.c-radio-a{
-    grid-column: 1;
-    grid-row: 3;
-    margin-left: 32px;
-    margin-top: 8px;
-}
-.c-radio-b{
-    grid-column: 1;
-    grid-row: 4;
-    margin-left: 32px;
-    margin-top: 8px;
-}
-.c-radio-c{
-    grid-column: 1;
-    grid-row: 5;
-    margin-left: 32px;
-    margin-top: 8px;
-}
-.c-radio-d{
-    grid-column: 1;
-    grid-row: 6;
-    margin-left: 32px;
-    margin-top: 8px;
+.c-lbl-antwoorden {
+  margin-top: 16px;
+  grid-column: 1;
+  margin-right: 360px;
+  grid-row: 2;
 }
 
-.c-input-style{
-    border: 1px solid #474242;
-    background-color:#FFFBF9;
-    height: 24px;
+.c-radio-a {
+  grid-column: 1;
+  grid-row: 3;
+  margin-left: 32px;
+  margin-top: 8px;
+}
+.c-radio-b {
+  grid-column: 1;
+  grid-row: 4;
+  margin-left: 32px;
+  margin-top: 8px;
+}
+.c-radio-c {
+  grid-column: 1;
+  grid-row: 5;
+  margin-left: 32px;
+  margin-top: 8px;
+}
+.c-radio-d {
+  grid-column: 1;
+  grid-row: 6;
+  margin-left: 32px;
+  margin-top: 8px;
 }
 
-
-.c-input-a{
-    
-    border-radius: 4px;
-    margin-left: 80px;
-    grid-column: 1/6;
-    width: 700px;
-    grid-row: 3;
-}
-.c-input-b{
-    border-radius: 4px;
-    margin-left: 80px;
-    grid-column: 1/8;
-    width: 700px;
-    grid-row: 4;
-}
-.c-input-c{
-    border-radius: 4px;
-    margin-left: 80px;
-    grid-column: 1/8;
-    width: 700px;
-    grid-row: 5;
-}
-.c-input-d{
-    border-radius: 4px;
-    margin-left: 80px;
-    grid-column: 1/8;
-    width: 700px;
-    grid-row: 6;
+.c-input-style {
+  border: 1px solid #474242;
+  background-color: #fffbf9;
+  height: 24px;
+  font-family: "Raleway", sans-serif;
 }
 
-.c-div-level{
-    grid-column: 1;
-    margin-left: 16px;
-    width: 200px;
-    height: 32px;
-    grid-row: 8;
-    display: grid;
-    align-items: center;
-    border-radius: 4px;
-    grid-template-columns: repeat(3,1px);
-    grid-auto-rows: minmax(1px,auto);
-    background-color: #fffbf9c9;
-    border: 1px solid #474242;
-} 
-
-.c-lbl-level{
-    grid-row: 1;
-    margin-top: 16px;
-    grid-column: 4;
+.c-input-a {
+  font-family: "Raleway", sans-serif;
+  border-radius: 4px;
+  margin-left: 80px;
+  grid-column: 1/6;
+  width: 700px;
+  grid-row: 3;
+}
+.c-input-b {
+  font-family: "Raleway", sans-serif;
+  border-radius: 4px;
+  margin-left: 80px;
+  grid-column: 1/8;
+  width: 700px;
+  grid-row: 4;
+}
+.c-input-c {
+  font-family: "Raleway", sans-serif;
+  border-radius: 4px;
+  margin-left: 80px;
+  grid-column: 1/8;
+  width: 700px;
+  grid-row: 5;
+}
+.c-input-d {
+  font-family: "Raleway", sans-serif;
+  border-radius: 4px;
+  margin-left: 80px;
+  grid-column: 1/8;
+  width: 700px;
+  grid-row: 6;
 }
 
-.c-lbl-1{
-    grid-column: 5;
-    padding-bottom: 16px;
-    grid-row: 2;
+.c-div-level {
+  grid-column: 1;
+  margin-left: 16px;
+  width: 200px;
+  height: 32px;
+  grid-row: 8;
+  display: grid;
+  align-items: center;
+  border-radius: 4px;
+  grid-template-columns: repeat(3, 1px);
+  grid-auto-rows: minmax(1px, auto);
+  background-color: #fffbf9c9;
+  border: 1px solid #474242;
 }
 
-.c-lbl-2{
-    grid-column: 6;
-    padding-bottom: 16px;
-    grid-row: 2;
-}
-.c-lbl-3{
-    grid-column: 7;
-    padding-bottom: 16px;
-    grid-row: 2;
-}
-.c-btn-add{
-    background-image: url("../img/plus.png"); 
-    background-size: 100% 100%;
-    width: 40px;
-    height:40px;
-    justify-self: end;
-    margin-right: 24px;
-    grid-column: 8;
-    grid-row: 8;
-    cursor: pointer;
+.c-lbl-level {
+  grid-row: 1;
+  margin-top: 16px;
+  grid-column: 4;
 }
 
-.c-ingegevenvragen-space{
-    display: grid;
-    grid-template-columns: repeat(8,1fr);
-    grid-auto-columns: minmax(10px, auto);
-    grid-template-rows: repeat(8,1fr);
-    grid-auto-rows: minmax(10px, auto);
-    grid-gap:2px;
-    height: 80px;
-    margin: 0px auto;
-    width: 80%;
-}
-.c-lbl-ingegevenvragen{
-    grid-row: 8;
-    grid-column:1/4;
-    justify-self: start;
-    margin-top: 60px;
-}
-.c-subject-vragen-show{
-    grid-row: 8;
-    grid-column:5;
-    margin-top: 30px;
+.c-lbl-1 {
+  grid-column: 5;
+  padding-bottom: 16px;
+  grid-row: 2;
 }
 
-.c-toonallevragen{
-    border: 1px solid #474242;
-    border-radius: 4px;
-    width: 140px;
-    height: 40px;
-    margin-top: 40px;
-    justify-self: start;
-    background-color: #F6D9CF;
-    grid-row: 8;
-    grid-column: 8;
-    margin-right: 12px;
-    cursor: pointer;
+.c-lbl-2 {
+  grid-column: 6;
+  padding-bottom: 16px;
+  grid-row: 2;
+}
+.c-lbl-3 {
+  grid-column: 7;
+  padding-bottom: 16px;
+  grid-row: 2;
+}
+.c-btn-add {
+  background-image: url("../img/plus.png");
+  background-size: 100% 100%;
+  width: 40px;
+  height: 40px;
+  justify-self: end;
+  margin-right: 24px;
+  grid-column: 8;
+  grid-row: 8;
+  cursor: pointer;
 }
 
-.lbl-middle{
-    line-height: 38px;
+.c-ingegevenvragen-space {
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  grid-auto-columns: minmax(10px, auto);
+  grid-template-rows: repeat(8, 1fr);
+  grid-auto-rows: minmax(10px, auto);
+  grid-gap: 2px;
+  height: 80px;
+  margin: 0px auto;
+  width: 80%;
+}
+.c-lbl-ingegevenvragen {
+  grid-row: 8;
+  grid-column: 1/4;
+  justify-self: start;
+  margin-top: 60px;
+}
+.c-subject-vragen-show {
+  grid-row: 8;
+  grid-column: 5;
+  margin-top: 30px;
 }
 
-.c-form-2{
-    display: grid;
-    grid-template-columns: repeat(8,1fr);
-    grid-auto-columns: minmax(10px, auto);
-    grid-template-rows: repeat(8,1fr);
-    grid-auto-rows: minmax(10px, auto);
-    grid-gap:2px;
-    margin-bottom: 8px;
-    border-radius: 4px;
-    margin: 0 auto;
-    margin-top: 80px;
-    padding: 3px;  
-    height: 430px;
-    width: 80%;
-    background-color: #fffbf98c;
-    box-shadow: 0px 3px 6px 0px rgba(0,0,0,0.16);
+.c-toonallevragen {
+  border: 1px solid #474242;
+  border-radius: 4px;
+  width: 140px;
+  height: 40px;
+  margin-top: 40px;
+  justify-self: start;
+  background-color: #f6d9cf;
+  grid-row: 8;
+  grid-column: 8;
+  margin-right: 12px;
+  cursor: pointer;
 }
 
+.lbl-middle {
+  line-height: 38px;
+}
+
+.c-form-2 {
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  grid-auto-columns: minmax(10px, auto);
+  grid-template-rows: repeat(8, 1fr);
+  grid-auto-rows: minmax(10px, auto);
+  grid-gap: 2px;
+  margin-bottom: 8px;
+  border-radius: 4px;
+  margin: 0 auto;
+  margin-top: 80px;
+  padding: 3px;
+  height: 430px;
+  width: 80%;
+  background-color: #fffbf98c;
+  box-shadow: 0px 3px 6px 0px rgba(0, 0, 0, 0.16);
+}
 
 @media (max-width: 1350px) {
-    .c-input-onderwerp{
-        border: 1px solid #474242;
-        margin-left: 16px;
-        border-radius:4px;
-        width: 500px;
-        height: 40px;
-        grid-row: 2;
-        grid-column: 1/2;
-    }
+  .c-input-onderwerp {
+    border: 1px solid #474242;
+    margin-left: 16px;
+    border-radius: 4px;
+    width: 500px;
+    height: 40px;
+    grid-row: 2;
+    grid-column: 1/2;
+  }
 
-    .c-btn-change{
-        grid-column: 8;
-        margin-left: 40px;
-        
-    }
+  .c-btn-change {
+    grid-column: 8;
+    margin-left: 40px;
+  }
 
-    .c-btn-delete{
-        grid-column: 8;
-        justify-self: center;
-       margin-left: 120px;
-    }
+  .c-btn-delete {
+    grid-column: 8;
+    justify-self: center;
+    margin-left: 120px;
+  }
 
-    .c-btn-send-subject{
-        margin-top: 4px;
-        margin-left: 14px;
-    }
+  .c-btn-send-subject {
+    margin-top: 4px;
+    margin-left: 14px;
+  }
 
-    .c-subject-vragen-show{
-        grid-column: 7;
-    }
-    .c-toonallevragen{
-        grid-column: 8;
-        margin-right: 80px;
-        cursor: pointer;
-    }
+  .c-subject-vragen-show {
+    grid-column: 7;
+    font-family: "Raleway", sans-serif;
+  }
+  .c-toonallevragen {
+    grid-column: 8;
+    margin-right: 80px;
+    cursor: pointer;
+  }
 
-    .c-input-vragen{
-        border: 1px solid #474242;
-        border-radius: 4px;
-        background-color: #FFFBF9;
-        font-family: inherit;
-        outline: none;
-        margin-top: 12px;
-        width: 400px;
-        height: 40px;
-        margin-left: 16px;
-        grid-column: 1;
-        grid-row: 1;
-    }
+  .c-input-vragen {
+    border: 1px solid #474242;
+    border-radius: 4px;
+    background-color: #fffbf9;
+    font-family: "Raleway", sans-serif;
+    outline: none;
+    margin-top: 12px;
+    width: 400px;
+    height: 40px;
+    margin-left: 16px;
+    grid-column: 1;
+    grid-row: 1;
+  }
 
-    .c-subject-vragen{
-        margin-right: 80px;
-        margin-top: 6px;
-        width: 110px;
-        height: 40px;
-        grid-column: 8;
-        grid-row: 1;
-    }
+  .c-subject-vragen {
+    margin-right: 80px;
+    margin-top: 6px;
+    width: 110px;
+    height: 40px;
+    grid-column: 8;
+    grid-row: 1;
+    font-family: "Raleway", sans-serif;
+  }
 
-    
-    .c-input-a{
-        
-        border-radius: 4px;
-        margin-left: 80px;
-        grid-column: 1/8;
-        width: 490px;
-        grid-row: 3;
-    }
+  .c-input-a {
+    border-radius: 4px;
+    margin-left: 80px;
+    grid-column: 1/8;
+    width: 490px;
+    grid-row: 3;
+  }
 
-    .c-input-b{
-        border-radius: 4px;
-        margin-left: 80px;
-        grid-column: 1/8;
-        width: 490px;
-        grid-row: 4;
-    }
-    .c-input-c{
-        border-radius: 4px;
-        margin-left: 80px;
-        grid-column: 1/8;
-        width: 490px;
-        grid-row: 5;
-    }
-    .c-input-d{
-        border-radius: 4px;
-        margin-left: 80px;
-        grid-column: 1/8;
-        width: 490px;
-        grid-row: 6;
-    }
+  .c-input-b {
+    border-radius: 4px;
+    margin-left: 80px;
+    grid-column: 1/8;
+    width: 490px;
+    grid-row: 4;
+  }
+  .c-input-c {
+    border-radius: 4px;
+    margin-left: 80px;
+    grid-column: 1/8;
+    width: 490px;
+    grid-row: 5;
+  }
+  .c-input-d {
+    border-radius: 4px;
+    margin-left: 80px;
+    grid-column: 1/8;
+    width: 490px;
+    grid-row: 6;
+  }
 
-    .c-lbl-antwoorden{
-        margin-top: 16px;
-        grid-column: 1;
-        margin-right: 160px;
-        grid-row: 2;
-    }
-   
- 
+  .c-lbl-antwoorden {
+    margin-top: 16px;
+    grid-column: 1;
+    margin-right: 160px;
+    grid-row: 2;
+  }
 }
-.c-moeilijkheidsgraad__selected[data-level-selected="true"]{
-    color: red;
+.c-moeilijkheidsgraad__selected[data-level-selected="true"] {
+  color: red;
 }
