@@ -42,7 +42,7 @@ const highscoreFilter=(data)=>{
         console.log(score);
         highScoreHTML += `
         <div class="divTableRow">
-        <div class="divTableCell01">${i}</div>
+        <div class="divTableCell01">${(i+1)}</div>
                 <div class="divTableCell1">
                         <figure class="imageHighscore">
                                 <img src="https://aikovanryssel.github.io/project2IMG/img/raketrechtnieuw/svg/${image}.svg" class="" alt="Image 1">
