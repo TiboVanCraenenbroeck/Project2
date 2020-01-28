@@ -66,7 +66,14 @@ function postonderwerpdata(url = '', data= {})
     console.error('error: ', error);
   })
 }
-
+const deleteHighscore = function(data){
+  // Controleer of het gelukt is
+  if(data["id"]){
+    alert("Alle highscores zijn verwijderd")
+  }else{
+    alert(data["error_message"])
+  }
+};
 
 const buttonclick = function(){
   let btn = document.querySelector('.js-btn-onderwerp-verzenden');
@@ -81,6 +88,14 @@ const buttonclick = function(){
     postonderwerpdata(uri+decid, data)
     document.getElementById("js-input-onderwerp").value = "";  
   })
+  // Knop om de highscore te resetten
+  const domBtnDeleteHighscore = document.querySelector(".js-btn--delete-highscore");
+  // Controleer of iemand op de knop geklikt heeft
+  domBtnDeleteHighscore.addEventListener('click', function(){
+    id = getCookie('id');
+    // Send it to the API
+    getAPI(`highscores?cookie_id=${id}`, deleteHighscore, "DELETE");
+  });
 }
 
 // home knop
@@ -256,7 +271,7 @@ const showonderwerpen = function(data)
 
 //get vragen
 
-const fetchData = async function(url, method = "GET", body = null) {
+const fetchData1 = async function(url, method = "GET", body = null) {
   return fetch(`https://mctproject2.azurewebsites.net/api/v1/questions/${url}`, {
     method: method,
     body: body,
@@ -266,10 +281,10 @@ const fetchData = async function(url, method = "GET", body = null) {
     .then(data => data);
 };
 
-let getAPI = async function(url, method = "GET", body = null) {
+let getAPI1 = async function(url, method = "GET", body = null) {
   datavragen = [];
     try {
-      const data = await fetchData(url, method, body);
+      const data = await fetchData1(url, method, body);
  /*      getrandomnr(0, data.length); */
      /*  console.log(data.error_message) */
 
@@ -460,7 +475,7 @@ const checkUserClickedOnBtnLevel = function(domBtnMoeilijkheidsgraad){
 };
 const alleVragen = async function(){
   const quizid = localStorage.getItem('quizopgevraagdeid');
-      await getAPI(quizid);
+      await getAPI1(quizid);
 
 
       domvragen = document.querySelector('.c-form-extra');
@@ -566,5 +581,5 @@ document.addEventListener('DOMContentLoaded', function()
     moeilijkheid3();
     getonderwerpen();
     buttonhomeclick();
-    /* getAPI("bef11ca2-3fb0-4bdf-90d2-2ad0be4787e6"); */
+    /* getAPI1("bef11ca2-3fb0-4bdf-90d2-2ad0be4787e6"); */
 });
