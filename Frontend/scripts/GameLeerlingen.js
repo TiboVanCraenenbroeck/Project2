@@ -17,7 +17,8 @@ let playingTeam,
   questionDuration,
   btnIdAnswerSelected,
   userAnswerSelected = false,
-  maxScore = 3000;
+  maxScore = 3000,
+  teamSongs = {};
 // Vars from dom
 let domTeamnamePlayingTeam,
   domQuestion,
@@ -25,9 +26,16 @@ let domTeamnamePlayingTeam,
   domAvatarPlayingTeam,
   domRockets,
   domPlanets,
-  domWinnarScreen;
+  domWinnarScreen,
+  domMusic;
 
 // Functions
+// Function that switch the music
+const changingSong = function(teamId) {
+  console.log(teamId);
+  console.log(teamSongs[teamId]);
+  domMusic.src = `./music/${teamSongs[teamId]}.m4a`;
+};
 // Function that gets the max-score for each team
 const getMaxScore = function(data) {
   maxScore = data["max_score"];
@@ -126,6 +134,8 @@ const getAvatarsFromTeam = function(data) {
     try {
       domRocket.src = `${linkImg}img/raketrechtnieuw/svg/${data[index]["avatar"]["name"]}.svg`;
       domRocket.setAttribute("data-teamId", data[index]["team_id"]);
+      // Set the music to the teams
+      teamSongs[data[index]["team_id"]] = `project2song${index}`;
     } catch (error) {}
   }
 };
@@ -159,6 +169,8 @@ const proccesGameValidation = function(data) {
   if (data["game_status"] == 1) {
     // Set the rocket from the winning team on the correct height
     changeHeightOfRocket(data["team"]["team_id"], data["team"]["score"]);
+    // Change the song for the current team
+    changingSong(data["team"]["team_id"]);
     // Display the playing team
     displayPlayingTeam(data["team"]);
     // Display the question
@@ -289,6 +301,7 @@ const loadDomElements = function() {
   domRockets = document.querySelectorAll(".js-rocket");
   domPlanets = document.querySelectorAll(".js-planet");
   domWinnarScreen = document.querySelector(".c-winner");
+  domMusic = document.querySelector(".js-song");
   // Check if the users click on the button (on the screen)
   for (const btnAnswer of domAnswers) {
     btnAnswer.addEventListener("click", function() {
@@ -308,9 +321,6 @@ const loadDomElements = function() {
 // Load the DOM
 document.addEventListener("DOMContentLoaded", function() {
   console.log("Spelen maar😎😎😎");
-  /* // TIJDELIJK ZET GAMEID IN LOCALSTORAGE
-  localStorage.setItem("quizid", "BEF11CA2-3FB0-4BDF-90D2-2AD0BE4787E6");
-  localStorage.setItem("gameid", "51826506-3c57-4e8e-adec-43c2c78a995b"); */
   // Load DOM-elements
   loadDomElements();
   // Load the first game (data)
