@@ -52,6 +52,10 @@ body {
   grid-column: 1;
   cursor: pointer;
 }
+.c-highscorebtn:hover{
+  background-color:#F6C0AD;
+}
+
 .lbl-titletekst {
   grid-row: 1;
   grid-column: 3/7;
@@ -70,6 +74,11 @@ body {
   grid-column: 8;
   cursor: pointer;
 }
+.c-homebtn:hover{
+  background-color:#F6C0AD;
+}
+
+
 .lbl-home {
   font-size: 20px;
   text-align: center;
@@ -202,6 +211,11 @@ body {
   margin-top: 12px;
   cursor: pointer;
 }
+
+.c-btn-change:hover{
+  background-color:#F6C0AD;
+}
+
 .c-moeilijkheidsgraad[data-moeiljkheidsgraad="true"] {
   color: red;
 }
@@ -417,6 +431,10 @@ body {
   cursor: pointer;
 }
 
+.c-toonallevragen:hover{
+    background-color:#F6C0AD;
+}
+
 .lbl-middle {
   line-height: 38px;
 }
@@ -454,6 +472,8 @@ body {
     grid-column: 8;
     margin-left: 40px;
   }
+
+ 
 
   .c-btn-delete {
     grid-column: 8;
