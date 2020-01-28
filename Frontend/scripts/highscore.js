@@ -16,18 +16,21 @@ const highscoreFilter=(data)=>{
     nummer2HTML += `
       <h3 class="h01">${dataGet[1].name}</h3>
       <h3 class="h011">${dataGet[1].score}</h3>
+      <h3 class="h0111">2</h3>
       <figure class="img1">
           <img src="https://aikovanryssel.github.io/project2IMG/img/raketrechtnieuw/svg/${dataGet[1].image}.svg" class="gallery__img " alt="Image 1">
       </figure> 
 
       <h3 class="h02">${dataGet[0].name}</h3>
       <h3 class="h022">${dataGet[0].score}</h3>
+      <h3 class="h0222">1</h3>
       <figure class="img2">
               <img src="https://aikovanryssel.github.io/project2IMG/img/raketrechtnieuw/svg/${dataGet[0].image}.svg" class="gallery__img " alt="Image 1">
       </figure>
       
       <h3 class="h03">${dataGet[2].name}</h3>
       <h3 class="h033">${dataGet[2].score}</h3>
+      <h3 class="h0333">3</h3>
       <figure class="img3">
               <img src="https://aikovanryssel.github.io/project2IMG/img/raketrechtnieuw/svg/${dataGet[2].image}.svg" class="gallery__img" alt="Image 1">
       </figure>`;
