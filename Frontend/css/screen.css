@@ -1118,6 +1118,7 @@ more padding on the right to avoid overlap
 }
 
 .c-button:hover {
+    cursor: pointer;
   border-color: var(
     --button-hover-borderColor,
     var(--global-color-border-button)
