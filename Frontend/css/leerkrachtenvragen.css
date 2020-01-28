@@ -75,6 +75,15 @@ body {
   text-align: center;
   vertical-align: middle;
   line-height: 36px;
+  cursor: pointer;
+}
+
+.lbl-highscore{
+  cursor:pointer;
+}
+
+.lbl-toonvragen{
+  cursor:pointer;
 }
 
 .c-onderwerp-form {
