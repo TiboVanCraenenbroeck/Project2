@@ -1079,8 +1079,9 @@ more padding on the right to avoid overlap
 }
 
 .c-lbl-password{
+  display: flex;
+  justify-content: center;
   margin-bottom: 0;
-  margin-left: 50%;
   padding-bottom: var(--global-whitespace-sm);
   font-size: 14px;
   line-height: 16px;
