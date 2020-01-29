@@ -7,7 +7,7 @@ let cookieId, userId;
 const showResponse = function(data) {
   // Check if the changes were successful
   if (data["id"]) {
-    alert("Je gegevens zijn succesvolg gewijzigd");
+    alert("Je gegevens zijn succesvol gewijzigd");
   } else {
     alert(data["error_message"]);
   }
