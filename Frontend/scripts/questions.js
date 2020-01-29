@@ -149,6 +149,7 @@ const moeilijkheid3 = function() {
 const buttonclickvragen = function() {
   let btnvragen = document.querySelector(".js-btn-verzenden");
   btnvragen.addEventListener("click", function() {
+    // TODO: fix, not unique
     let vraag = document.getElementById("js-vraag").value;
     var antwoorda = document.getElementById("js-antwoorda").value;
     var antwoordb = document.getElementById("js-antwoordb").value;
@@ -212,6 +213,7 @@ const buttonclickvragen = function() {
 };
 
 const cleanform = function() {
+  // todo
   let vraag = (document.getElementById("js-vraag").value = "");
   var antwoorda = (document.getElementById("js-antwoorda").value = "");
   var antwoordb = (document.getElementById("js-antwoordb").value = "");

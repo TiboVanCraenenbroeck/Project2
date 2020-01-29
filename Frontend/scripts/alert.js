@@ -1,0 +1,3 @@
+const showAlert = function(text){
+    
+};
