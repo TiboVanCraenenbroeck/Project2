@@ -719,6 +719,13 @@ input::placeholder {
   background-color:#F6C0AD;
 }
 
+.lbl-terug{
+  font-size: 20px;
+  text-align: center;
+  vertical-align: middle;
+  cursor: pointer;
+}
+
 .lbl-svg {
   font-size: 20px;
   text-align: center;
