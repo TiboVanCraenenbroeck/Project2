@@ -1090,6 +1090,7 @@ more padding on the right to avoid overlap
 }
 .c-link {
   color: #585151!important;
+  text-decoration: none;
 }
 
 .c-dot {
