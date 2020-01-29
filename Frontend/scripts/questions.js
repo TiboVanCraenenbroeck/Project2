@@ -92,8 +92,9 @@ const buttonclick = function() {
   // Controleer of iemand op de knop geklikt heeft
   domBtnDeleteHighscore.addEventListener("click", function() {
     id = getCookie("id");
+    decid = encodeURIComponent(id);
     // Send it to the API
-    getAPI(`highscores?cookie_id=${id}`, deleteHighscore, "DELETE");
+    getAPI(`highscores?cookie_id=${decid}`, deleteHighscore, "DELETE");
   });
 };
 
