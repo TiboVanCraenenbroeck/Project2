@@ -652,11 +652,22 @@ input::placeholder {
   color: white;
 }
 .c-btn__add-user {
-  justify-self: end;
+  justify-self: center;
+  grid-column: 3;
   width: 11rem;
   height: 3rem;
   background-color: #fffbf98c;
 }
+
+.c-btn__change-user{
+  justify-self: end;
+  width: 11rem;
+  height: 3rem;
+
+  background-color: #fffbf98c;
+}
+
+
 .c-btn__delete-user {
   color: var(--user-color--text);
   background-color: var(--user-color--btn, red);

@@ -46,6 +46,12 @@ const buttontoevoegen = function() {
   });
 };
 
+const buttonwijzigen = function(){
+  let btnwijzig = document.querySelector('.js-changeuser');
+  btnwijzig.addEventListener("click", function(){
+    document.location.href = "usersettings.html";
+  })
+}
 
 document.addEventListener("DOMContentLoaded", function() {
   console.log("Script leerkrachten geladen😛");
@@ -55,6 +61,7 @@ document.addEventListener("DOMContentLoaded", function() {
     // Load the DOM
     loadDom();
     buttontoevoegen();
+    buttonwijzigen();
   } else {
     // Send the user to the main-page
     window.location.href = "./";
