@@ -644,7 +644,7 @@ input::placeholder {
 }
 .c-btn:hover {
   /* background-color: var(--global-color-button-hover); */
-  background-color: var(--user-color--btn, var(--global-color-button-hover));
+  background-color: var(--global-color-button-hover);
 
   border: 2px solid var(--color-text);
 }

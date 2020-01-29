@@ -1,7 +1,7 @@
 let domUsers, domBtnsDeleteUser;
 let cookieId;
 const showResponseFromServer = function(data) {
-  console.log(data);
+  /* console.log(data); */
   // Check if the user is deleted
   if (data["id"]) {
     alert("De gebruiker is succesvol verwijderd");
@@ -38,6 +38,15 @@ const loadDom = function() {
   // Load all the users form the API
   getAPI(`users?cookie_id=${encodeURIComponent(cookieId)}`, loadUsers);
 };
+
+const buttontoevoegen = function() {
+  let btntvg = document.querySelector(".js-addUser");
+  btntvg.addEventListener("click", function() {
+    document.location.href = "AddUser.html";
+  });
+};
+
+
 document.addEventListener("DOMContentLoaded", function() {
   console.log("Script leerkrachten geladen😛");
   // Check if the user is logged in
@@ -45,6 +54,7 @@ document.addEventListener("DOMContentLoaded", function() {
     cookieId = getCookie("id");
     // Load the DOM
     loadDom();
+    buttontoevoegen();
   } else {
     // Send the user to the main-page
     window.location.href = "./";

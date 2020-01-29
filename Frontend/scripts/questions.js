@@ -107,6 +107,13 @@ const buttonhomeclick = function() {
   });
 };
 
+const buttonuserclick = function(){
+  let btngebruiker = document.querySelector('.js-gebruiker');
+  btngebruiker.addEventListener("click", function(){
+    document.location.href = "users.html";
+  })
+}
+
 const moeilijkheid1 = function() {
   let makkelijk = document.querySelector(".js-moeilijkheid1");
   makkelijk.addEventListener("click", function() {
@@ -496,6 +503,7 @@ const alleVragen = async function() {
   let vragenHTML = ``;
   for (let i = 0; i < datavragen.length; i++) {
     const quizdata = datavragen[i];
+    console.log(quizdata)
 
     vragenHTML += `<div class="c-form-delete js-form-delete">
         <input class="c-input-vragen js-input-question--${
@@ -620,5 +628,6 @@ document.addEventListener("DOMContentLoaded", function() {
   moeilijkheid3();
   getonderwerpen();
   buttonhomeclick();
+  buttonuserclick();
   /* getAPI1("bef11ca2-3fb0-4bdf-90d2-2ad0be4787e6"); */
 });

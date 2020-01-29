@@ -14,9 +14,9 @@ const fetchData = async function(url, method = "GET", body = null) {
 let getAPI = async function(url, callback, method = "GET", body = null) {
   try {
     const data = await fetchData(url, method, body);
-    console.log(data);
+   /*  console.log(data); */
     callback(data);
   } catch (error) {
-    console.log(error);
+   /*  console.log(error); */
   }
 };
