@@ -1078,14 +1078,18 @@ more padding on the right to avoid overlap
   color: #fffbf9;
 }
 
-.c-lbl-password{
+.c-lbl-password {
+  display: flex;
+  justify-content: center;
   margin-bottom: 0;
-  margin-left: 50%;
   padding-bottom: var(--global-whitespace-sm);
   font-size: 14px;
   line-height: 16px;
   /* color: var(--label-color); */
   color: #585151;
+}
+.c-link {
+  color: #585151!important;
 }
 
 .c-dot {
