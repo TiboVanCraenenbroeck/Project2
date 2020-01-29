@@ -1094,6 +1094,7 @@ more padding on the right to avoid overlap
 */
 
 .c-button {
+  cursor: pointer;
   position: relative;
   z-index: 1;
   font-size: 16px;
@@ -1118,7 +1119,6 @@ more padding on the right to avoid overlap
 }
 
 .c-button:hover {
-    cursor: pointer;
   border-color: var(
     --button-hover-borderColor,
     var(--global-color-border-button)
