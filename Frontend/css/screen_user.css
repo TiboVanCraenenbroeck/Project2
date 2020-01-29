@@ -659,7 +659,7 @@ input::placeholder {
   background-color: #fffbf98c;
 }
 
-.c-btn__change-user{
+.c-btn__change-user {
   justify-self: end;
   width: 11rem;
   height: 3rem;
@@ -667,13 +667,15 @@ input::placeholder {
   background-color: #fffbf98c;
 }
 
-
 .c-btn__delete-user {
   color: var(--user-color--text);
   background-color: var(--user-color--btn, red);
 }
 .c-btn__delete-user:hover {
   --user-color--btn: black;
+}
+.c-btns {
+  justify-self: end;
 }
 .c-title-bar {
   display: grid;
