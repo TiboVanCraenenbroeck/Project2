@@ -701,13 +701,29 @@ input::placeholder {
   grid-template-columns: 1fr 1fr;
   margin-bottom: 1rem;
 }
+
+
 .c-svg {
-  margin: 0 0 var(--global-whitespace);
-  fill: #474242;
+  display: inline-block;
+  margin-bottom: 14px;
+  padding: 3px;
+  border: 1px solid #474242;
+  border-radius: 4px;
+  width: 110px;
+  height: 40px;
+  background-color: #f6d9cf;
+  grid-column: 8;
   cursor: pointer;
 }
-.c-svg:hover {
-  fill: var(--input-hover-borderColor);
+.c-svg:hover{
+  background-color:#F6C0AD;
+}
+
+.lbl-svg {
+  font-size: 20px;
+  text-align: center;
+  vertical-align: middle;
+  cursor: pointer;
 }
 /*------------------------------------*\
 #States
