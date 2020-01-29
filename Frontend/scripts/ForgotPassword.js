@@ -5,7 +5,7 @@ const showResultFromApi = function(data) {
   if (data["id"] == "ERROR") {
     alert(data["error_message"]);
   } else {
-    alert("Je ontvangt een mail met daaring een nieuw wachtwoord");
+    alert("Je ontvangt een mail met daarin een nieuw wachtwoord");
     domInputField.value = "";
   }
 };
