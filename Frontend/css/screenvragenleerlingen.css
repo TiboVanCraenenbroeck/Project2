@@ -660,6 +660,7 @@ grid
 } */
 .c-answer {
   padding: 8px;
+  cursor: pointer;
 }
 .c-answer-correct {
   background-color: var(--color-answer-background--correct);
@@ -688,7 +689,7 @@ grid
 }
 .c-score__raket-team-a {
   bottom: var(--score-bottom-team-a);
-  left: 3%;
+  left: 6%;
   width: var(--score--rocket-size);
 }
 .c-score__planet-team-b {
@@ -698,7 +699,7 @@ grid
 }
 .c-score__raket-team-b {
   bottom: var(--score-bottom-team-b);
-  right: 3%;
+  right: 6%;
   width: var(--score--rocket-size);
   transition: all 500ms ease-in-out, transform 1.3s ease-in-out;
 }
